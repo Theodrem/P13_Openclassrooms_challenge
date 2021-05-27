@@ -29,12 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth.registration',
-    'rest_auth',
-    'allauth',
-    'allauth.account',
+    'rest_framework'
 ]
 
 SITE_ID = 1
@@ -130,11 +125,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-
      'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    )
+
+     )
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
