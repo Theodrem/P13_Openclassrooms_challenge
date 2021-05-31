@@ -1,10 +1,15 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from user.views import RegisterView
+from rest_framework_simplejwt import views as jwt_views
+from user.views import RegisterView, LogoutView
+
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='auth_register'),
-    #path('dashboard/<int:pk>',)
+    path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('logout/', LogoutView.as_view(), name='logout_view'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh')
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

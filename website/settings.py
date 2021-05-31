@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,8 +30,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'rest_framework'
+    'rest_framework',
+    "rest_framework_simplejwt.token_blacklist",
 ]
+
 
 SITE_ID = 1
 
@@ -71,7 +74,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'challenge',
+            'NAME': 'p13_challenge',
             'USER': 'theodrem',
             'PASSWORD': os.environ.get('PASSWORD_DB_P8'),
             'HOST': 'localhost',
@@ -126,9 +129,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
      'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
      )
 }
 
@@ -138,3 +139,16 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'herin.theotim@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "BLACKLIST_AFTER_ROTATION": True,
+}
+
+CORS_ORIGIN_WHITELIST = (
+            "http://127.0.0.1:8000",
+            "http://127.0.0.1:8080",
+            "http://localhost:8000",
+            "http://localhost:8080",
+        )
