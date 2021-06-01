@@ -1,21 +1,23 @@
-from rest_framework import permissions
-from rest_framework import viewsets
-
-
+from rest_framework import generics
 from challenge.models import Challenge, Category
 from challenge.serializers import ChallengeSerializer, CategorySerializer
-from challenge.permissions import IsOwnerOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 
 
-class ChallengeViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+class ChallengeView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated)
     queryset = Challenge.objects.all()
     serializer_class = ChallengeSerializer
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAdminUser]
+class CategoryView(generics.ListCreateAPIView):
+    permission_classes = (AllowAny, )
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
+"""class ChallengeUserView(generics.UpdateAPIView):
+    permission_classes = (AllowAny, )
+    queryset = Challenge.objects.all()
+    serializer_class = ChallengeUserSerializer
+"""
