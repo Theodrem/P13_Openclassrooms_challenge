@@ -15,14 +15,14 @@ SECRET_KEY = 'django-insecure-@2@ucg(yi^!e-pm=l7^+(2p%&ooq+0-j^qp%-ucj+ruez0byik
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'challenge.apps.ChallengeConfig',
-    'user.apps.UserConfig',
+    'challenge',
+    'user',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,12 +32,14 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     "rest_framework_simplejwt.token_blacklist",
+    "corsheaders"
 ]
 
 
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,7 +54,7 @@ ROOT_URLCONF = 'website.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/build/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,6 +67,10 @@ TEMPLATES = [
     },
 ]
 
+STATIC_URL = '/static/'
+STATIC_ROOT = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/build/static')]
+
 WSGI_APPLICATION = 'website.wsgi.application'
 
 
@@ -74,7 +80,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'challenges',
+            'NAME': 'challenge',
             'USER': 'theodrem',
             'PASSWORD': os.environ.get('PASSWORD_DB_P8'),
             'HOST': 'localhost',
@@ -125,13 +131,6 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-     )
-}
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -146,9 +145,17 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
 }
 
+
 CORS_ORIGIN_WHITELIST = (
-            "http://127.0.0.1:8000",
-            "http://127.0.0.1:8080",
-            "http://localhost:8000",
-            "http://localhost:8080",
-        )
+    # TODO - set this properly for production
+    'https://127.0.0.1:8080',
+    'https://127.0.0.1:8000',
+)
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20,
+}

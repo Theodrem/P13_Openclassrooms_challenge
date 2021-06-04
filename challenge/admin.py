@@ -1,3 +1,6 @@
 from django.contrib import admin
+from django.urls.conf import include
+from .models import Category, Challenge
 
-# Register your models here.
+admin.site.register(Challenge)
+admin.site.register(Category)
