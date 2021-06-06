@@ -5,7 +5,6 @@ from challenge.serializers import ChallengeSerializer, CategorySerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 
 
-
 class ChallengeView(generics.ListCreateAPIView):
     permission_classes = (AllowAny,)
     queryset = Challenge.objects.all()
