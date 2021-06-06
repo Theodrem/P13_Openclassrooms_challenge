@@ -1,10 +1,11 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from challenge.views import ChallengeView, CategoryView
+from challenge.views import ChallengeView, CategoryView, GetChallengeView
 
 urlpatterns = [
-    path('challenge/', ChallengeView.as_view(), name='challenge-list'),
-    path('category/', CategoryView.as_view(), name='category-list'),
+    path('challenges/', ChallengeView.as_view(), name='challenge-create'),
+    path('', GetChallengeView.as_view(), name='challenge-list'),
+    path('category/', CategoryView.as_view(), name='category-create'),
     #path('add_challenge/', ChallengeUserView.as_view(), name='add_challenge'),
     #path(actuallity/<int:id>
     #path(my_challenges/)

@@ -6,7 +6,7 @@ from challenge.models import Challenge, Category
 class ChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Challenge
-        fields = ('difficult', 'title', 'category')
+        fields = '__all__'
 
     def create(self, validated_data):
         challenge = Challenge.objects.create(
