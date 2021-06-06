@@ -1,14 +1,15 @@
 <template>
   <div class="posts">
-    <NavBar></NavBar>
+    <Navbar></Navbar>
       <div class="album py-5 bg-light">
           <div class="container">
             <div class="row">
               <div v-for="challenge in APIData" :key="challenge.id" class="col-md-4">
+                <p>{{ challenge.title }}</p>
                 <div class="card mb-4 box-shadow">
-                  <img class="card-img-top" src="https://via.placeholder.com/150x100" alt="Card image cap">
+                  
                   <div class="card-body">
-                      <h4 class=""><a class="text-secondary" href="">{{posts.title}}</a></h4>
+                      <h4 class=""><a class="text-secondary" href="">{{challenge.title}}</a></h4>
                       <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
                       <a href="" class="btn btn-sm btn-outline-primary" role="button" aria-pressed="true">View</a>
@@ -26,25 +27,25 @@
 </template>
 
 <script>
-  import NavBar from '../components/Navbar'
-  import { getAPI } from '../axios-api'
-  import { mapState } from 'vuex'
+  import axios from 'axios'
+  import Navbar from '../components/Navbar'
   export default {
-    name: 'Posts',
-    onIdle () {
-      this.$store.dispatch('userLogout')
-        .then(() => {
-          this.$router.push({ name: 'login' })
-        })
+    name: 'Challenge',
+    data () {
+      return {
+          APIData: []
+        }
     },
     components: {
-      NavBar
+      Navbar
     },
-    computed: mapState(['APIData']),
-    created () {
-        getAPI.get('/', { headers: { Authorization: `Bearer ${this.$store.state.accessToken}` } })
-          .then(response => {
-            this.$store.state.APIData = response.data
+    mounted(){
+        axios.get('http://127.0.0.1:8000/')
+          .then((response) => {
+            
+
+            console.log(this.difficult)
+            this.APIData = response.data
           })
           .catch(err => {
             console.log(err)
@@ -53,5 +54,5 @@
   }
 </script>
 
-<style>
+<style scoped>
 </style>

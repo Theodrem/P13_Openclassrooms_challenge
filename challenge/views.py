@@ -3,8 +3,7 @@ from rest_framework.response import Response
 from challenge.models import Challenge, Category
 from challenge.serializers import ChallengeSerializer, CategorySerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
-from django.views.generic import TemplateView
-from django.views.decorators.cache import never_cache
+
 
 
 class ChallengeView(generics.ListCreateAPIView):
