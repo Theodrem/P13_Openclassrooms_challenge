@@ -27,10 +27,17 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import { getAPI } from '../axios-api'
   import Navbar from '../components/Navbar'
+  import { mapState } from 'vuex'
   export default {
     name: 'Challenge',
+    onIdle () {
+      this.$store.dispatch('userLogout')
+        .then(() => {
+          this.$router.push({ name: 'login' })
+        })
+    },
     data () {
       return {
           APIData: []
@@ -39,12 +46,10 @@
     components: {
       Navbar
     },
-    mounted(){
-        axios.get('http://127.0.0.1:8000/')
+    computed: mapState(['APIDATA']),
+    created () {
+        getAPI.get('http://127.0.0.1:8000/', { headers: { Authorization: `Bearer ${this.$store.state.accessToken}` } })
           .then((response) => {
-            
-
-            console.log(this.difficult)
             this.APIData = response.data
           })
           .catch(err => {

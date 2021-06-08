@@ -6,11 +6,12 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 
 
 class ChallengeView(generics.ListCreateAPIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated)
     queryset = Challenge.objects.all()
     serializer_class = ChallengeSerializer
 
 class GetChallengeView(generics.RetrieveAPIView):
+    permission_classes = (IsAuthenticated, )
     queryset = Challenge.objects.all()
     
     def get(self, request, *args, **kwargs):
