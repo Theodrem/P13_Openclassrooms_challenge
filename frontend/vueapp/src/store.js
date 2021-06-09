@@ -32,7 +32,7 @@ export default new Vuex.Store({
     },
     userLogin (context, usercredentials) {
       return new Promise((resolve, reject) => {
-        getAPI.post('/api-token/', {
+        getAPI.post('/login/', {
           username: usercredentials.username,
           password: usercredentials.password
         })

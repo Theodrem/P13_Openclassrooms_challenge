@@ -10,22 +10,29 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-            <router-link :to = "{ name:'challenge' }" exact>Accueil</router-link>
-            </li>
+            <li class="nav-item"><router-link :to = "{ name:'challenge' }" exact>Accueil</router-link></li>
+            <li class="nav-item" v-if="accessToken!=null"><router-link :to = "{ name:'logout' }">Logout</router-link></li>
+            <li class="nav-item" v-if="accessToken==null"><router-link :to = "{ name:'login' }">Login</router-link></li>
           </ul>
         </div>
-
       </div>
     </nav>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
     name: 'Navbar',
+    computed: mapState(['accessToken'])
   }
 </script>
+
+<style scoped>
+    a {
+      color:#000;
+  }
+</style>
 
 <style scoped>
     a {
