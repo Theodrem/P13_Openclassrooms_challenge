@@ -26,7 +26,10 @@ const getters = {
 const actions = {
    userLogout (context) {
      if (context.getters.loggedIn) {
-         context.commit('DESTROY_TOKEN')
+        const token = localStorage.getItem("token")
+        console.log(token)
+        getAPI.post('/logout/',{ headers: { Authorization: `${token}` } })
+        context.commit('DESTROY_TOKEN')
      }
    },
    userLogin (context, usercredentials) {
