@@ -6,15 +6,15 @@ const state = {
  }
 const mutations = {
     UPDATE_STORAGE (state, { access, refresh}) {
-     localStorage.setItem("token", access);
+     localStorage.setItem("access", access);
      localStorage.setItem("refresh", refresh);
-     state.accessToken = localStorage.getItem("token");
+     state.accessToken = localStorage.getItem("access");
      state.refreshToken = localStorage.getItem("refresh");
    },
     DESTROY_TOKEN (state) {
      state.accessToken = null
      state.refreshToken = null
-     localStorage.removeItem("token");
+     localStorage.removeItem("access");
      localStorage.removeItem("refresh");
    }
  }
@@ -26,13 +26,12 @@ const getters = {
 const actions = {
    userLogout (context) {
      if (context.getters.loggedIn) {
-        const token = localStorage.getItem("token")
-        console.log(token)
-        getAPI.post('/logout/',{ headers: { Authorization: `${token}` } })
+        console.log("logout")
+        getAPI.post('/logout/',{refresh: state.refreshToken}, { headers: { Authorization: `Bearer ${state.accessToken}` }}  ) // addd refresh
         context.commit('DESTROY_TOKEN')
      }
    },
-   userLogin (context, usercredentials) {
+   userLogin (context, usercredentials) { //async await
      return new Promise((resolve, reject) => {
        getAPI.post('/login/', {
          username: usercredentials.username,
@@ -46,8 +45,28 @@ const actions = {
            reject(err)
          })
      })
-   }
- };
+   },
+   userRegister (context, data) {
+    return new Promise((resolve, reject) => {
+      getAPI.post('/register/', {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        username: data.username,
+        password: data.password,
+        password2: data.password2
+      })
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+      })
+    }
+  }
+
+
 
  export default {
     state,

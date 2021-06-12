@@ -3,10 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework import viewsets, generics, permissions, status
 from rest_framework.response import Response
-from user.serializers import UserSerializer, LogoutSerializer
-from .serializers import RegisterSerializer
-from rest_framework.permissions import AllowAny
-
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from .serializers import RegisterSerializer, UserSerializer, LogoutSerializer
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -36,7 +34,7 @@ class LogoutView(generics.GenericAPIView):
     """
 
     serializer_class = LogoutSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args):
         serializer = self.get_serializer(data=request.data)
