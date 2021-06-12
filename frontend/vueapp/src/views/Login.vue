@@ -2,30 +2,47 @@
 <template>
   <div>
   <Navbar></Navbar>
-  <div class="container text-dark">
-    <div class="row justify-content-md-center">
-      <div class="col-md-5 p-3 login justify-content-md-center">
-        <h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
+  <div class="container-fluid">
+    <div class="row no-gutter">
+        <!-- The image half -->
+        <div class="col-md-6 d-none d-md-flex bg-image"></div>
+        <!-- The content half -->
+        <div class="col-md-6 bg-light">
+            <div class="login d-flex align-items-center py-5">
+                <!-- Demo content-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10 col-xl-7 mx-auto">
+                            <h3 class="display-4">Bienvue à toi!</h3>
+                            <p class="text-muted mb-4">Connecte pour réaliser de nouveaux défis.</p>
+                            <p v-if="incorrectAuth">Le nom d'utilisateur ne correspont avec le mot de passe.</p>
+                            <form v-on:submit.prevent="login">
+                              <div class="form-group">
+                                <input type="text" name="username" id="user" v-model="username" class="form-control" placeholder="Nom d'utilisateur*">
+                              </div>
+                              <div class="form-group">
+                                <input type="password" name="password" id="pass" v-model="password" class="form-control" placeholder="Mot de passe*">
+                              </div>
+                              <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm">Envoyer</button>
+                           
+                            </form>
+                            <p class="text-muted">T'as pas de compte?<b><router-link :to = "{ name:'register' }" class="text-decoration-none">Inscrit toi.</router-link></b></p>
+                        </div>
+                    </div>
+                </div><!-- End -->
+                
+            </div>
+        </div><!-- End -->
 
-        <p v-if="incorrectAuth">Incorrect username or password entered - please try again</p>
-        <form v-on:submit.prevent="login">
-          <div class="form-group">
-            <input type="text" name="username" id="user" v-model="username" class="form-control" placeholder="Username">
-          </div>
-          <div class="form-group">
-            <input type="password" name="password" id="pass" v-model="password" class="form-control" placeholder="Password">
-          </div>
-          <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
-        </form>
-        
-      </div>
     </div>
   </div>
-  </div>
+<Footer></Footer>
+</div>
 </template>
 
 <script>
   import Navbar from '../components/Navbar'
+  import Footer from '../components/Footers'
   export default {
     name: 'login',
     data () {
@@ -36,12 +53,13 @@
       }
     },
     components: {
-      Navbar
+      Navbar,
+      Footer
     },
     methods: {
       login () { 
-        this.$store.dispatch('userLogin', {
-          username: this.username,
+        this.$store.dispatch('userLogin', { //use mapaction
+          username: this.username, 
           password: this.password
         })
         .then(() => {
@@ -56,15 +74,32 @@
   }
 </script>
 
-<style>
-body { 
-  background-color:#f4f4f4;
+<style scoped>
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.login,
+.image {
+  min-height: 100vh;
 }
-  .login{
-    background-color:#fff;
-    margin-top:10%;
-  }
-  input {
-    padding: 25px 10px;
+
+.bg-image {
+  background-image: url('../assets/back2.jpg');
+  background-size: cover;
+  background-position: center center;
+  padding: 25px 10px;
 }
+button {
+  margin-top: 20px;
+}
+
+.form-control {
+  margin-top: 20px;
+}
+
+
 </style>

@@ -6,7 +6,7 @@ urlpatterns = [
     path('challenges/', ChallengeView.as_view(), name='challenge-create'),
     path('', GetChallengeView.as_view(), name='challenge-list'),
     path('category/', CategoryView.as_view(), name='category-create'),
-    #path('add_challenge/', ChallengeUserView.as_view(), name='add_challenge'),
+    path('actuallity/', ChallengeView.as_view(), name='actuallity'),
     #path(actuallity/<int:id>
     #path(my_challenges/)
     #path(best_players/)

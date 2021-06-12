@@ -1,15 +1,15 @@
 <template>
-  <div class="posts">
+  <div class="index">
     <Navbar></Navbar>
-        <header class="masthead">
+     <header class="masthead">
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center text-center">
-                <div class="col-lg-10 align-self-end">
+                <div class="col-lg-10 align-self-end" id="async">
                     <h1 class="title text-uppercase text-white"><b>Sort de ta zone de confort!</b></h1>
-                    <button type="button" class="btn btn-outline-light btn-lg">LET'S GO</button>
+                    <button class="btn btn-outline-light btn-lg" @click="create">LET'S GO</button>
                 </div>
-                <div class="col-lg-8 align-self-baseline">
-                </div>
+                <section class="page-section" id="services">
+            </section>
             </div>
         </div>
     </header>
@@ -55,12 +55,10 @@
     components: {
       Navbar,
       Footers,
-      Compteur
+      Compteur,
     },
     mounted () {
-        console.log("ddddd")
-        const tok = localStorage.getItem('token')
-        getAPI.get('/', { headers: { Authorization: `Bearer ${tok}` } })
+        getAPI.get('/')
           .then((response) => {
             this.APIData = response.data
             console.log(this.APIData)
@@ -68,20 +66,29 @@
           .catch(err => {
             console.log(err)
           })
-    }
+    },
+    methods: {
+          create() {
+              console.log('salut')
+          },
+          
+      },
+      
   }
+
+  
 </script>
 
 <style scoped>
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 4.5rem);
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(53, 6, 6, 0.8) 100%), url("../assets/back3.jpg");
+  background: linear-gradient(to bottom, rgba(99, 98, 98, 0.5) 0%, rgba(49, 49, 49, 0.8) 100%), url("../assets/back.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-size: cover;
-  height: 100vh;
+  height: 60vh;
 }
 h1 {
       font-size: 5em;
@@ -89,6 +96,7 @@ h1 {
 button {
   margin-top: 30px;
 }
+
 </style>
 
   
