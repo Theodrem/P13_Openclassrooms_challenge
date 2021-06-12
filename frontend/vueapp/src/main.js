@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './routes.js'
-import store from './store'
+import router from './router/routes.js'
+import store from './store/store'
 import IdleVue from 'idle-vue'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
 
 const eventsHub = new Vue()
 
@@ -13,18 +17,6 @@ Vue.use(IdleVue, {
 })
 
 Vue.config.productionTip = false
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresLogin)) {
-    if (!store.getters.loggedIn) {
-      next({ name: 'login' })
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
 
 new Vue({
   router,

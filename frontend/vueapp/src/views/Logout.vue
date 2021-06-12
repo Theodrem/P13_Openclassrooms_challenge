@@ -9,6 +9,7 @@
       this.$store.dispatch('userLogout')
         .then(() => {
           this.$router.push({ name: 'login' })
+          
         })
     }
   }

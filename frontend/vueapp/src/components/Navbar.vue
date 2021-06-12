@@ -1,41 +1,41 @@
 <template>
-  <div class="nav-bar">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white nav-1">
-      <div class="container mw-0 px-3">
-
-        <a class="navbar-brand" href="#">Name_website</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><router-link :to = "{ name:'challenge' }" exact>Accueil</router-link></li>
-            <li class="nav-item" v-if="accessToken!=null"><router-link :to = "{ name:'logout' }">Logout</router-link></li>
-            <li class="nav-item" v-if="accessToken==null"><router-link :to = "{ name:'login' }">Login</router-link></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand"><router-link :to = "{ name:'index' }" exact>Name_website</router-link></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item" v-if="token==null"><router-link :to = "{ name:'login' }" class="nav-link">Login</router-link></li>
+        <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'logout' }" class="nav-link">Logout</router-link></li>
+      </ul>
+    </div>
   </div>
+</nav>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
   export default {
     name: 'Navbar',
-    computed: mapState(['accessToken'])
+     
+    data () {
+      return {
+          token: localStorage.getItem('token')
+        }
+    }  
   }
 </script>
 
 <style scoped>
     a {
-      color:#000;
-  }
-</style>
-
-<style scoped>
-    a {
-      color:#000;
-  }
+      color: #fff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: rgb(0, 0, 0);
+    }
 </style>

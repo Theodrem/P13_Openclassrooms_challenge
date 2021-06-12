@@ -8,7 +8,7 @@
 <script>
 export default {
   name: 'App',
-  componenents: 'Challenge'
+  componenents: 'Index'
 }
 </script>
 

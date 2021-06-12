@@ -45,8 +45,7 @@
           password: this.password
         })
         .then(() => {
-          this.token = localStorage.token;
-          this.$router.push({ name: 'challenge' })
+          this.$router.push({ name: 'index' })
         })
         .catch(err => {
           console.log(err)
