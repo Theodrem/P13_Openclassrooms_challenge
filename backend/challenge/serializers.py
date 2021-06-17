@@ -1,9 +1,10 @@
 from rest_framework import serializers
-
 from challenge.models import Challenge, Category
+from django.contrib.auth.models import User
 
 
 class ChallengeSerializer(serializers.ModelSerializer):
+    category_name = serializers.CharField(source='category.name')
     class Meta:
         model = Challenge
         fields = '__all__'
@@ -15,7 +16,14 @@ class ChallengeSerializer(serializers.ModelSerializer):
             category=validated_data['category'],
         )
         challenge.save()
-        return challenge
+        return Challenge
+
+class UserAskingSerializer(serializers.ModelSerializer):
+    Challenge_name = serializers.CharField(source='challenge.name')
+    username = serializers.CharField(source='user.username')
+    class Meta:
+        model = Challenge
+        fields = ( 'id', 'challenge_name', 'username')
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -23,16 +31,3 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ('name', )
 
-"""
-class ChallengeUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Challenge
-        fields = ('id', 'created', 'owner')
-
-    def update(self, challenge, validated_data):
-        challenge = Challenge.objects.get(id=id)
-        challenge(owner=)
-        challenge.save()
-        return challenge
-
-"""

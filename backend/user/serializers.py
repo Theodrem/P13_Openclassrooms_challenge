@@ -6,12 +6,11 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
 
-class UserSerializer(serializers.ModelSerializer):
-    challenge = serializers.HyperlinkedRelatedField(read_only=True, view_name='challenge-detail', many=True)
 
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'challenge')
+        fields = ('id','username', 'email')
 
 
 
@@ -64,3 +63,5 @@ class LogoutSerializer(serializers.Serializer):
             RefreshToken(self.token).blacklist()
         except TokenError:
             self.fail("bad_token")
+
+

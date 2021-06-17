@@ -5,8 +5,10 @@
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center text-center">
                 <div class="col-lg-10 align-self-end" id="async">
-                    <h1 class="title text-uppercase text-white"><b>Sort de ta zone de confort!</b></h1>
-                    <button class="btn btn-outline-light btn-lg" @click="create">LET'S GO</button>
+                    <h1 class="title text-uppercase text-white"><b>Gloot</b></h1>
+                    <h3 class="text-white">Réalise des défis quotidien et sors de ta routine.</h3>
+                    <button class="btn btn-outline-dark btn-lg" v-if="token==null"><router-link :to = "{ name:'login' }" class="text-white text-decoration-none">LET'S GO</router-link></button>
+                    <button class="btn btn-outline-dark btn-lg" v-if="token!=null"><router-link :to = "{ name:'index' }" class="text-white text-decoration-none">LET'S GO</router-link></button>
                 </div>
                 <section class="page-section" id="services">
             </section>
@@ -14,88 +16,46 @@
         </div>
     </header>
     <!-- Services-->
-    <section class="page-section" id="services">
-        <div class="container">
-            <h2 class="text-center mt-0 title"><b>On te propose des défis</b></h2>
-               <div class="card" style="width: 18rem;">
-                 <img class="card-img-top" src="../assets/back.jpg" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">Marche 5 kilomètre</h5>
-                    <p class="card-text">Marche 5 kilomètre ou tu veux, tu peux même les faire en courant. </p>
-                    <a href="#" class="btn btn-outline-success">Accepter</a>
-                  </div>
-               </div>
-        </div>
-    </section>
-    <!-- Contact-->
-    <section class="page-section" id="contact">
-      <Compteur></Compteur>
-    </section>
-     <section class="page-section" id="co">
-      <div :key="challenge.id" v-for="(challenge) in APIData">
-        <h3>{{ challenge.title }}</h3>
-      </div>
-    </section>
-      <Footers></Footers>
   </div>
 </template>
 
+
 <script>
-  import { getAPI } from '../api/axios-api'
-  import Navbar from '../components/Navbar'
-  import Footers from '../components/Footers'
-  import Compteur from '../components/Concept'
-  export default {
+import Navbar from '../components/Navbar'
+export default {
     name: 'Index',
-    data () {
-      return {
-          APIData: []
-        }
-    },
     components: {
       Navbar,
-      Footers,
-      Compteur,
-    },
-    mounted () {
-        getAPI.get('/')
-          .then((response) => {
-            this.APIData = response.data
-            console.log(this.APIData)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-    },
-    methods: {
-          create() {
-              console.log('salut')
-          },
-          
-      },
-      
-  }
-
-  
+    }
+}
 </script>
 
 <style scoped>
-header.masthead {
-  padding-top: 10rem;
-  padding-bottom: calc(10rem - 4.5rem);
-  background: linear-gradient(to bottom, rgba(99, 98, 98, 0.5) 0%, rgba(49, 49, 49, 0.8) 100%), url("../assets/back.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
-  height: 60vh;
-}
 h1 {
       font-size: 5em;
     }
 button {
   margin-top: 30px;
 }
+
+.page-section {
+  margin-top: 70px;
+ 
+}
+.index {
+  background:  linear-gradient(to bottom, rgba(21, 111, 122, 0.8) 0%, rgba(21, 111, 122, 0.8) 100%), url("../assets/back.jpg");
+  height: 100vh;
+}
+
+#async {
+  margin-top: 150px;
+}
+ 
+header.masthead {
+  margin-top: 150px;
+  
+}
+
 
 </style>
 
