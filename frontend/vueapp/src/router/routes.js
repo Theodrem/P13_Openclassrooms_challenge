@@ -4,7 +4,8 @@ import Index from '../views/Index'
 import Login from '../views/Login'
 import Logout from '../views/Logout'
 import Register from '../views/Register'
-import Actuallity from '../views/Actuallity'
+import Profile from '../views/Profile'
+import Challenge from '../views/Challenge'
 
 Vue.use(VueRouter)
 
@@ -33,9 +34,14 @@ export default new VueRouter({
             component: Register,
         },
         {
-            path: '/actuallity',
-            name: 'actuallity', 
-            component: Actuallity,
+            path: '/profile',
+            name: 'profile', 
+            component: Profile,
+        },
+        {
+            path: '/challenge',
+            name: 'challenge',
+            component: Challenge
         }
     ]
 })

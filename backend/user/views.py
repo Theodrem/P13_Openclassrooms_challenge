@@ -6,21 +6,14 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from .serializers import RegisterSerializer, UserSerializer, LogoutSerializer
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    This viewset automatically provides `list` and `retrieve` actions.
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
+class UserViewSet(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
 
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'challenge': reverse('challenge-list', request=request, format=format)
-    })
-
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+        
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -40,7 +33,6 @@ class LogoutView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        print("blacklisted")
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
