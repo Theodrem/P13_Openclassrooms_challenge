@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './auth'
-import index from './index'
+import get_challenge from './get_challenge'
+
 
 
 Vue.use(Vuex);
@@ -9,6 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     auth,
-    index,
+    get_challenge,
+  
   },
 })

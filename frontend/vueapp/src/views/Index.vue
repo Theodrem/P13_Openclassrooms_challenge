@@ -18,15 +18,19 @@
     <!-- Services-->
   </div>
 </template>
-
-
 <script>
 import Navbar from '../components/Navbar'
 export default {
     name: 'Index',
     components: {
       Navbar,
-    }
+    },
+     data () {
+      return {
+          token: localStorage.getItem('access')
+        }
+    }  
+  
 }
 </script>
 
@@ -48,15 +52,13 @@ button {
 }
 
 #async {
-  margin-top: 150px;
+  margin-top: 180px;
 }
  
 header.masthead {
-  margin-top: 150px;
+  margin-top: 180px;
   
 }
-
-
 </style>
 
   

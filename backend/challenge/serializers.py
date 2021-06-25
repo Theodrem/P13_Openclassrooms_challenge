@@ -1,33 +1,28 @@
 from rest_framework import serializers
-from challenge.models import Challenge, Category
+from challenge.models import Challenge, UserChallenge
 from django.contrib.auth.models import User
 
 
-class ChallengeSerializer(serializers.ModelSerializer):
-    category_name = serializers.CharField(source='category.name')
+class AddChallengeSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    status = serializers.HiddenField(default="En cours")
     class Meta:
-        model = Challenge
-        fields = '__all__'
-
+        model = UserChallenge
+        fields = ('user', 'challenge', 'status')
+    
     def create(self, validated_data):
-        challenge = Challenge.objects.create(
-            difficult=validated_data['difficult'],
-            title=validated_data['title'],
-            category=validated_data['category'],
-        )
-        challenge.save()
-        return Challenge
+        try:
+            challenge = UserChallenge.objects.get(**validated_data)
+            return challenge
+        except UserChallenge.DoesNotExist:
+            challenge = UserChallenge.objects.create(**validated_data)
+            challenge.save()
+            return challenge
 
-class UserAskingSerializer(serializers.ModelSerializer):
-    Challenge_name = serializers.CharField(source='challenge.name')
-    username = serializers.CharField(source='user.username')
+
+class ChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Challenge
-        fields = ( 'id', 'challenge_name', 'username')
+        fields = ("id", "title", "description", "difficult", "category")
 
-
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ('name', )
-
+        

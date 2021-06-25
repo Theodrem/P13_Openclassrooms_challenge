@@ -24,7 +24,6 @@
                                 <input type="password" name="password" id="pass" v-model="password" class="form-control" placeholder="Mot de passe*">
                               </div>
                               <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm">Envoyer</button>
-                           
                             </form>
                             <p class="text-muted">T'as pas de compte?<b><router-link :to = "{ name:'register' }" class="text-decoration-none">Inscrit toi.</router-link></b></p>
                         </div>
@@ -58,8 +57,9 @@
     },
     methods: {
       login () { 
-        this.$store.dispatch('userLogin', { //use mapaction
-          username: this.username, 
+        
+        this.$store.dispatch('userLogin', { 
+          username: this.username,
           password: this.password
         })
         .then(() => {

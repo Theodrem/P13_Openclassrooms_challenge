@@ -5,15 +5,11 @@
 
 <script>
   export default {
-    created () {
-      this.$store.dispatch('userLogout')
-        .then(() => {
-          this.$router.push({ name: 'login' })
-          
-        })
+    async created () {
+      await this.$store.dispatch('userLogout')
+      this.$router.push({ name: 'login' })
     }
   }
 </script>
-
 <style>
 </style>
