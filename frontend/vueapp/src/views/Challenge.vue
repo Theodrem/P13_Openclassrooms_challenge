@@ -7,20 +7,20 @@
                 <div class="col-lg-10 align-self-end" id="async">
                     <h1 class="title">Choisis un défi</h1>
                 </div>
-                <section class="page-section" id="services" v-if="display.length > 0">
-                    <div class="container d-flex">
-                        <div :key="challenge.id" v-for="(challenge) in APIData">
-                            <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="../assets/back.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ challenge.title }}</h5>
-                                    <p class="card-text">Marche 5 kilomètre ou tu veux, tu peux même les faire en courant. </p>
-                                    <a href="#" class="btn btn-outline-success">Accepter</a>
+                      <div class="container cards d-flex">
+                        <div v-for="(data, index) in  challenges.results" :key="index">
+                                <div class="card border-danger mb-3" style="max-width: 18rem;">
+                                <div class="card-body text-danger">
+                                  <h1 v-if="data.category == 1"><i class="fas fa-basketball-ball"></i></h1>
+                                  <h1 v-if="data.category == 2"><i class="fas fa-user-friends"></i></h1>
+                                  <h4 class="card-title">{{ data.title }}</h4>
+                                  <p class="text-muted">{{ data.description }}</p>
+                                  <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm" v-on:click="get_id(data.id)">Ajouter</button>
+                              
                                 </div>
-                            </div>
+                            </div>                
                         </div>
                     </div>
-                </section>
             </div>
         </div>
     </header>
@@ -30,32 +30,40 @@
 
   
 <script>
-import { getAPI } from '../api/axios-api'
 import Navbar from '../components/Navbar'
+import { mapGetters } from 'vuex'
 import Footers from '../components/Footers'
 export default {
     name: 'Index',
     data () {
       return {
-          APIData: [],
-          display: []
-        }
-    },
-    components: {
+        id: null
+      }
+     },
+     components: {
       Navbar,
       Footers,
     },
-    mounted () {
-        getAPI.get('')
-          .then((response) => {
-            this.APIData = response.data
-            console.log(this.APIData.results)
-          })
-          .catch(err => {
-            console.log(err)
-          })
+    created () {
+      this.$store.dispatch("get_challenges")
+    },
+    computed: {
+      ...mapGetters(['challenges']),
+    
+    },
+    methods: {
+    get_id: function(data) { 
+      this.id = data;
+      console.log(this.id);
+      
+      this.$store.dispatch('addChallenge', { 
+        id: this.id
+      })
     }
-}
+    }
+  }
+
+
 </script>
 
 <style scoped>
@@ -67,16 +75,17 @@ button {
 }
 
 .page-section {
-  margin-top: 70px;
+  margin-top: 40px;
  
 }
-.index {
-  background: url("../assets/back.jpg");
-}
- 
+
 header.masthead {
   margin-top: 150px;
   
+}
+
+.cards {
+  margin-top: 50px;
 }
 
 </style>

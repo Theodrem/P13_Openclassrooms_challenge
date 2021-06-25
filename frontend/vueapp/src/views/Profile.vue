@@ -15,7 +15,7 @@
                                 <img class="card-img-top" src="../assets/back.jpg" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ result.challenge_name }}</h5>
-                                    <p class="card-text">Marche 5 kilomètre ou tu veux, tu peux même les faire en courant. </p>
+                                    <p class="card-text">Marche 5 kilomètre ou tu veux, tu peux même les faire en courant.</p>
                                 </div>
                             </div>
                         </div>

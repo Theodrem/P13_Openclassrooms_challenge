@@ -18,16 +18,13 @@ const mutations = {
      localStorage.removeItem("refresh");
    }
  }
-const getters = {
-   loggedIn (state) {
-     return state.accessToken != null
-   }
- }
 const actions = {
    userLogout (context) {
-     if (context.getters.loggedIn) {
+     const access = localStorage.getItem("access")
+     const refresh = localStorage.getItem("refresh")
+     if (access != null) {
         console.log("logout")
-        getAPI.post('/logout/',{refresh: state.refreshToken}, { headers: { Authorization: `Bearer ${state.accessToken}` }}  ) // addd refresh
+        getAPI.post('/logout/',{refresh: refresh}, { headers: { Authorization: `Bearer ${access}` }}  ) // addd refresh
         context.commit('DESTROY_TOKEN')
      }
    },
@@ -70,7 +67,6 @@ const actions = {
 
  export default {
     state,
-    getters,
     actions,
     mutations
   };
