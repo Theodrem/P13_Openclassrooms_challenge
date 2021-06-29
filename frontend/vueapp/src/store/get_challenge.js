@@ -20,9 +20,8 @@ const actions = {
   async addChallenge (context, challenge) {
     const access = localStorage.getItem("access")
     console.log(challenge.id)
-    await getAPI.post('/add_challenges/',{challenge: challenge.id}, { headers: { Authorization: `Bearer ${access}` }}  ) // add refresh
+    await getAPI.post('/add_challenges/',{challenge: challenge.id, status: "En cours"}, { headers: { Authorization: `Bearer ${access}` }}  ) // add refresh
      
-
   }
   
 }

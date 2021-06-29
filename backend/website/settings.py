@@ -139,14 +139,13 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'herin.theotim@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "BLACKLIST_AFTER_ROTATION": True,
-}
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(weeks=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(weeks=10),
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
