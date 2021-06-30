@@ -19,12 +19,12 @@ const mutations = {
    }
  }
 const actions = {
-   userLogout (context) {
+   async userLogout (context) {
      const access = localStorage.getItem("access")
      const refresh = localStorage.getItem("refresh")
      if (access != null) {
         console.log("logout")
-        getAPI.post('/logout/',{refresh: refresh}, { headers: { Authorization: `Bearer ${access}` }}  ) // addd refresh
+        await getAPI.post('/logout/',{refresh: refresh}, { headers: { Authorization: `Bearer ${access}` }}  ) // addd refresh
         context.commit('DESTROY_TOKEN')
      }
    },

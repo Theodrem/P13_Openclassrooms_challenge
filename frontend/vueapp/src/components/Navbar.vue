@@ -7,10 +7,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
         <li class="nav-item" v-if="token==null"><router-link :to = "{ name:'login' }" class="nav-link">Login</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'logout' }" class="nav-link">Logout</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'profile' }" class="nav-link">Mon compte</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'challenge' }" class="nav-link">Défis</router-link></li>
+        <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'actuallity' }" class="nav-link">Actus</router-link></li>
       </ul>
     </div>
   </div>
