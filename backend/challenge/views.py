@@ -1,30 +1,13 @@
-from rest_framework import generics, viewsets, status 
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from django.http import HttpResponse
 from challenge.models import Challenge, UserChallenge
-from challenge.serializers import ChallengeSerializer, AddChallengeSerializer, UserChallengeSerializer
+from challenge.serializers import ChallengeSerializer, GetUserChallengeSerializer, UserChallengeSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
-from rest_framework.decorators import action
 from rest_framework import status as rest_status
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-
-
-
-class UserView(generics.ListAPIView):
-    permission_classes = (IsAuthenticated, )
-    queryset = UserChallenge.objects.all().filter()
-    serializer_class = UserChallengeSerializer
-
-    def get_queryset(self):
-        """
-        This view should return a list of all the purchases for
-        the user as determined by the username portion of the URL.
-        """
-        queryset = UserChallenge.objects.filter(user_id=self.kwargs['id'])
-        return queryset
 
 
 class ChallengeView(generics.ListAPIView):
@@ -32,37 +15,32 @@ class ChallengeView(generics.ListAPIView):
     queryset = Challenge.objects.all()
     serializer_class = ChallengeSerializer
 
-        
-class AddChallengeView(viewsets.ModelViewSet): #une vue par model
-    #viewset 
-    permission_classes = (IsAuthenticated, )
-    serializer_class = AddChallengeSerializer
 
-    def create(self, request, *args, **kwargs):
-        data = request.data 
-        challenge = Challenge.objects.get(id=data["challenge"])
-        try:
-             new_challenge = UserChallenge.objects.get(user=request.user, challenge=challenge)
-             return Response(status=rest_status.HTTP_404_NOT_FOUND)
-        except UserChallenge.DoesNotExist: 
-            new_challenge = UserChallenge.objects.create(user=request.user, challenge=challenge, status=data["status"])
-            new_challenge.save()
-        serializer = UserChallengeSerializer(new_challenge)
-        return Response(serializer.data)
+class UserChallengePermission(permissions.BasePermission):
 
-    def update(self, request, *args, **kwargs):
-        data = request.data
-        try:
-            user_challenge = UserChallenge.objects.get(user=request.user, challenge=data["challenge"])
-            user_challenge.status = data["status"]
-            user_challenge.save()
-        
-            serializer = UserChallengeSerializer(user_challenge)
-            return Response(serializer.data)
-        except UserChallenge.DoesNotExist:
-            return Response(status=rest_status.HTTP_404_NOT_FOUND)
+    def has_object_permission(self, request, view, user_challenge):
+        if request.method in permissions.SAFE_METHODS:
+            return True
 
+        return user_challenge.user == request.user
     
+        
+class UserChallengeView(viewsets.ModelViewSet):
+    
+    permission_classes = (IsAuthenticated, UserChallengePermission)
+    queryset = UserChallenge.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in ["list", "detail"]:
+            return GetUserChallengeSerializer
+        return UserChallengeSerializer
+    
+    def filter_queryset(self, queryset):
+        return queryset.filter(user=self.request.user)
+    
+    #def as_object_permissions(self, )
+
+
 
         
 

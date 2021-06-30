@@ -9,7 +9,7 @@ urlpatterns = [
     path('login/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('logout/', LogoutView.as_view(), name='logout_view'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('dashboard/', UserViewSet.as_view(), name="dashboard")
+    path('dashboard/', UserViewSet.as_view({'post': 'get_user'}), name="dashboard"),
 
 ]
 

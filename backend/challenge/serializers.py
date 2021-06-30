@@ -3,8 +3,7 @@ from challenge.models import Challenge, UserChallenge
 from django.contrib.auth.models import User
 
 
-class AddChallengeSerializer(serializers.ModelSerializer):
-  
+class UserChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserChallenge
         fields = ('user', 'challenge', 'status')
@@ -15,7 +14,7 @@ class ChallengeSerializer(serializers.ModelSerializer):
         model = Challenge
         fields = ("__all__")
 
-class UserChallengeSerializer(serializers.ModelSerializer):
+class GetUserChallengeSerializer(serializers.ModelSerializer):
     title = serializers.CharField(source='challenge.title') #call serializer
     category = serializers.CharField(source='challenge.category')
     difficult = serializers.CharField(source='challenge.difficult')

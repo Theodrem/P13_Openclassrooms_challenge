@@ -6,6 +6,8 @@ import Logout from '../views/Logout'
 import Register from '../views/Register'
 import Profile from '../views/Profile'
 import Challenge from '../views/Challenge'
+import Actuality from '../views/Actuality'
+
 
 Vue.use(VueRouter)
 
@@ -34,7 +36,7 @@ export default new VueRouter({
             component: Register,
         },
         {
-            path: '/profile',
+            path: '/profile', //add argument 
             name: 'profile', 
             component: Profile,
         },
@@ -42,6 +44,13 @@ export default new VueRouter({
             path: '/challenge',
             name: 'challenge',
             component: Challenge
-        }
+        },
+        {
+            path: '/actuality',
+            name: 'actuality',
+            component: Actuality
+        },
+
+
     ]
 })

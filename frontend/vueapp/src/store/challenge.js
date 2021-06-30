@@ -19,16 +19,17 @@ const actions = {
         },
   async addChallenge (context, challenge) {
     const access = localStorage.getItem("access")
-    console.log(challenge.id)
-    await getAPI.post('/add_challenges/',{challenge: challenge.id, status: "En cours"}, { headers: { Authorization: `Bearer ${access}` }}  ) // add refresh
-     
+    try {
+      await getAPI.post('/add_challenges/',{challenge: challenge.id, status: "En cours"}, { headers: { Authorization: `Bearer ${access}` }}  ) // add refresh
+    } catch (e) {
+      console.log("L'objet existe déja")
+    }   
   }
   
 }
    
 const getters = {
   challenges: state => {
-    
     return state.list_challenges
   }
 }
