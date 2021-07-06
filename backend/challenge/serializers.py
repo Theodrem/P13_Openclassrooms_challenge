@@ -18,11 +18,11 @@ class GetUserChallengeSerializer(serializers.ModelSerializer):
     title = serializers.CharField(source='challenge.title') #call serializer
     category = serializers.CharField(source='challenge.category')
     difficult = serializers.CharField(source='challenge.difficult')
-    description = serializers.CharField(source='challenge.description')
+    icon = serializers.CharField(source='challenge.icon')
 
     class Meta:
         model = UserChallenge
-        fields = ("id", "title", "description", "difficult", "category", "status", "user_id")
+        fields = ("id", "title","difficult", "category", "status", "user_id", "icon", "challenge_id")
 
    
       

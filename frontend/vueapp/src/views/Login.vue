@@ -62,6 +62,9 @@
           password: this.password
         })
         .then(() => {
+          this.$store.dispatch('saveId', {
+            username: this.username
+          })
           this.$router.push({ name: 'index' })
         })
         .catch(err => {

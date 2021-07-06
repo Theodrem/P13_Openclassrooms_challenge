@@ -1,29 +1,33 @@
 <template>
-<div>
+<div id="body">
  <Navbar></Navbar>
-     <header class="masthead">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center justify-content-center text-center">
-                <div class="col-lg-10 align-self-end" id="async">
-                    <h1 class="title">Choisis un défi</h1>
-                </div>
-                      <div class="container cards d-flex">
-                        <div v-for="(data, index) in  challenges.results" :key="index">
-                                <div class="card border-danger mb-3" style="max-width: 18rem;">
-                                <div class="card-body text-danger">
-                                  <h1 v-if="data.category == 1"><i class="fas fa-basketball-ball"></i></h1>
-                                  <h1 v-if="data.category == 2"><i class="fas fa-user-friends"></i></h1>
-                                  <h4 class="card-title">{{ data.title }}</h4>
-                                  <p class="text-muted">{{ data.description }}</p>
-                                  <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm" v-on:click="get_id(data.id)">Ajouter</button>
-                              
-                                </div>
-                            </div>                
-                        </div>
-                    </div>
-            </div>
+ <div class="sub container align-center">
+    <div class="row">
+        <div class="col-md-12 title text-center">
+            <h1 id="liste" class="text-white" >Choisis des défis</h1>
         </div>
-    </header>
+    </div>
+    <div class="row list text-center">
+      <div class="col-md-4 text-center" v-for="(data, index) in  challenges.results" :key="index">
+            <div class="card" style="background: #FC7A5D;">
+              <div class="card-header">
+                  <h5>{{ data.category }}</h5>
+              </div>
+            <div class="card-body">
+                <div class="card-body">
+                    <h1 class="text-white"><i :class="data.icon"></i></h1>
+                    <h4 class="card-title">{{ data.title }}</h4>
+                    <h5 v-if="data.difficult==4" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
+                    <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
+                    <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
+                    <h5 v-if="data.difficult==1" style="color: #04F982"><i class="fas fa-star fa-lg"></i></h5>
+                    <button type="submit" class="btn btn-outline-light" v-on:click="get_id(data.id)">Ajouter</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+ </div>
     <Footers></Footers>
 </div>
 </template>
@@ -54,8 +58,7 @@ export default {
     methods: {
     get_id: function(data) { 
       this.id = data;
-      console.log(this.id);
-      
+    
       this.$store.dispatch('addChallenge', { 
         id: this.id
       })
@@ -84,9 +87,27 @@ header.masthead {
   
 }
 
-.cards {
-  margin-top: 50px;
+.card {
+    width: 20rem;
+    height: 28rem;
+    margin-top: 30px;
 }
+.sub {
+    
+    margin-top: 200px;
+}
+
+.list {
+    margin-top: 150px;
+}
+
+#body { 
+  background:  linear-gradient(to bottom, rgba(104, 105, 105, 0.8) 0%, rgba(102, 105, 105, 0.8) 100%), url("../assets/team.png");
+  background-position: center;
+  height: 50vh;
+}
+
+
 
 </style>
 

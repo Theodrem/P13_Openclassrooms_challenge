@@ -36,7 +36,7 @@ export default new VueRouter({
             component: Register,
         },
         {
-            path: '/profile', //add argument 
+            path: '/profile/:id', //add argument 
             name: 'profile', 
             component: Profile,
         },

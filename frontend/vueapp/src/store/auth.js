@@ -3,6 +3,7 @@ import { getAPI } from '../api/axios-api'
 const state = {
     accessToken: null,
     refreshToken: null,
+    id: null
  }
 const mutations = {
     UPDATE_STORAGE (state, { access, refresh}) {
@@ -16,6 +17,7 @@ const mutations = {
      state.refreshToken = null
      localStorage.removeItem("access");
      localStorage.removeItem("refresh");
+     localStorage.removeItem("id");
    }
  }
 const actions = {
@@ -23,7 +25,6 @@ const actions = {
      const access = localStorage.getItem("access")
      const refresh = localStorage.getItem("refresh")
      if (access != null) {
-        console.log("logout")
         await getAPI.post('/logout/',{refresh: refresh}, { headers: { Authorization: `Bearer ${access}` }}  ) // addd refresh
         context.commit('DESTROY_TOKEN')
      }
@@ -43,6 +44,14 @@ const actions = {
          })
      })
    },
+   async saveId (context, usercredentials) {
+    const access = localStorage.getItem("access")
+    console.log(access)
+    if (access != null) {
+       let response = await getAPI.post(`/profile/get_by_username/`,{username: usercredentials.username}, { headers: { Authorization: `Bearer ${access}` }}  ) 
+       localStorage.setItem("id", response.data.id)
+    }
+  },
    userRegister (context, data) {
     return new Promise((resolve, reject) => {
       getAPI.post('/register/', {
