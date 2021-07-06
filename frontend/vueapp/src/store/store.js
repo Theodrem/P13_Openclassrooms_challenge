@@ -13,7 +13,5 @@ export default new Vuex.Store({
     auth,
     challenge,
     profile
-
-  
   },
 })

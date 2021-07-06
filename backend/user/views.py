@@ -7,18 +7,21 @@ from rest_framework.decorators import action
 from .serializers import RegisterSerializer, UserSerializer, LogoutSerializer
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = (AllowAny,)
+class UserView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
+    queryset = User.objects.all()
 
-    def get_user(self, request):
-        data = request.data
+    @action(methods=['post'], detail=False)
+    def get_by_username(self, request):
         try:
-            user = User.objects.get(username=data["username"])
+            user = User.objects.get(username=request.data['username'])
             serializer = UserSerializer(user)
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response(status=rest_status.HTTP_404_NOT_FOUND)
+    
+         
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()

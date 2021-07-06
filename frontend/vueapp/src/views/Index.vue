@@ -8,7 +8,7 @@
                     <h1 class="title text-uppercase text-white"><b>Gloot</b></h1>
                     <h3 class="text-white">Réalise des défis quotidien et sors de ta routine.</h3>
                     <button class="btn btn-outline-dark btn-lg" v-if="token==null"><router-link :to = "{ name:'login' }" class="text-white text-decoration-none">LET'S GO</router-link></button>
-                    <button class="btn btn-outline-dark btn-lg" v-if="token!=null"><router-link :to = "{ name:'index' }" class="text-white text-decoration-none">LET'S GO</router-link></button>
+                    <button class="btn btn-outline-dark btn-lg" v-if="token!=null"><router-link :to = "{ name:'challenge' }" class="text-white text-decoration-none">LET'S GO</router-link></button>
                 </div>
                 <section class="page-section" id="services">
             </section>

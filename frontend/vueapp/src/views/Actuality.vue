@@ -37,12 +37,13 @@
     },
     methods: {
       search () { 
-      
         this.$store.dispatch('findUser', {
           username: this.username,
         })
         .then(() => {
-          this.$router.push({ name: 'profile' })
+          const user_search = localStorage.getItem("user_search")
+          console.log(user_search)
+          this.$router.push({ name:'profile', params: {id: user_search}})
         })
         .catch(err => {
           console.log(err)
