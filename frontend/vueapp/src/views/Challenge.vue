@@ -41,7 +41,7 @@ export default {
     name: 'Index',
     data () {
       return {
-        id: null
+        id: null,
       }
      },
      components: {

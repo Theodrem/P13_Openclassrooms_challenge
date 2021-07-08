@@ -7,8 +7,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item" v-if="token==null"><router-link :to = "{ name:'login' }" class="nav-link">Login</router-link></li>
-        <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'logout' }" class="nav-link">Logout</router-link></li>
+        <li class="nav-item" v-if="token==null"><router-link :to = "{ name:'login' }" class="nav-link">Connexion</router-link></li>
+        <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'logout' }" class="nav-link">Déconnexion</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'profile', params: {id: user_id}}" class="nav-link">Mon compte</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'challenge' }" class="nav-link">Défis</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'actuality' }" class="nav-link">Actus</router-link></li>

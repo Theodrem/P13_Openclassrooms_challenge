@@ -48,8 +48,9 @@ const actions = {
     const access = localStorage.getItem("access")
     console.log(access)
     if (access != null) {
-       let response = await getAPI.post(`/profile/get_by_username/`,{username: usercredentials.username}, { headers: { Authorization: `Bearer ${access}` }}  ) 
-       localStorage.setItem("id", response.data.id)
+      let response = await getAPI.get(`/profile/?username=${usercredentials.username}`, { headers: { Authorization: `Bearer ${access}` }}  )  
+      localStorage.setItem("id", response.data.results[0].id)
+      console.log(localStorage.getItem("id"))
     }
   },
    userRegister (context, data) {

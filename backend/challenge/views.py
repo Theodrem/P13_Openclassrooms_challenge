@@ -8,9 +8,9 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, I
 from rest_framework import status 
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
-from django.shortcuts import get_object_or_404
+from django_filters import rest_framework as filters
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from django.db.models import Count
 
 
@@ -28,8 +28,17 @@ class UserChallengePermission(permissions.BasePermission):
 
         return user_challenge.user == request.user
     
-        
+class UserChallengeFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name="name", lookup_expr='icontains')
+    id = filters.NumberFilter(field_name="user_id")
+
+    class Meta:
+        model = UserChallenge
+        fields = ['name',  'user_id']
+
 class UserChallengeView(viewsets.ModelViewSet):
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = UserChallengeFilter
     permission_classes = (IsAuthenticated, UserChallengePermission)
     queryset = UserChallenge.objects.all()
 
@@ -37,25 +46,17 @@ class UserChallengeView(viewsets.ModelViewSet):
         if self.action in ["list", "detail", "user", "best_player"]:
             return GetUserChallengeSerializer
         return UserChallengeSerializer
-    
-    @action(methods=['get'], detail=False, url_path=r'user/(?P<id>\d+)')
-    def user(self, request, id):
-        queryset = UserChallenge.objects.all().filter(user=id)
-        serializer = GetUserChallengeSerializer(queryset, many=True)
-        return Response(serializer.data)
 
-    @action(methods=['get'], detail=False)
-    def best_player(self, request):
-        queryset = UserChallenge.objects.filter(status="validé").order_by("challenge_id")
-        serializer = GetUserChallengeSerializer(queryset, many=True)
-        return Response(serializer.data)
+    
+
+   
+    
+
+
         
 
-    #def filter_queryset
-    
-        
-    
 
+ 
 
 
         
