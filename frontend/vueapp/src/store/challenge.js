@@ -1,8 +1,7 @@
 import { getAPI } from '../api/axios-api'
 
 const state = {
-    list_challenges: [],
-    challenge_id: "ss"
+    list_challenges: []
  }
 
 const actions = {

@@ -3,14 +3,81 @@
 <Navbar></Navbar>
  <div class="sub container align-center">
     <div class="row">
-        <div class="col-md-12 title text-center" id="header">
+        <div class="col-md-12 title text-center text-white" id="header">
             <img src="../assets/user-profile.png" alt="" id="profile">
             <h1 class="title text-uppercase">{{ infosUser.username }}</h1>
-            <h4 class="title">{{ infosUser.email }}</h4> 
-            <h4>Défi validé: {{ ChallengeUser.length }}</h4>
+            <h4 class="title">{{ infosUser.email }}</h4>
         </div>
     </div>
-    <div class="row list text-center">
+       <div class="row sections">
+          <!-- Earnings (Monthly) Card Example -->
+          <div class="col-md-4">
+              <div class="card mb-3 text-white" style="background: #5D69FC">
+                <div class="card-header"><h3>Défi validé</h3></div>
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <table class="table">
+                          <tbody  v-for="(data, index) in  ChallengeUser" :key="index" >
+                            <tr v-if="data.status == 'Validé'">
+                              <td class="text-white"><h5>{{ data.title }}</h5></td>
+                              <td class="text-white"><h5><i :class="data.icon"></i></h5></td>
+                            </tr>
+                          </tbody>
+                      </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+           <div class="col-md-4">
+              <div class="card mb-3 text-white" style="background: #FC7A5D;">
+                <div class="card-header"><h3>Défi En cours</h3></div>
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <table class="table">
+                          <tbody  v-for="(data, index) in  ChallengeUser" :key="index" >
+                            <tr v-if="data.status == 'En cours'">
+                              <td class="text-white"><h5>{{ data.title }}</h5></td>
+                              <td class="text-white"><h5><i :class="data.icon"></i></h5></td> 
+                            </tr>
+                          </tbody>
+                      </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+           <div class="col-md-4">
+              <div class="card mb-3 text-white" style="background: #9A1BBC">
+                <div class="card-header"><h3>Groupes</h3></div>
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                       <table class="table">
+                          <tbody  v-for="(data, index) in  groups.results" :key="index">
+                            <tr v-if="infosUser.groups.includes(data.id)">
+                              <td class="text-white" ><h5>{{ data.name }}</h5></td>
+                            </tr>
+                          </tbody>
+                          <tfoot v-if="infosUser.id==id_current_user">
+                            <tr>
+                              <td>
+                            <form class="row g-3" v-on:submit.prevent="add_group">
+                                <div class="col-auto">
+                                  <input class="form-control mb-2 mr-sm-2" placeholder="Nom du groupe" name="name_group" v-model="name_group">
+                                </div>
+                                <div class="col-auto">
+                                  <button type="submit" class="btn btn-primary "><i class="fas fa-plus"></i> Groupe</button>
+                                </div>
+                            </form> 
+                              </td>
+                            </tr>
+                          </tfoot>
+                      </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+     </div>
+
+    <div class="row list text-center" v-if="infosUser.id==id_current_user" >
       <div class="col-md-4 text-center" v-for="(data, index) in  ChallengeUser" :key="index">
             <div class="card" style="background: #FC7A5D;">
               <div class="card-header">
@@ -24,8 +91,8 @@
                     <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
                     <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
                     <h5 v-if="data.difficult==1" style="color: #04F982"><i class="fas fa-star fa-lg"></i></h5>
-                    <button v-if="infosUser.id==id_current_user" type="submit" class="btn btn-outline-success" v-on:click="get_id(data, valid)">Valider</button>
-                    <button v-if="infosUser.id==id_current_user" type="submit" class="btn btn-outline-danger" v-on:click="get_id(data, cancel)" id="give-up">Annuler</button>
+                    <button type="submit" class="btn btn-outline-success" v-on:click="get_id(data, valid)">Valider</button>
+                    <button type="submit" class="btn btn-outline-danger" v-on:click="get_id(data, cancel)" id="give-up">Annuler</button>
                 </div>
             </div>
           </div>
@@ -48,7 +115,8 @@ export default {
           APIData: [],
           id_current_user: localStorage.getItem('id'),
           valid: "Validé",
-          cancel: "Annulé"
+          cancel: "Annulé",
+          name_group: null
         }
     },
     components: {
@@ -58,6 +126,7 @@ export default {
     computed: {
       ...mapGetters(['infosUser']),
       ...mapGetters(['ChallengeUser']),
+      ...mapGetters(['groups']),
     
     },
     mounted () {
@@ -68,26 +137,32 @@ export default {
         this.$store.dispatch('getUserChallenge', {
             id: this.$router.currentRoute.params.id
         })
+        this.$store.dispatch('getUserGroups')
     },
     methods: {
       get_id (data, state) { 
-        console.log(state)
         this.$store.dispatch("update_challenge", {
           user_challenge: data,
           state: state,
           
         })
+      },
+      add_group () {
+        this.$store.dispatch("addGroup", {
+          group: this.name_group
+        })
+       
       }
+      
     }
 }
 </script>
 
 <style scoped>
 h1 {
-      font-size: 5em;
+      font-size: 3em;
     }
 button {
-  margin-top: 30px;
   margin-left: 20px;
 }
 
@@ -106,13 +181,11 @@ header.masthead {
 }
 
 .card {
-    width: 20rem;
-    height: 28rem;
     margin-top: 30px;
 }
 .sub {
     
-    margin-top: 200px;
+    margin-top: 100px;
 }
 
 .list {
@@ -120,7 +193,7 @@ header.masthead {
 }
 
 #body { 
-  background:  linear-gradient(to bottom, rgba(104, 105, 105, 0.8) 0%, rgba(102, 105, 105, 0.8) 100%), url("../assets/team.png");
+  background:  linear-gradient(to bottom, rgba(128, 7, 7, 0.8) 0%, #201d1dcc 100%), url("../assets/paris.jpg");
   background-position: center;
   height: 50vh;
 }
@@ -130,11 +203,9 @@ header.masthead {
   width: 150px;
 }
 
-#header {
-    background: #fff;
-    padding: 4rem 1rem 4rem 1rem;
-    box-shadow: 0 0 5px 5px rgba(0,0,0, 0.5);
-    width: 400px;
+.sections {
+  margin-top: 100px;
 }
+
 
 </style>

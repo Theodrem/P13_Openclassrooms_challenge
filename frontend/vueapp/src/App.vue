@@ -41,6 +41,9 @@ export default {
   button {
     font-family: "Montserrat";
   }
+  td {
+    font-family: "Montserrat";
+  }
 
 
 

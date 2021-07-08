@@ -1,9 +1,10 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import RefreshToken
 from rest_framework_simplejwt.views import TokenError
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -60,5 +61,13 @@ class LogoutSerializer(serializers.Serializer):
             RefreshToken(self.token).blacklist()
         except TokenError:
             self.fail("bad_token")
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('__all__')
+
+
 
 

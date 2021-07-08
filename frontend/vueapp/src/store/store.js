@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import auth from './auth'
 import challenge from './challenge'
 import profile from './profile'
+import group from './group'
 
 
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     challenge,
-    profile
+    profile,
+    group
   },
 })

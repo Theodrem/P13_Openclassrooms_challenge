@@ -1,10 +1,11 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
-from user.views import RegisterView, LogoutView, UserView
+from user.views import RegisterView, LogoutView, UserView, GroupView
 from rest_framework import routers
 
 router = routers.SimpleRouter()
-router.register(r'profile', UserView)
+router.register(r'profile', UserView),
+router.register(r'group', GroupView)
 
 
 urlpatterns = [

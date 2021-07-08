@@ -6,7 +6,10 @@ from django.contrib.auth.models import User
 class UserChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserChallenge
-        fields = ('user', 'challenge', 'status')
+        fields = ('user', 'challenge', 'status', 'user_id')
+
+        def get_user_count(self, obj):
+            return obj.user_id.count()
     
 
 class ChallengeSerializer(serializers.ModelSerializer):
@@ -22,7 +25,7 @@ class GetUserChallengeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserChallenge
-        fields = ("id", "title","difficult", "category", "status", "user_id", "icon", "challenge_id")
+        fields = ("id", "title","difficult", "category", "status", "user_id", "icon", "challenge_id", )
 
    
       
