@@ -7,6 +7,7 @@ import Register from '../views/Register'
 import Profile from '../views/Profile'
 import Challenge from '../views/Challenge'
 import Actuality from '../views/Actuality'
+import Group from '../views/Group'
 
 
 Vue.use(VueRouter)
@@ -49,6 +50,11 @@ export default new VueRouter({
             path: '/actuality',
             name: 'actuality',
             component: Actuality
+        },
+        {
+        path: '/group/:id',
+        name: 'group',
+        component: Group
         },
 
 

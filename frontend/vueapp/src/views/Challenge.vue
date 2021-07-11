@@ -20,7 +20,7 @@
                     <h5 v-if="data.difficult==4" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
                     <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
                     <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
-                    <h5 v-if="data.difficult==1" style="color: #04F982"><i class="fas fa-star fa-lg"></i></h5>
+                    <h5 v-if="data.difficult==1" style="scolor: #04F982"><i class="fas fa-star fa-lg"></i></h5>
                     <button type="submit" class="btn btn-outline-light" v-on:click="get_id(data.id)">Ajouter</button>
                 </div>
             </div>

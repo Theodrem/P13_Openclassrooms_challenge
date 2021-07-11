@@ -4,6 +4,7 @@ import auth from './auth'
 import challenge from './challenge'
 import profile from './profile'
 import group from './group'
+import user from './user'
 
 
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     auth,
     challenge,
     profile,
-    group
+    group,
+    user
   },
 })
