@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
     'django_filters',
-    'django_rest_passwordreset'
+    'django_rest_passwordreset',
+ 
 ]
 
 
@@ -159,3 +160,11 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
+
+DJANGO_REST_RESETPASSWORD_TOKEN_CONFIG = {
+    "CLASS": "django_rest_resetpassword.tokens.RandomStringTokenGenerator",
+    "OPTIONS": {
+        "min_length": 20,
+        "max_length": 30
+    }
+}
