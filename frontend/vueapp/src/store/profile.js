@@ -6,12 +6,7 @@ const state = {
  }
 
 const actions = {
-  async findUser(context, user) {
-    const access = localStorage.getItem("access")
-    let response = await getAPI.get(`/profile/?username=${user.username}`, { headers: { Authorization: `Bearer ${access}` }}  )  
-    localStorage.setItem("user_search", response.data.id)
-  },
-
+  
   async getProfile(context, user) {
     const access = localStorage.getItem("access");
     let response = await getAPI.get(`/profile/${user.id}/`, { headers: { Authorization: `Bearer ${access}` }}  ) 
@@ -20,14 +15,12 @@ const actions = {
   async getUserChallenge(context, user) {
     const access = localStorage.getItem("access");
     let response = await getAPI.get(`users-challenges?user_id=${user.id}`, { headers: { Authorization: `Bearer ${access}` }}  ) 
-    console.log(response.data.results)
     state.list_challenges = response.data.results
-  }
-  
+  },
 }
    
 const getters = {
-  infosUser: state => {
+  InfosUser: state => {
     return state.info_user
   },
   ChallengeUser: state => {

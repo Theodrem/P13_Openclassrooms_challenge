@@ -17,11 +17,33 @@
             </div>
         </div>
     </header> 
+    <div class="container text-center" style="margin-top:50px">
+        <div class="row text-center">
+          <div class="col-md-12 text-center">
+              <div class="row no-gutters text-center"  v-if="ListUsers.length != []">
+                  <table class="table table-success table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Utilisateurs</th>
+                      </tr>
+                    </thead>
+                      <tbody  v-for="(data, index) in  ListUsers.results" :key="index" >
+                          <tr>
+                              <td><router-link :to = "{ name:'profile', params: {id: data.id}}" class="username">{{ data.username }}</router-link></td>
+                          </tr>
+                      </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>
+    </div>
+          
     <Footer></Footer>
 </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import Navbar from '../components/Navbar'
   import Footer from '../components/Footers'
   export default {
@@ -35,22 +57,17 @@
       Navbar,
       Footer
     },
+    computed: {
+      ...mapGetters(['ListUsers']),
+    },
     methods: {
       search () { 
-        this.$store.dispatch('findUser', {
+        this.$store.dispatch('getListUsers', {
           username: this.username,
         })
-        .then(() => {
-          const user_search = localStorage.getItem("user_search")
-          console.log(user_search)
-          this.$router.push({ name:'profile', params: {id: user_search}})
-        })
-        .catch(err => {
-          console.log(err)
-          this.incorrectAuth = true
-        })
-        }
+
       }
+    }
   }
 </script>
 
@@ -116,6 +133,15 @@ header.masthead {
 
 form {
     margin-top: 50px;
+}
+
+.username {
+  text-decoration: none;
+  color: black;
+}
+
+.username:hover {
+  font-weight: bold;
 }
 </style>
 

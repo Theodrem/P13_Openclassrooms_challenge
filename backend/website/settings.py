@@ -1,3 +1,4 @@
+  
 import os
 from pathlib import Path
 from datetime import timedelta
@@ -33,7 +34,8 @@ INSTALLED_APPS = [
     'rest_framework',
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
-     'django_filters',
+    'django_filters',
+    'django_rest_passwordreset'
 ]
 
 
@@ -156,3 +158,4 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+

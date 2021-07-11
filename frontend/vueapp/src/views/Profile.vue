@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-md-12 title text-center text-white" id="header">
             <img src="../assets/user-profile.png" alt="" id="profile">
-            <h1 class="title text-uppercase">{{ infosUser.username }}</h1>
-            <h4 class="title">{{ infosUser.email }}</h4>
+            <h1 class="title text-uppercase">{{ InfosUser.username }}</h1>
+            <h4 class="title">{{ InfosUser.email }}</h4>
         </div>
     </div>
        <div class="row sections">
@@ -51,12 +51,12 @@
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
                        <table class="table">
-                          <tbody  v-for="(data, index) in  groups.results" :key="index">
-                            <tr v-if="infosUser.groups.includes(data.id)">
-                              <td class="text-white" ><h5>{{ data.name }}</h5></td>
+                          <tbody  v-for="(data, index) in Groups.results" :key="index">
+                            <tr v-if="InfosUser.groups.includes(data.id)">
+                              <td class="text-white" ><router-link :to = "{ name:'group', params: {id: data.id}}" class="group_name">{{ data.name }}</router-link></td>
                             </tr>
                           </tbody>
-                          <tfoot v-if="infosUser.id==id_current_user">
+                          <tfoot v-if="InfosUser.id==id_current_user">
                             <tr>
                               <td>
                             <form class="row g-3" v-on:submit.prevent="add_group">
@@ -77,26 +77,28 @@
           </div>
      </div>
 
-    <div class="row list text-center" v-if="infosUser.id==id_current_user" >
-      <div class="col-md-4 text-center" v-for="(data, index) in  ChallengeUser" :key="index">
-            <div class="card" style="background: #FC7A5D;">
+    <div class="row list text-center " v-if="InfosUser.id==id_current_user" >
+      <div v-for="(data, index) in  ChallengeUser" :key="index">
+        <div v-if="data.status=='En cours'" class="">
+            <div class="card" style="background: #FC7A5D;" v-if="data.status=='En cours'">
               <div class="card-header">
                   <h5>{{ data.category }}</h5>
               </div>
-            <div class="card-body">
-                <div class="card-body">
-                    <h1 class="text-white"><i :class="data.icon"></i></h1>
-                    <h4 class="card-title">{{ data.title }}</h4>
-                    <h5 v-if="data.difficult==4" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
-                    <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
-                    <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
-                    <h5 v-if="data.difficult==1" style="color: #04F982"><i class="fas fa-star fa-lg"></i></h5>
-                    <button type="submit" class="btn btn-outline-success" v-on:click="get_id(data, valid)">Valider</button>
-                    <button type="submit" class="btn btn-outline-danger" v-on:click="get_id(data, cancel)" id="give-up">Annuler</button>
-                </div>
+              <div class="card-body">
+                  <div class="card-body">
+                      <h1 class="text-white"><i :class="data.icon"></i></h1>
+                      <h4 class="card-title">{{ data.title }}</h4>
+                      <h5 v-if="data.difficult==4" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
+                      <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
+                      <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
+                      <h5 v-if="data.difficult==1" style="color: #04F982"><i class="fas fa-star fa-lg"></i></h5>
+                      <button type="submit" class="btn btn-outline-success" v-on:click="get_id(data, valid)">Valider</button>
+                      <button type="submit" class="btn btn-outline-danger" v-on:click="get_id(data, cancel)" id="give-up">Annuler</button>
+                  </div>
+              </div>
             </div>
-          </div>
         </div>
+      </div>
     </div>
  </div>
 <Footers></Footers>
@@ -124,20 +126,19 @@ export default {
       Footers,
     },
     computed: {
-      ...mapGetters(['infosUser']),
+      ...mapGetters(['InfosUser']),
       ...mapGetters(['ChallengeUser']),
-      ...mapGetters(['groups']),
+      ...mapGetters(['Groups']),
     
     },
     mounted () {
-         console.log(this.id_current_user);
          this.$store.dispatch('getProfile', {
             id: this.$router.currentRoute.params.id
         })
         this.$store.dispatch('getUserChallenge', {
             id: this.$router.currentRoute.params.id
         })
-        this.$store.dispatch('getUserGroups')
+        this.$store.dispatch('getGroups')
     },
     methods: {
       get_id (data, state) { 
@@ -205,6 +206,15 @@ header.masthead {
 
 .sections {
   margin-top: 100px;
+}
+
+.group_name {
+  text-decoration: none;
+  color: black;
+}
+
+.group_name:hover{
+  font-weight: bold;
 }
 
 
