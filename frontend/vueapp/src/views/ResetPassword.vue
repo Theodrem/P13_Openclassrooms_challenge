@@ -15,7 +15,7 @@
                         <div class="col-lg-10 col-xl-7 mx-auto">
                             <h3 class="display-4">Mot de passe oublié?</h3>
                             <p class="text-muted mb-4">Entre ton email.</p>
-                            <p v-if="incorrectAuth">L'email est incorrect.</p>
+                            <p v-if="MessageSend != null">{{ MessageSend }}</p>
                             <form v-on:submit.prevent="reset">
                               <div class="form-group">
                                 <input type="text" name="email" id="email" v-model="email" class="form-control" placeholder="Email*">
@@ -37,26 +37,28 @@
 <script>
   import Navbar from '../components/Navbar'
   import Footer from '../components/Footers'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'reset-password',
     data () {
       return {
         email: '',
-        incorrectAuth: false
       }
     },
     components: {
       Navbar,
       Footer
     },
+    computed: {
+      ...mapGetters(['MessageSend'])
+    },
     methods: {
-    reset () { 
-        this.$store.dispatch('postEmailReset', {
+    async reset () { 
+       this.$store.dispatch('postEmailReset', {
           email: this.email
-        })
+        }) 
+        } 
       }
-        
-    }
   }
 </script>
 

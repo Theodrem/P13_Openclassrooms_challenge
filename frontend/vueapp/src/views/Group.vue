@@ -94,19 +94,19 @@ export default {
     mounted () {
         this.$store.dispatch('getGroup', {
             id: this.$router.currentRoute.params.id
-        }),
+        });
         this.$store.dispatch('getMembersGroup', {
             id: this.$router.currentRoute.params.id
-        })
+        });
     },
     methods: {
-      search () { 
-        this.$store.dispatch('getListUsers', {
+      async search () { 
+        await this.$store.dispatch('getListUsers', {
           username: this.username,
         })
       },
-       add_user (user) { 
-        this.$store.dispatch('addMember', {
+      async add_user (user) { 
+        await this.$store.dispatch('addMember', {
           user: user,
           group: this.$router.currentRoute.params.id
         })

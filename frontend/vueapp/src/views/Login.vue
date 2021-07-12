@@ -15,7 +15,7 @@
                         <div class="col-lg-10 col-xl-7 mx-auto">
                             <h3 class="display-4">Bienvue à toi!</h3>
                             <p class="text-muted mb-4">Connecte pour réaliser de nouveaux défis.</p>
-                            <p v-if="incorrectAuth">Le nom d'utilisateur ne correspont avec le mot de passe.</p>
+                            <p v-if="Message != null">{{ Message }}</p>
                             <form v-on:submit.prevent="login">
                               <div class="form-group">
                                 <input type="text" name="username" id="user" v-model="username" class="form-control" placeholder="Nom d'utilisateur*">
@@ -43,6 +43,7 @@
 <script>
   import Navbar from '../components/Navbar'
   import Footer from '../components/Footers'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'login',
     data () {
@@ -56,9 +57,12 @@
       Navbar,
       Footer
     },
+    computed: {
+      ...mapGetters(['Message'])
+    },
     methods: {
-      login () { 
-        this.$store.dispatch('userLogin', { 
+      async login () { 
+        await this.$store.dispatch('userLogin', { 
           username: this.username,
           password: this.password
         })
@@ -66,13 +70,8 @@
           this.$store.dispatch('saveId', {
             username: this.username
           })
-          this.$router.push({ name: 'index' })
         })
-        .catch(err => {
-          console.log(err)
-          this.incorrectAuth = true
-        })
-        }
+      }
       }
   }
 </script>

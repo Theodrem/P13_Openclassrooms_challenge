@@ -31,6 +31,7 @@ class UserChallengePermission(permissions.BasePermission):
 class UserChallengeFilter(filters.FilterSet):
     name = filters.CharFilter(field_name="name", lookup_expr='icontains')
     id = filters.NumberFilter(field_name="user_id")
+    status = filters.CharFilter(field_name="status")
 
     class Meta:
         model = UserChallenge

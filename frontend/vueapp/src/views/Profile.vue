@@ -17,8 +17,8 @@
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
                           <table class="table">
-                          <tbody  v-for="(data, index) in  ChallengeUser" :key="index" >
-                            <tr v-if="data.status == 'Validé'">
+                          <tbody  v-for="(data, index) in  ValidateChallengeUser" :key="index" >
+                            <tr>
                               <td class="text-white"><h5>{{ data.title }}</h5></td>
                               <td class="text-white"><h5><i :class="data.icon"></i></h5></td>
                             </tr>
@@ -35,7 +35,7 @@
                       <div class="row no-gutters align-items-center">
                           <table class="table">
                           <tbody  v-for="(data, index) in  ChallengeUser" :key="index" >
-                            <tr v-if="data.status == 'En cours'">
+                            <tr>
                               <td class="text-white"><h5>{{ data.title }}</h5></td>
                               <td class="text-white"><h5><i :class="data.icon"></i></h5></td> 
                             </tr>
@@ -51,8 +51,8 @@
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
                        <table class="table">
-                          <tbody  v-for="(data, index) in Groups.results" :key="index">
-                            <tr v-if="InfosUser.groups.includes(data.id)">
+                          <tbody  v-for="(data, index) in Groups" :key="index">
+                            <tr>
                               <td class="text-white" ><router-link :to = "{ name:'group', params: {id: data.id}}" class="group_name">{{ data.name }}</router-link></td>
                             </tr>
                           </tbody>
@@ -79,8 +79,7 @@
 
     <div class="row list text-center " v-if="InfosUser.id==id_current_user" >
       <div v-for="(data, index) in  ChallengeUser" :key="index">
-        <div v-if="data.status=='En cours'" class="">
-            <div class="card" style="background: #FC7A5D;" v-if="data.status=='En cours'">
+            <div class="card" style="background: #FC7A5D;">
               <div class="card-header">
                   <h5>{{ data.category }}</h5>
               </div>
@@ -92,20 +91,18 @@
                       <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
                       <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
                       <h5 v-if="data.difficult==1" style="color: #04F982"><i class="fas fa-star fa-lg"></i></h5>
-                      <button type="submit" class="btn btn-outline-success" v-on:click="get_id(data, valid)">Valider</button>
-                      <button type="submit" class="btn btn-outline-danger" v-on:click="get_id(data, cancel)" id="give-up">Annuler</button>
+                      <button type="submit" class="btn btn-outline-success" v-on:click="update_challenge(data, valid)">Valider</button>
+                      <button type="submit" class="btn btn-outline-danger" v-on:click="update_challenge(data, cancel)" id="give-up">Annuler</button>
                   </div>
               </div>
             </div>
         </div>
-      </div>
     </div>
  </div>
 <Footers></Footers>
 </div>
 </template>
 
-  >
 <script>
 import Navbar from '../components/Navbar'
 import Footers from '../components/Footers'
@@ -129,31 +126,39 @@ export default {
       ...mapGetters(['InfosUser']),
       ...mapGetters(['ChallengeUser']),
       ...mapGetters(['Groups']),
+      ...mapGetters(['ValidateChallengeUser'])
     
     },
     mounted () {
-         this.$store.dispatch('getProfile', {
+        this.$store.dispatch('getProfile', {
             id: this.$router.currentRoute.params.id
-        })
+        });
         this.$store.dispatch('getUserChallenge', {
             id: this.$router.currentRoute.params.id
-        })
-        this.$store.dispatch('getGroups')
+        });
+        this.$store.dispatch('getUserValidateChallenge', {
+            id: this.$router.currentRoute.params.id
+        });  
+        this.$store.dispatch('getUserGroups');
     },
     methods: {
-      get_id (data, state) { 
-        this.$store.dispatch("update_challenge", {
+      async update_challenge (data, state) { 
+        await this.$store.dispatch("update_challenge", {
           user_challenge: data,
-          state: state,
-          
-        })
+          state: state
+        });
       },
-      add_group () {
-        this.$store.dispatch("addGroup", {
+
+      async add_group () {
+        await this.$store.dispatch("addGroup", {
           group: this.name_group
-        })
-       
-      }
+        });
+        await this.$store.dispatch('addMember', {
+          user: localStorage.getItem("id"),
+          group: this.$store.getters.InfoGroup.id
+        });
+      },
+
       
     }
 }

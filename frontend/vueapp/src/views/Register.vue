@@ -15,9 +15,12 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10 col-xl-7 mx-auto">
-                            <h3 class="display-4">Bienvue à toi!</h3>
-                            <p class="text-muted mb-4">Inscrit toi pour réaliser de nouveaux défis.</p>
-                            <p v-if="incorrectAuth">Erreur</p>
+                            <h3 class="display-4">Inscrit toi!</h3>
+                            <p class="text-muted mb-4">Le mot de passe doit contenir 8 caractères au minimum.</p>
+                            <p class="text-muted mb-4">Le mot de passe ne doit pas contenir que des chiffres</p>
+                            <p class="text-muted mb-4">Evite les mots de passe trop commun</p>
+
+                            <p v-if="Message != null">{{ Message }}</p>
                             <form v-on:submit.prevent="register">
                                 <div class="form-group">
                                 <input type="text" name="username" id="user" v-model="username" class="form-control" placeholder="Nom d'utilisateur*">
@@ -58,6 +61,7 @@
 <script>
   import Navbar from '../components/Navbar'
   import Footer from '../components/Footers'
+  import { mapGetters } from 'vuex'
 
   export default {
     data () {
@@ -68,15 +72,18 @@
         email: '',
         password: '',
         password2: '',
-        incorrectAuth: false
+        
       }
     },
     components: {
       Navbar,
       Footer
     },
+    computed: {
+      ...mapGetters(['Message'])
+    },
     methods: {
-      register () { 
+      async register () {
         this.$store.dispatch('userRegister', {
           username: this.username,
           first_name: this.first_name,
@@ -84,13 +91,6 @@
           email: this.email,
           password: this.password,
           password2: this.password2,
-        })
-        .then(() => {
-          this.$router.push({ name: 'login' })
-        })
-        .catch(err => {
-          console.log(err)
-          this.incorrectAuth = true
         })
         }
       }

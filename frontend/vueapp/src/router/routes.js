@@ -10,7 +10,7 @@ import Actuality from '../views/Actuality'
 import Group from '../views/Group'
 import ResetPassword from '../views/ResetPassword'
 import ResetPasswordConfirm from '../views/ResetPasswordConfirm'
-
+import PageNotFound from '../views/PageNotFound'
 
 Vue.use(VueRouter)
 
@@ -68,6 +68,9 @@ export default new VueRouter({
         name: 'reset-password-confirm',
         component: ResetPasswordConfirm
         },
+        { path: "*",
+        name: 'page-not-found',
+        component: PageNotFound }
         
 
 

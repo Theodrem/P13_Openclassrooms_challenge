@@ -17,7 +17,7 @@
                             <p class="text-muted mb-4">Le mot de passe doit faire au moins 8 caractères</p>
                             <p class="text-muted mb-4">Ne doit pas être trop courant</p>
                             <p class="text-muted mb-4">Ne peut pas contenir que des chiffres</p>
-                            <p v-if="incorrectAuth">Le nom d'utilisateur ne correspont avec le mot de passe.</p>
+                            <p v-if="MessageReset != null">{{ MessageReset }}</p>
                             <form v-on:submit.prevent="send_password">
                               <div class="form-group">
                                 <input type="password" name="password1" id="password" v-model="password1" class="form-control" placeholder="Mot de passe*">
@@ -43,23 +43,25 @@
 <script>
   import Navbar from '../components/Navbar'
   import Footer from '../components/Footers'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'reset-password-confirm',
     data () {
       return {
         password1: '',
         password2: '',
-        incorrectAuth: false
       }
     },
     components: {
       Navbar,
       Footer
     },
-
+    computed: {
+      ...mapGetters(['MessageReset'])
+    },
     methods: {
-        send_password () {
-            this.$store.dispatch('resetPasswordConfirm', {
+        async send_password () {
+            await this.$store.dispatch('resetPasswordConfirm', {
             password1: this.password1,
             password2: this.password2,
             token: this.$router.currentRoute.params.token

@@ -31,7 +31,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Les Mots de passes ne sont pas identiques"})
+            raise serializers.ValidationError({"password": "The passwords doesn't matches"})
 
         return attrs
 
