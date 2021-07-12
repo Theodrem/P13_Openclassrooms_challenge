@@ -18,7 +18,7 @@ class ChallengeSerializer(serializers.ModelSerializer):
         fields = ("__all__")
 
 class GetUserChallengeSerializer(serializers.ModelSerializer):
-    title = serializers.CharField(source='challenge.title') #call serializer
+    title = serializers.CharField(source='challenge.title') 
     category = serializers.CharField(source='challenge.category')
     difficult = serializers.CharField(source='challenge.difficult')
     icon = serializers.CharField(source='challenge.icon')

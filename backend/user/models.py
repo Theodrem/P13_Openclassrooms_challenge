@@ -1,5 +1,7 @@
+from django.contrib.auth.models import Group, User
 from django.dispatch import receiver
-from django.urls import reverse
+from django.db import models
+from django.utils import timezone
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail  
 
@@ -19,3 +21,17 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         # to:
         [reset_password_token.user.email]
     )
+
+class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    published_date = models.DateTimeField(blank=True, null=True)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title
