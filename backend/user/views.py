@@ -38,7 +38,7 @@ class UserView(viewsets.ModelViewSet):
     def add_user_group(self, request):
         try:
             user = User.objects.get(id=request.data['user'])
-            group =Group.objects.get(id=request.data['group'])
+            group = Group.objects.get(id=request.data['group'])
             user.groups.add(group)
             serializer = UserSerializer(user)
             return Response(serializer.data)

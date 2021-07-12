@@ -13,20 +13,20 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10 col-xl-7 mx-auto">
-                            <h3 class="display-4">Bienvue à toi!</h3>
-                            <p class="text-muted mb-4">Connecte pour réaliser de nouveaux défis.</p>
-                            <p v-if="Message != null">{{ Message }}</p>
-                            <form v-on:submit.prevent="login">
+                            <h3 class="display-4">Nouveau mot de passe</h3>
+                            <p class="text-muted mb-4">Le mot de passe doit faire au moins 8 caractères</p>
+                            <p class="text-muted mb-4">Ne doit pas être trop courant</p>
+                            <p class="text-muted mb-4">Ne peut pas contenir que des chiffres</p>
+                            <p v-if="MessageReset != null">{{ MessageReset }}</p>
+                            <form v-on:submit.prevent="send_password">
                               <div class="form-group">
-                                <input type="text" name="username" id="user" v-model="username" class="form-control" placeholder="Nom d'utilisateur*">
+                                <input type="password" name="password1" id="password" v-model="password1" class="form-control" placeholder="Mot de passe*">
                               </div>
                               <div class="form-group">
-                                <input type="password" name="password" id="pass" v-model="password" class="form-control" placeholder="Mot de passe*">
+                                <input type="password" name="password2" id="pass" v-model="password2" class="form-control" placeholder="Confirmation mot de passe*">
                               </div>
                               <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm">Envoyer</button>
                             </form>
-                            <p class="text-muted">T'as pas de compte?<b><router-link :to = "{ name:'register' }" class="text-decoration-none">Inscrit toi.</router-link></b></p>
-                            <p><b><router-link :to = "{ name:'reset-password' }" class="text-decoration-none">Mot de passe oublié?</router-link></b></p>
                         </div>
                     </div>
                 </div><!-- End -->
@@ -45,12 +45,11 @@
   import Footer from '../components/Footers'
   import { mapGetters } from 'vuex'
   export default {
-    name: 'login',
+    name: 'reset-password-confirm',
     data () {
       return {
-        username: '',
-        password: '',
-        incorrectAuth: false
+        password1: '',
+        password2: '',
       }
     },
     components: {
@@ -58,21 +57,19 @@
       Footer
     },
     computed: {
-      ...mapGetters(['Message'])
+      ...mapGetters(['MessageReset'])
     },
     methods: {
-      async login () { 
-        await this.$store.dispatch('userLogin', { 
-          username: this.username,
-          password: this.password
+        async send_password () {
+            await this.$store.dispatch('resetPasswordConfirm', {
+            password1: this.password1,
+            password2: this.password2,
+            token: this.$router.currentRoute.params.token
         })
-        .then(() => {
-          this.$store.dispatch('saveId', {
-            username: this.username
-          })
-        })
+        }
+        
       }
-      }
+      
   }
 </script>
 

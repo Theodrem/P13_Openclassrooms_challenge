@@ -13,27 +13,21 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10 col-xl-7 mx-auto">
-                            <h3 class="display-4">Bienvue à toi!</h3>
-                            <p class="text-muted mb-4">Connecte pour réaliser de nouveaux défis.</p>
-                            <p v-if="Message != null">{{ Message }}</p>
-                            <form v-on:submit.prevent="login">
+                            <h3 class="display-4">Mot de passe oublié?</h3>
+                            <p class="text-muted mb-4">Entre ton email.</p>
+                            <p v-if="MessageSend != null">{{ MessageSend }}</p>
+                            <form v-on:submit.prevent="reset">
                               <div class="form-group">
-                                <input type="text" name="username" id="user" v-model="username" class="form-control" placeholder="Nom d'utilisateur*">
-                              </div>
-                              <div class="form-group">
-                                <input type="password" name="password" id="pass" v-model="password" class="form-control" placeholder="Mot de passe*">
+                                <input type="text" name="email" id="email" v-model="email" class="form-control" placeholder="Email*">
                               </div>
                               <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm">Envoyer</button>
                             </form>
-                            <p class="text-muted">T'as pas de compte?<b><router-link :to = "{ name:'register' }" class="text-decoration-none">Inscrit toi.</router-link></b></p>
-                            <p><b><router-link :to = "{ name:'reset-password' }" class="text-decoration-none">Mot de passe oublié?</router-link></b></p>
+                            <p><b><router-link :to = "{ name:'login' }" class="text-decoration-none">Connecte toi</router-link></b></p>
                         </div>
                     </div>
                 </div><!-- End -->
-                
             </div>
         </div><!-- End -->
-
     </div>
   </div>
 <Footer></Footer>
@@ -45,12 +39,10 @@
   import Footer from '../components/Footers'
   import { mapGetters } from 'vuex'
   export default {
-    name: 'login',
+    name: 'reset-password',
     data () {
       return {
-        username: '',
-        password: '',
-        incorrectAuth: false
+        email: '',
       }
     },
     components: {
@@ -58,20 +50,14 @@
       Footer
     },
     computed: {
-      ...mapGetters(['Message'])
+      ...mapGetters(['MessageSend'])
     },
     methods: {
-      async login () { 
-        await this.$store.dispatch('userLogin', { 
-          username: this.username,
-          password: this.password
-        })
-        .then(() => {
-          this.$store.dispatch('saveId', {
-            username: this.username
-          })
-        })
-      }
+    async reset () { 
+       this.$store.dispatch('postEmailReset', {
+          email: this.email
+        }) 
+        } 
       }
   }
 </script>

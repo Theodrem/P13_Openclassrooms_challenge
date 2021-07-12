@@ -8,7 +8,9 @@ import Profile from '../views/Profile'
 import Challenge from '../views/Challenge'
 import Actuality from '../views/Actuality'
 import Group from '../views/Group'
-
+import ResetPassword from '../views/ResetPassword'
+import ResetPasswordConfirm from '../views/ResetPasswordConfirm'
+import PageNotFound from '../views/PageNotFound'
 
 Vue.use(VueRouter)
 
@@ -37,7 +39,7 @@ export default new VueRouter({
             component: Register,
         },
         {
-            path: '/profile/:id', //add argument 
+            path: '/profile/:id',  
             name: 'profile', 
             component: Profile,
         },
@@ -56,6 +58,21 @@ export default new VueRouter({
         name: 'group',
         component: Group
         },
+        {
+        path: '/reset-password/',
+        name: 'reset-password',
+        component: ResetPassword
+        },
+        {
+        path: '/reset-password-confirm/:token',
+        name: 'reset-password-confirm',
+        component: ResetPasswordConfirm
+        },
+        { path: "*",
+        name: 'page-not-found',
+        component: PageNotFound }
+        
+
 
 
     ]
