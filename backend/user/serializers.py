@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import TokenError
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
+from user.models import Post
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -68,16 +69,15 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = ('__all__')
 
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('__all__')
 
-class ChangePasswordSerializer(serializers.Serializer):
-    model = User
-
-    """
-    Serializer for password change endpoint.
-    """
-    old_password = serializers.CharField(required=True)
-    new_password = serializers.CharField(required=True)
-
-
+class GetPostSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='author.username') 
+    class Meta:
+        model = Post
+        fields = ('text', 'username' )        
 
 

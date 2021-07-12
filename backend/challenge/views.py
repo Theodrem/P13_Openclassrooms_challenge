@@ -44,7 +44,7 @@ class UserChallengeView(viewsets.ModelViewSet):
     queryset = UserChallenge.objects.all()
 
     def get_serializer_class(self):
-        if self.action in ["list", "detail", "user", "best_player"]:
+        if self.action in ["list", "detail", "user"]:
             return GetUserChallengeSerializer
         return UserChallengeSerializer
 

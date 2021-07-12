@@ -5,7 +5,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework import status as rest_status
 from rest_framework.decorators import action
 from django_filters import rest_framework as filters
-from .serializers import RegisterSerializer, UserSerializer, LogoutSerializer, GroupSerializer, ChangePasswordSerializer
+from .serializers import RegisterSerializer, UserSerializer, LogoutSerializer, GroupSerializer, PostSerializer, GetPostSerializer
+from .models import Post
 
 
 class UserFilter(filters.FilterSet):
@@ -25,6 +26,15 @@ class GroupFilter(filters.FilterSet):
     class Meta:
         model = Group
         fields = ['name',  'id']
+
+class PostFilter(filters.FilterSet):
+    group = filters.NumberFilter(field_name="group")
+    id = filters.NumberFilter(field_name="id")
+
+    class Meta:
+        model = Post
+        fields = ['group',  'id']
+
 
 
 class UserView(viewsets.ModelViewSet):
@@ -74,39 +84,14 @@ class GroupView(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
-class ChangePasswordView(generics.UpdateAPIView):
-    """
-    An endpoint for changing password.
-    """
-    serializer_class = ChangePasswordSerializer
-    model = User
+class PostView(viewsets.ModelViewSet):
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = PostFilter
     permission_classes = (IsAuthenticated,)
+    queryset = Post.objects.all()
 
-    def get_object(self, queryset=None):
-        obj = self.request.user
-        return obj
-
-    def update(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        serializer = self.get_serializer(data=request.data)
-
-        if serializer.is_valid():
-            # Check old password
-            if not self.object.check_password(serializer.data.get("old_password")):
-                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
-            # set_password also hashes the password that the user will get
-            self.object.set_password(serializer.data.get("new_password"))
-            self.object.save()
-            response = {
-                'status': 'success',
-                'code': status.HTTP_200_OK,
-                'message': 'Password updated successfully',
-                'data': []
-            }
-
-            return Response(response)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    
-
+    def get_serializer_class(self):
+        if self.action in ["list", "detail"]:
+            return GetPostSerializer
+        return PostSerializer
+        

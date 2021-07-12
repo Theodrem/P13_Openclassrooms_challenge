@@ -10,6 +10,20 @@
         </div>
     </div>
     <div class="row sections">
+        <div class="col-md-8">
+              <div class="card">
+                      <div class="card-header"> 
+                      <h4>Discute sur le groupe</h4> 
+                      </div>
+                      <div class="card-body">
+                          <form v-on:submit.prevent="add_post">
+                            <label class="sr-only" for="message">message</label>
+                            <textarea class="form-control" id="message" rows="3" placeholder="Hello!" v-model="post" name="post"></textarea>
+                            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Envoyer</button>
+                          </form>
+                      </div>
+                </div>
+          </div>
           <!-- Earnings (Monthly) Card Example -->
           <div class="col-md-4">
               <div class="card mb-3 text-white" style="background: #5D69FC">
@@ -17,29 +31,30 @@
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
                           <table class="table">
-                          <tbody  v-for="(data, index) in Members" :key="index">
-                            <tr>
-                              <td class="text-white"><router-link :to = "{ name:'profile', params: {id: data.id}}" class="username">{{ data.username }}</router-link></td>
-                            </tr>
-                          </tbody>
-                          <tfoot>
-                            <tr>
-                              <td>
-                            <form class="row g-3" v-on:submit.prevent="search">
-                                <div class="col-auto">
-                                  <input class="form-control mb-2 mr-sm-2" placeholder="Utilisateur" name="username" v-model="username">
-                                </div>
-                                <div class="col-auto">
-                                  <button type="submit" class="btn btn-primary "><i class="fas fa-plus"></i> Joueur</button>
-                                </div>
-                            </form> 
-                              </td>
-                            </tr>
-                          </tfoot>
+                            <tbody  v-for="(data, index) in Members" :key="index">
+                              <tr>
+                                <td class="text-white"><router-link :to = "{ name:'profile', params: {id: data.id}}" class="username">{{ data.username }}</router-link></td>
+                              </tr>
+                            </tbody>
+                            <tfoot>
+                              <tr>
+                                <td>
+                              <form class="row g-3" v-on:submit.prevent="search">
+                                  <div class="col-auto">
+                                    <input class="form-control mb-2 mr-sm-2" placeholder="Utilisateur" name="username" v-model="username">
+                                  </div>
+                                  <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary "><i class="fas fa-plus"></i> Joueur</button>
+                                  </div>
+                              </form> 
+                                </td>
+                              </tr>
+                            </tfoot>
                       </table>
                       </div>
                   </div>
               </div>
+          </div>
           </div>
     </div>
     <div class="container text-center" style="margin-top:50px">
@@ -63,6 +78,17 @@
             </div>
           </div>
         </div>
+    <div class="row" v-for="(data, index) in ListPostsGroup" :key="index">
+    <div class="col-md-12">
+              <div class="card text-left">
+                <div class="card-header text-left"><h6 class="text-capitalize">{{ data.username }}</h6></div>
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <h4>{{ data.text }}</h4>  
+                      </div>
+                  </div>
+              </div>
+          </div>
     </div>
  </div>
 <Footers></Footers>
@@ -79,7 +105,8 @@ export default {
       return {
           APIData: [],
           current_user: localStorage.getItem("id"),
-          username: null
+          username: null,
+          post: null
         }
     },
     components: {
@@ -89,7 +116,8 @@ export default {
     computed: {
       ...mapGetters(['Group']),
       ...mapGetters(['Members']),
-      ...mapGetters(['ListUsers'])
+      ...mapGetters(['ListUsers']),
+      ...mapGetters(['ListPostsGroup']),
     },
     mounted () {
         this.$store.dispatch('getGroup', {
@@ -97,6 +125,9 @@ export default {
         });
         this.$store.dispatch('getMembersGroup', {
             id: this.$router.currentRoute.params.id
+        });
+        this.$store.dispatch('getListPost', {
+          group: this.$router.currentRoute.params.id
         });
     },
     methods: {
@@ -110,8 +141,16 @@ export default {
           user: user,
           group: this.$router.currentRoute.params.id
         })
-      }
-      
+      },
+      async add_post () { 
+        await this.$store.dispatch('addPost', {
+          user: this.current_user,
+          group: this.$router.currentRoute.params.id,
+          text: this.post 
+        })
+      },
+
+    
     }
 }
 </script>

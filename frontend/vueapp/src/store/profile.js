@@ -5,12 +5,19 @@ const state = {
     list_challenges: [],
     info_user: [],
     list_group: [],
+    id_user_groups: [],
     info_group: null,
     list_validate_challenges: []
  }
  const mutations = {
   GET_USER_GROUPS(state, groups) {
-    state.list_group = groups
+    groups.forEach(function (item) {
+       state.list_group.push(item); 
+      
+    });
+  },
+  GET_ID_USER_GROUPS(state, groups) {
+    state.id_user_groups = groups;
   },
   GET_INFO_USER(state, info) {
     state.info_user = info
@@ -25,15 +32,16 @@ const state = {
     state.list_group.push(group)
     state.info_group = group
   },
+
 }
 
 const actions = {
-  
   async getProfile(context, user) {
     const access = localStorage.getItem("access");
     try {
     let response = await getAPI.get(`/profile/${user.id}/`, { headers: { Authorization: `Bearer ${access}` }}  ) 
-    context.commit("GET_INFO_USER", response.data) 
+    context.commit("GET_INFO_USER", response.data);
+    context.commit("GET_ID_USER_GROUPS", response.data.groups);
     } catch (e) {
     routes.push({ name: 'page-not-found' });
     }
@@ -60,10 +68,11 @@ const actions = {
   },
 
   async getUserGroups(context) {
-    const access = localStorage.getItem("access")
+    const access = localStorage.getItem("access");
     try {
       let response = await getAPI.get(`/group/`, { headers: { Authorization: `Bearer ${access}` }}  );
       context.commit("GET_USER_GROUPS", response.data.results);
+      console.log(state.list_group)
     } catch (e) {
       context.commit("GET_USER_GROUPS", null);
     }
