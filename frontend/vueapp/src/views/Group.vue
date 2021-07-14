@@ -137,7 +137,7 @@ export default {
         })
       },
       async add_user (user) { 
-        await this.$store.dispatch('addMember', {
+        await this.$store.dispatch('SendInvitation', {
           user: user,
           group: this.$router.currentRoute.params.id
         })

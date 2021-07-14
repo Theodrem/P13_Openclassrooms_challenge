@@ -38,7 +38,7 @@ export default {
    font-family: "Montserrat"; 
    text-decoration: none;
   }
-  button {
+  p {
     font-family: "Montserrat";
   }
   td {

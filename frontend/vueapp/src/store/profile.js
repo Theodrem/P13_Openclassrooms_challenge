@@ -96,7 +96,7 @@ const getters = {
   ChallengeUser: state => {
     return state.list_challenges
   },
-  ValidateChallengeUser: state => {
+  ValidateChallengeUser: state => {  //modifier avec le getter une seul action
     return state.list_validate_challenges
   },
   Groups: state => {

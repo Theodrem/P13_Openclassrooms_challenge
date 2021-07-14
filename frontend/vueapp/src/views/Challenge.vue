@@ -9,19 +9,19 @@
     </div>
     <div class="row list text-center">
       <div class="col-md-4 text-center" v-for="(data, index) in  challenges.results" :key="index">
-            <div class="card" style="background: #FC7A5D;">
+            <div class="card" style="background: #fff">
               <div class="card-header">
                   <h5>{{ data.category }}</h5>
               </div>
             <div class="card-body">
                 <div class="card-body">
-                    <h1 class="text-white"><i :class="data.icon"></i></h1>
+                    <h1><i :class="data.icon"></i></h1>
                     <h4 class="card-title">{{ data.title }}</h4>
                     <h5 v-if="data.difficult==4" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
                     <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
                     <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
                     <h5 v-if="data.difficult==1" style="scolor: #04F982"><i class="fas fa-star fa-lg"></i></h5>
-                    <button type="submit" class="btn btn-outline-light" v-on:click="get_id(data.id)">Ajouter</button>
+                    <button type="submit" class="btn btn-outline-dark" v-on:click="get_id(data.id)">Ajouter</button>
                 </div>
             </div>
           </div>

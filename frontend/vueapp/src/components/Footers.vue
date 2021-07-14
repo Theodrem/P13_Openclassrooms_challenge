@@ -40,9 +40,7 @@
         <!-- Section: Text -->
         <section class="mb-4">
         <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum
-            repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam
-            eum harum corrupti dicta, aliquam sequi voluptate quas.
+            Projet scolaire réalisé dans le cadre du parcours développeur d'application Python de l'école Openclassrooms.
         </p>
         </section>
         <!-- Section: Text -->
@@ -52,88 +50,42 @@
         <!--Grid row-->
         <div class="row">
             <!--Grid column-->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Links</h5>
-
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+            <h5 class="text-uppercase">Mentions légales</h5>
             <ul class="list-unstyled mb-0">
                 <li>
-                <a href="#!">Link 1</a>
-                </li>
-                <li>
-                <a href="#!">Link 2</a>
-                </li>
-                <li>
-                <a href="#!">Link 3</a>
-                </li>
-                <li>
-                <a href="#!">Link 4</a>
+                <p> Hébergement: Digital Océan</p>
                 </li>
             </ul>
             </div>
             <!--Grid column-->
 
             <!--Grid column-->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Links</h5>
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+            <h5 class="text-uppercase">Technologie</h5>
 
             <ul class="list-unstyled mb-0">
                 <li>
-                <a href="#!" >Link 1</a>
+                <a href="#!" >Vue.js</a>
                 </li>
                 <li>
-                <a href="#!">Link 2</a>
+                <a href="#!">Django Rest Framework</a>
                 </li>
                 <li>
-                <a href="#!">Link 3</a>
+                <a href="#!">Postgresql</a>
                 </li>
                 <li>
-                <a href="#!">Link 4</a>
+                <a href="#!">Postman</a>
                 </li>
             </ul>
             </div>
             <!--Grid column-->
 
             <!--Grid column-->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Links</h5>
-
-            <ul class="list-unstyled mb-0">
-                <li>
-                <a href="">Link 1</a>
-                </li>
-                <li>
-                <a href="">Link 2</a>
-                </li>
-                <li>
-                <a href="#!">Link 3</a>
-                </li>
-                <li>
-                <a href="#!">Link 4</a>
-                </li>
-            </ul>
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+            <h5 class="text-uppercase">A propos de moi</h5>
+            <p>Je m'appelle Théotim Herin. Je suis étudiant développeur d'application spécialisé en langage Python</p>
             </div>
-            <!--Grid column-->
-
-            <!--Grid column-->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-            <h5 class="text-uppercase">Links</h5>
-
-            <ul class="list-unstyled mb-0">
-                <li>
-                <a href="#!" >Link 1</a>
-                </li>
-                <li>
-                <a href="#!" >Link 2</a>
-                </li>
-                <li>
-                <a href="#!">Link 3</a>
-                </li>
-                <li>
-                <a href="#!">Link 4</a>
-                </li>
-            </ul>
-            </div>
-            <!--Grid column-->
         </div>
         <!--Grid row-->
         </section>
@@ -143,10 +95,22 @@
 
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2020 Copyright:
-        <a href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        <p>Projet: Gloot 2021</p>
     </div>
     <!-- Copyright -->
     </footer>
     <!-- Footer -->
 </template>
+
+<style scoped>
+    a {
+      text-decoration: none;
+      color: rgb(0,0,0);
+    }
+    a:hover {
+      font-weight: bold;
+    }
+    nav {
+      background: #fff;
+    }
+</style>

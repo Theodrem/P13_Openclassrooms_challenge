@@ -24,6 +24,7 @@ ALLOWED_HOSTS = ["127.0.0.1"]
 INSTALLED_APPS = [
     'challenge',
     'user',
+    'utils',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,7 +37,6 @@ INSTALLED_APPS = [
     "corsheaders",
     'django_filters',
     'django_rest_passwordreset',
- 
 ]
 
 

@@ -6,11 +6,11 @@ import Logout from '../views/Logout'
 import Register from '../views/Register'
 import Profile from '../views/Profile'
 import Challenge from '../views/Challenge'
-import Actuality from '../views/Actuality'
 import Group from '../views/Group'
 import ResetPassword from '../views/ResetPassword'
 import ResetPasswordConfirm from '../views/ResetPasswordConfirm'
 import PageNotFound from '../views/PageNotFound'
+import Notification from '../views/Notification'
 
 Vue.use(VueRouter)
 
@@ -49,11 +49,6 @@ export default new VueRouter({
             component: Challenge
         },
         {
-            path: '/actuality',
-            name: 'actuality',
-            component: Actuality
-        },
-        {
         path: '/group/:id',
         name: 'group',
         component: Group
@@ -68,10 +63,19 @@ export default new VueRouter({
         name: 'reset-password-confirm',
         component: ResetPasswordConfirm
         },
-        { path: "*",
+        {
+        path: "*",
         name: 'page-not-found',
-        component: PageNotFound }
+        component: PageNotFound 
+        },
+        {
+        path: "/notification/",
+        name: 'notification',
+        component: Notification 
+        },
+
         
+    
 
 
 
