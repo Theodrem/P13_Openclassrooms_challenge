@@ -6,7 +6,7 @@ import profile from './profile'
 import group from './group'
 import user from './user'
 import post from './post'
-
+import notification from './notification'
 
 
 Vue.use(Vuex);
@@ -18,6 +18,7 @@ export default new Vuex.Store({
     profile,
     group,
     user,
-    post
+    post,
+    notification
   },
 })
