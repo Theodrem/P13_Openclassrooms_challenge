@@ -8,7 +8,6 @@ const mutations = {
   GET_LIST_INVITATIONS(state, invitations) {
     state.list_invitations_user = invitations
   }
-
 }
 const actions = {
   async getListInvitations(context) {
@@ -32,7 +31,7 @@ async SendInvitation(context, invitation) {
 async DropInvitations(context, post) {
     const access = localStorage.getItem("access")
     try {
-      let response = await getAPI.post(`/notification/`, {text: post.text, author: post.user, group: post.group}, { headers: { Authorization: `Bearer ${access}` }}  );
+      let response = await getAPI.post(`/notification/$`, {text: post.text, author: post.user, group: post.group}, { headers: { Authorization: `Bearer ${access}` }}  );
       context.commit('ADD_NEW_POST', response.data.results);
     } catch (e) {
         routes.push({ name: 'page-not-found' });

@@ -50,7 +50,6 @@
       return {
         username: '',
         password: '',
-        incorrectAuth: false
       }
     },
     components: {

@@ -1,26 +1,29 @@
 import { getAPI } from '../api/axios-api'
-import routes from '../router/routes';
+import routes from '../router/routes'
+import { 
+  MESSAGE_ADD_CHALLENGE_FAIL
+ }  from './const'
+
 
 const state = {
-    list_challenges: [],
-    challenge: null
+    list_challenges: '',
+    message_add_challenge_fail: ''
  }
 
  const mutations = {
    GET_LIST_CHALLENGES(state, challenges) {
     state.list_challenges = challenges
   },
-  UPDATE_CHALLENGE(state, challenge) {
-    state.challenge = challenge
-  },
-
+  UPDATE_MESS_CHALLENGE(state, message) {
+    state.message_add_challenge_fail = message;
+  }
 }
 const actions = {
    async get_challenges (context) {
      try {
       const token = localStorage.getItem("access")
       let response = await getAPI.get('/challenges/',  { headers: { Authorization: `Bearer ${token}` } })
-      context.commit("GET_LIST_CHALLENGES", response.data)
+      context.commit("GET_LIST_CHALLENGES", response.data);
      } catch(e) {
        routes.push({ name: 'page-not-found' });
      }
@@ -29,30 +32,22 @@ const actions = {
     const access = localStorage.getItem("access")
     const user_id = localStorage.getItem("id")
     try {
-      let response = await getAPI.post('/users-challenges/',{user: user_id, challenge: challenge.id, status: "En cours"}, { headers: { Authorization: `Bearer ${access}` }}  );
-      context.commit("UPDATE_CHALLENGE", response.data)
+      await getAPI.post('/users-challenges/',{user: user_id, challenge: challenge.id, status: "En cours"}, { headers: { Authorization: `Bearer ${access}` }}  );
+      routes.push({ name: 'profile', params: {id: user_id}});
     } catch (e) {
-      console.log("L'objet existe déja")
+      context.commit("UPDATE_MESS_CHALLENGE", MESSAGE_ADD_CHALLENGE_FAIL);
+      console.log(state.message_add_challenge_fail)
     }   
   },
-  async update_challenge(context, user_challenge) {
-    const access = localStorage.getItem("access");
-    const user_id = localStorage.getItem("id");
-    try {
-      let response = await getAPI.put(`/users-challenges/${user_challenge.user_challenge.id}/`, 
-      {user: user_id, challenge: user_challenge.user_challenge.challenge_id, status: user_challenge.state}, { headers: { Authorization: `Bearer ${access}` }}  );
-      context.commit("UPDATE_CHALLENGE", response.data);
-    } catch (e) {
-      context.commit("UPDATE_CHALLENGE", null);
-  } 
-}
-  
 }
    
 const getters = {
   challenges: state => {
     return state.list_challenges
-  }
+  },
+  MessageChallengeFail: state => {
+    return state.message_add_challenge_fail
+  },
 }
 
  export default {

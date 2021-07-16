@@ -36,7 +36,6 @@ class PostFilter(filters.FilterSet):
         fields = ['group',  'id']
 
 
-
 class UserView(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = UserFilter
