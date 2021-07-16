@@ -1,14 +1,18 @@
 <template>
 <div id="body">
 <Navbar></Navbar>
+<header class="bg-dark py-5">
  <div class="sub container align-center">
-    <div class="row">
-        <div class="col-md-12 title text-center text-white" id="header">
-            <img src="../assets/user-profile.png" alt="" id="profile">
-            <h1 class="title text-uppercase">{{ Group.name }}</h1>
-            <h4 class="title"></h4>
+     <div class="row">
+        <div class="col-md-12 title text-center text-white" id="header" v-if=" InfoGroup !=''">
+            <img src="../assets/group.png" alt="" id="profile">
+            <h1 class="title text-uppercase">{{ InfoGroup[0].name }}</h1>
+            <h2 class="title">Groupe</h2>
         </div>
     </div>
+ </div>
+</header>
+ <div class="sub container align-center">
     <div class="row sections">
         <div class="col-md-8">
               <div class="card">
@@ -49,6 +53,9 @@
                               </form> 
                                 </td>
                               </tr>
+                              <tr>
+                              <td v-if="MessageNoUser !=''" class="text-white">{{ MessageNoUser }}</td>
+                            </tr>
                             </tfoot>
                       </table>
                       </div>
@@ -60,7 +67,7 @@
     <div class="container text-center" style="margin-top:50px">
         <div class="row text-center">
           <div class="col-md-12 text-center">
-              <div class="row no-gutters text-center"  v-if="ListUsers.length != []">
+              <div class="row no-gutters text-center"  v-if="ListUsers != ''">
                   <table class="table table-success table-striped">
                     <thead>
                       <tr>
@@ -68,7 +75,7 @@
                         <th scope="col">Ajouter</th>
                       </tr>
                     </thead>
-                      <tbody  v-for="(data, index) in  ListUsers.results" :key="index" >
+                      <tbody  v-for="(data, index) in  ListUsers" :key="index" >
                           <tr>
                               <td><router-link :to = "{ name:'profile', params: {id: data.id}}" class="username">{{ data.username }}</router-link></td>
                               <td><button type="submit" class="btn btn-dark " v-on:click="add_user(data.id)"><i class="fas fa-plus"></i></button></td>
@@ -78,8 +85,8 @@
             </div>
           </div>
         </div>
-    <div class="row" v-for="(data, index) in ListPostsGroup" :key="index">
-    <div class="col-md-12">
+    <div class="row" v-if="ListPostsGroup !=''">
+    <div class="col-md-12" v-for="(data, index) in ListPostsGroup" :key="index">
               <div class="card text-left">
                 <div class="card-header text-left"><h6 class="text-capitalize">{{ data.username }}</h6></div>
                   <div class="card-body">
@@ -118,6 +125,8 @@ export default {
       ...mapGetters(['Members']),
       ...mapGetters(['ListUsers']),
       ...mapGetters(['ListPostsGroup']),
+      ...mapGetters(['InfoGroup']),
+      ...mapGetters(['MessageNoUser']),
     },
     mounted () {
         this.$store.dispatch('getGroup', {
@@ -141,13 +150,18 @@ export default {
           user: user,
           group: this.$router.currentRoute.params.id
         })
+        await this.$store.dispatch('delListUsers')
       },
       async add_post () { 
         await this.$store.dispatch('addPost', {
           user: this.current_user,
           group: this.$router.currentRoute.params.id,
           text: this.post 
-        })
+        });
+        await this.$store.dispatch('getListPost', {
+          group: this.$router.currentRoute.params.id
+        });
+
       },
 
     

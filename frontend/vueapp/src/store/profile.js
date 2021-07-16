@@ -1,24 +1,18 @@
 import { getAPI } from '../api/axios-api'
-import routes from '../router/routes';
+import routes from '../router/routes'
+import { MESSAGE_ADD_GROUP_FAIL }  from './const'
+//les getters agissent en live pour changer en direct jouué avec les getters
 
+//pas de valeur null initial
 const state = {
-    list_challenges: [],
-    info_user: [],
-    list_group: [],
-    id_user_groups: [],
-    info_group: null,
-    list_validate_challenges: []
+    list_challenges: "",
+    info_user: "",
+    list_group: "",
+    id_user_groups: "",
+    list_validate_challenges: "",
+    group_exist: ""
  }
  const mutations = {
-  GET_USER_GROUPS(state, groups) {
-    groups.forEach(function (item) {
-       state.list_group.push(item); 
-      
-    });
-  },
-  GET_ID_USER_GROUPS(state, groups) {
-    state.id_user_groups = groups;
-  },
   GET_INFO_USER(state, info) {
     state.info_user = info
   },
@@ -28,65 +22,56 @@ const state = {
   GET_LIST_VALIDATE_CHALLENGES(state, challenges) {
     state.list_validate_challenges = challenges
   },
-  ADD_GROUP(state, group) {
-    state.list_group.push(group)
-    state.info_group = group
-  },
-
+  MESSAGE_ADD_GROUP_FAIL(state, message) {
+    state.group_exist = message; 
+  }
 }
 
 const actions = {
   async getProfile(context, user) {
     const access = localStorage.getItem("access");
     try {
-    let response = await getAPI.get(`/profile/${user.id}/`, { headers: { Authorization: `Bearer ${access}` }}  ) 
-    context.commit("GET_INFO_USER", response.data);
-    context.commit("GET_ID_USER_GROUPS", response.data.groups);
+      let response = await getAPI.get(`/profile/?id=${user.id}`, { headers: { Authorization: `Bearer ${access}` }} ); 
+      context.commit("GET_INFO_USER", response.data.results);
     } catch (e) {
-    routes.push({ name: 'page-not-found' });
+      routes.push({ name: 'page-not-found' });
     }
   },
 
   async getUserChallenge(context, user) {
     const access = localStorage.getItem("access");
     try {
-    let response = await getAPI.get(`users-challenges/?status=En cours&user_id=${user.id}`, { headers: { Authorization: `Bearer ${access}` }}  );
-    context.commit("GET_LIST_CHALLENGES", response.data.results);
+    let response = await getAPI.get(`users-challenges/?status=${user.status}&user_id=${user.id}`, { headers: { Authorization: `Bearer ${access}` }}  );
+    if (user.status == "Validé") {
+      context.commit("GET_LIST_VALIDATE_CHALLENGES", response.data.results);
+    } else {
+      context.commit("GET_LIST_CHALLENGES", response.data.results);
+    }
     } catch (e) {
       context.commit("GET_LIST_CHALLENGES", null);
     }
   },
-
-  async getUserValidateChallenge(context, user) {
-    const access = localStorage.getItem("access");
-    try {
-    let response = await getAPI.get(`users-challenges/?status=Validé&user_id=${user.id}`, { headers: { Authorization: `Bearer ${access}` }}  );
-    context.commit("GET_LIST_VALIDATE_CHALLENGES", response.data.results);
-    } catch (e) {
-      context.commit("GET_LIST_VALIDATE_CHALLENGES", null);
-    }
-  },
-
-  async getUserGroups(context) {
-    const access = localStorage.getItem("access");
-    try {
-      let response = await getAPI.get(`/group/`, { headers: { Authorization: `Bearer ${access}` }}  );
-      context.commit("GET_USER_GROUPS", response.data.results);
-      console.log(state.list_group)
-    } catch (e) {
-      context.commit("GET_USER_GROUPS", null);
-    }
-  },
   async addGroup (context, group) {
       const access = localStorage.getItem("access")
+      const user_id = localStorage.getItem("id")
       try {
         let response = await getAPI.post('/group/',{name: group.group}, { headers: { Authorization: `Bearer ${access}` }}  );
-        context.commit("ADD_GROUP", response.data);
-        return state.list_group
+        await getAPI.post(`profile/add_user_group/`,{user: user_id, group: response.data.id}, { headers: { Authorization: `Bearer ${access}` }}  );
+        context.commit("MESSAGE_ADD_GROUP_FAIL", "");
       } catch (e) {
-        context.commit("ADD_GROUP", null);
+        context.commit("MESSAGE_ADD_GROUP_FAIL", MESSAGE_ADD_GROUP_FAIL);
       }   
     }, 
+    async update_challenge(context, user_challenge) {
+      const access = localStorage.getItem("access");
+      const user_id = localStorage.getItem("id");
+      try {
+        await getAPI.put(`/users-challenges/${user_challenge.user_challenge.id}/`, 
+        {user: user_id, challenge: user_challenge.user_challenge.challenge_id, status: user_challenge.status}, { headers: { Authorization: `Bearer ${access}` }}  );
+      } catch (e) {
+        context.commit("UPDATE_CHALLENGE", null);
+      } 
+    },   
 }
    
 const getters = {
@@ -102,9 +87,11 @@ const getters = {
   Groups: state => {
     return state.list_group
   },
-  InfoGroup: state => {
-    return state.info_group
+  MessageAddGroup: state => {
+    return state.group_exist
   },
+  
+  
 }
 
  export default {

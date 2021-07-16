@@ -8,10 +8,17 @@ from django.contrib.auth.password_validation import validate_password
 from user.models import Post
 
 
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('name', 'id')
+
+
 class UserSerializer(serializers.ModelSerializer):
+    groups = GroupSerializer(many=True)
     class Meta:
         model = User
-        fields = ('__all__')
+        fields = ('id', 'username', 'email', 'is_staff', 'groups', 'first_name', 'last_name')
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -64,10 +71,6 @@ class LogoutSerializer(serializers.Serializer):
             self.fail("bad_token")
 
 
-class GroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Group
-        fields = ('__all__')
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
