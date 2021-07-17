@@ -10,4 +10,4 @@ export const MESSAGE_ADD_CHALLENGE_FAIL = "Vous possédez déjà le défis";
 export const MESSAGE_ADD_GROUP_FAIL = "Le nom du groupe est déjà utilisé";
 export const NO_USER_FOUND = "Aucun utilisateur trouvé";
 export const EMAIL_SENT = "Un email vous à été envoyé";
-export const ACCEPT_INVIT = "Invitation acceptée";
+export const DESCRIP_NOTIF = "vous à invité à rejoindre le groupe";

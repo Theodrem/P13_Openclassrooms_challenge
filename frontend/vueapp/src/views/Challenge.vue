@@ -98,8 +98,9 @@ export default {
 
 <style scoped>
 h1 {
-      font-size: 5em;
-    }
+      font-size: 4em;
+  }
+
 button {
   margin-top: 30px;
 }
@@ -110,15 +111,14 @@ button {
 }
 
 .card {
-    width: 20rem;
-    height: 28rem;
     margin-top: 30px;
 }
-
 
 .list {
     margin-top: 150px;
 }
+
+
 
 
 

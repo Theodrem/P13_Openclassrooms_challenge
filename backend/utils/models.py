@@ -4,15 +4,10 @@ from django.utils import timezone
 
 
 class Notifications(models.Model):
-    #notif_senders (related_name)
-    #ricipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ricipient")
-    #sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
-    #maj bdd
-    ricipient = models.ForeignKey(User, on_delete=models.CASCADE)
+    ricipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ricipient")
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     description = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    is_read = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("ricipient", "group")

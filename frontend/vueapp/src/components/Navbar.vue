@@ -30,7 +30,10 @@
         }
     },
     mounted () {
+      if (this.token != null) {
         this.$store.dispatch('getListInvitations');
+      }
+        
     },
     computed: {
       ...mapGetters(['ListInvitations']),

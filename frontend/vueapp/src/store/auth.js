@@ -39,12 +39,15 @@ const mutations = {
  }
 const actions = {
    async userLogout (context) {
+    try {
      const access = localStorage.getItem("access")
      const refresh = localStorage.getItem("refresh")
-     if (access != null) {
         await getAPI.post('/logout/',{refresh: refresh}, { headers: { Authorization: `Bearer ${access}` }}  );
-        context.commit('DESTROY_TOKEN')
-     }
+        context.commit('DESTROY_TOKEN');
+     } catch(e) {
+      context.commit('DESTROY_TOKEN');
+      routes.push({ name: 'login'});
+    }
    },
    async userLogin (context, usercredentials) { 
      try {
@@ -72,6 +75,7 @@ const actions = {
           password: data.password,
           password2: data.password2
         })
+        routes.push({ name: 'login'});
         } catch(e) {
           if ('username' in e.response.data) {
             context.commit("UPDATE_MESSAGE", USERNAME_ALREADY_EXIST);

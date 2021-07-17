@@ -9,8 +9,9 @@
                     <h1 class="title display-5 fw-bolder text-white mb-2">GLOOT</h1>
                     <p class="lead fw-normal text-white-50 mb-4">Réalise des défis que tu n'aurais jamais fait</p>
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                        <a class="btn btn-lg px-4 me-sm-3 text-white" href="#features" style="background: #C52528">Get Started</a>
-                        <a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a>
+                        <router-link :to = "{ name:'login' }" class="btn btn-lg px-4 me-sm-3 text-white" style="background: #C52528" v-if="token==null">Get Started</router-link>
+                        <router-link :to = "{ name:'challenge' }" class="btn btn-lg px-4 me-sm-3 text-white" style="background: #C52528" v-if="token!=null">Get Started</router-link>
+                        <a class="btn btn-outline-light btn-lg px-4" href="#features">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -93,7 +94,8 @@
     data () {
       return {
         username: '',
-        id: localStorage.getItem("id")
+        id: localStorage.getItem("id"),
+        token: localStorage.getItem("access"), 
       }
     },
     components: {

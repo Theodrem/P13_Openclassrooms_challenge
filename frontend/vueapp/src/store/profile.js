@@ -1,9 +1,8 @@
 import { getAPI } from '../api/axios-api'
 import routes from '../router/routes'
 import { MESSAGE_ADD_GROUP_FAIL }  from './const'
-//les getters agissent en live pour changer en direct jouué avec les getters
 
-//pas de valeur null initial
+
 const state = {
     list_challenges: "",
     info_user: "",
