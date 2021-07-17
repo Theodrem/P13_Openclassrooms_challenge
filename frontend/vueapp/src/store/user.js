@@ -1,6 +1,13 @@
 import { getAPI } from '../api/axios-api'
 import routes from '../router/routes'
-import { NO_USER_FOUND }  from './const'
+import { 
+  NO_USER_FOUND, 
+  PASSWORD_NOT_MATCH,
+  INCORRECT_EMAIL,
+  PASSWORD_NOT_SECUR,
+  CHANGED_PASSWORD,
+  EMAIL_SENT
+ }  from './const'
 
 
 const state = {
@@ -49,23 +56,23 @@ const actions = {
   async postEmailReset(context, user) {
     try {
       await getAPI.post(`/api/password_reset/`, {email: user.email});
-      await context.commit("SEND_EMAIL", "Un email vous à été envoyé");
+      await context.commit("SEND_EMAIL", EMAIL_SENT);
     } catch(e) {
-      context.commit("SEND_EMAIL", "Votre email est incorrect")
+      context.commit("SEND_EMAIL", INCORRECT_EMAIL)
     } 
   },
   async resetPasswordConfirm(context, user) {
     try {
       if (user.password1 == user.password2 ){
         await getAPI.post(`/api/password_reset/confirm/`, {password: user.password1, token: user.token});
-        await context.commit("MESSAGE_RESET", "Votre mot de passe à été changé");
+        await context.commit("MESSAGE_RESET", CHANGED_PASSWORD);
         routes.push({ name: 'login' });
       }
       else {
-        context.commit("MESSAGE_RESET", "Vos mots de passes ne correspondent pas")
+        context.commit("MESSAGE_RESET", PASSWORD_NOT_MATCH)
       }
       } catch(e) {
-          context.commit("MESSAGE_RESET", "Votre mot de passe n'est pas assez sécurié");
+          context.commit("MESSAGE_RESET", PASSWORD_NOT_SECUR);
     }
   }
 }

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets, generics, permissions, status
+from rest_framework import viewsets, generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework import status as rest_status
@@ -7,6 +7,7 @@ from rest_framework.decorators import action
 from django_filters import rest_framework as filters
 from .serializers import RegisterSerializer, UserSerializer, LogoutSerializer, GroupSerializer, PostSerializer, GetPostSerializer
 from .models import Post
+from .permissions import HasGroupPermission
 
 
 class UserFilter(filters.FilterSet):
@@ -78,7 +79,7 @@ class LogoutView(generics.GenericAPIView):
 class GroupView(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = GroupFilter
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, HasGroupPermission)
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
