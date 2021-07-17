@@ -7,15 +7,13 @@ const state = {
     info_group: ""
  }
 const mutations = {
-  ADD_NEW_MEMBER(state, member) {
-    state.list_members.push(member)
-  },
   GET_INITIAL_MEMBERS(state, members) {
     state.list_members = members
   },
   GET_INFO_GROUP(state, info) {
     state.info_group = info
   }
+  
 
   
 }
@@ -37,20 +35,7 @@ const actions = {
     } catch (e) {
       context.commit('GET_INITIAL_MEMBERS', '')
   }
-  },
-  async addMember(context, user) {
-    const access = localStorage.getItem("access")
-    console.log(user)
-    try {
-      let response = await getAPI.post(`profile/add_user_group/`,{user: user.user, group: user.group}, { headers: { Authorization: `Bearer ${access}` }}  ) 
-      context.commit('ADD_NEW_MEMBER', response.data)
-      console.log(response.data)
-    } catch (e) {
-      console.log("zzzzeee")
-      context.commit('ADD_NEW_MEMBER', null)
-    }
-  },
-
+  }
   
 }
    

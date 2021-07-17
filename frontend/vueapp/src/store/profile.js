@@ -62,12 +62,20 @@ const actions = {
         context.commit("MESSAGE_ADD_GROUP_FAIL", MESSAGE_ADD_GROUP_FAIL);
       }   
     }, 
-    async update_challenge(context, user_challenge) {
+    async updateChallenge(context, user_challenge) {
       const access = localStorage.getItem("access");
       const user_id = localStorage.getItem("id");
       try {
         await getAPI.put(`/users-challenges/${user_challenge.user_challenge.id}/`, 
         {user: user_id, challenge: user_challenge.user_challenge.challenge_id, status: user_challenge.status}, { headers: { Authorization: `Bearer ${access}` }}  );
+      } catch (e) {
+        context.commit("UPDATE_CHALLENGE", null);
+      } 
+    },   
+    async deleteChallenge(context, user_challenge) {
+      const access = localStorage.getItem("access");
+      try {
+        await getAPI.delete(`/users-challenges/${user_challenge.id}/`, { headers: { Authorization: `Bearer ${access}` }}  );
       } catch (e) {
         context.commit("UPDATE_CHALLENGE", null);
       } 
@@ -90,7 +98,6 @@ const getters = {
   MessageAddGroup: state => {
     return state.group_exist
   },
-  
   
 }
 

@@ -100,7 +100,7 @@
                       <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
                       <h5 v-if="data.difficult==1" style="color: #04F982"><i class="fas fa-star fa-lg"></i></h5>
                       <button type="submit" class="btn btn-outline-success" v-on:click="update_challenge(data, valid)">Valider</button>
-                      <button type="submit" class="btn btn-outline-danger" v-on:click="update_challenge(data, cancel)" id="give-up">Annuler</button>
+                      <button type="submit" class="btn btn-outline-danger" v-on:click="delete_challenge(data.id)" id="give-up">Annuler</button>
                   </div>
               </div>
             </div>
@@ -153,7 +153,7 @@ export default {
     },
     methods: {
       async update_challenge (data, status) { 
-        await this.$store.dispatch("update_challenge", {
+        await this.$store.dispatch("updateChallenge", {
           user_challenge: data,
           status: status
         });
@@ -174,9 +174,16 @@ export default {
             id: this.$router.currentRoute.params.id //jest pour les test front
         });
       },
-
-      
+      async delete_challenge(id) {
+        await this.$store.dispatch("deleteChallenge", {
+          id: id
+        });
+        await this.$store.dispatch('getUserChallenge', {
+            id: this.$router.currentRoute.params.id,
+            status: "En cours"
+        });
     }
+  }
 }
 </script>
 
