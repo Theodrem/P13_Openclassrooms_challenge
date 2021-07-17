@@ -79,8 +79,9 @@ class PostSerializer(serializers.ModelSerializer):
 
 class GetPostSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='author.username') 
+    id_user = serializers.CharField(source='author.id')
     class Meta:
         model = Post
-        fields = ('text', 'username' )        
+        fields = ('text', 'username', 'id_user', 'id')        
 
 

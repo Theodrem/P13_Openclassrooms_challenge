@@ -14,8 +14,6 @@ const mutations = {
     state.info_group = info
   }
   
-
-  
 }
 const actions = {
   async getGroup(context, group) {
@@ -30,12 +28,23 @@ const actions = {
   async getMembersGroup(context, group) {
     const access = localStorage.getItem("access")
     try {
-      let response = await getAPI.get(`/profile/?groups=${group.id}`, { headers: { Authorization: `Bearer ${access}` }}  )
+      let response = await getAPI.get(`/profile/?groups=${group.id}`, { headers: { Authorization: `Bearer ${access}` }}  );
       context.commit('GET_INITIAL_MEMBERS', response.data.results) 
     } catch (e) {
       context.commit('GET_INITIAL_MEMBERS', '')
   }
+  },
+  async quitGroup(context, user) {
+    const access = localStorage.getItem("access")
+    console.log(access)
+    try {
+      await getAPI.delete(`profile/delete_user_group/`,{data: {user: user.user, group: user.group},  headers: { Authorization: `Bearer ${access}` }},    );
+      routes.push({ name: 'profile' , params: {id: user.user}});
+    } catch (e) {
+      routes.push({ name: 'page-not-found' });
   }
+  },
+
   
 }
    

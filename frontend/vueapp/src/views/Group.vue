@@ -8,6 +8,7 @@
             <img src="../assets/group.png" alt="" id="profile">
             <h1 class="title text-uppercase">{{ InfoGroup[0].name }}</h1>
             <h2 class="title">Groupe</h2>
+            <button class="btn btn-light" v-on:click="quit_group(InfoGroup[0].id)">Quitter</button>
         </div>
     </div>
  </div>
@@ -88,10 +89,13 @@
     <div class="row" v-if="ListPostsGroup !=''">
     <div class="col-md-12" v-for="(data, index) in ListPostsGroup" :key="index">
               <div class="card text-left">
-                <div class="card-header text-left"><h6 class="text-capitalize">{{ data.username }}</h6></div>
+                <div class="card-header text-left d-flex justify-content-around">
+                  <h4 class="text-capitalize">{{ data.username }}</h4>
+                  <button class="btn btn-danger" v-on:click="delete_post(data.id)" v-if="data.id_user==current_user">Supprimer</button>
+                  </div>
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
-                          <h4>{{ data.text }}</h4>  
+                          <h3>{{ data.text }}</h3>  
                       </div>
                   </div>
               </div>
@@ -112,8 +116,8 @@ export default {
       return {
           APIData: [],
           current_user: localStorage.getItem("id"),
-          username: null,
-          post: null
+          username: "",
+          post: ""
         }
     },
     components: {
@@ -161,10 +165,22 @@ export default {
         await this.$store.dispatch('getListPost', {
           group: this.$router.currentRoute.params.id
         });
-
       },
-
-    
+      async delete_post (id) { 
+        console.log(id)
+        await this.$store.dispatch('delPost', {
+          id: id
+        });
+        await this.$store.dispatch('getListPost', {
+          group: this.$router.currentRoute.params.id
+        });
+      },
+      async quit_group(id) { 
+        await this.$store.dispatch('quitGroup', { 
+            group: id,
+            user: this.current_user
+        });
+      }
     }
 }
 </script>

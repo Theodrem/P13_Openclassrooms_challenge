@@ -54,8 +54,25 @@ class UserView(viewsets.ModelViewSet):
             return Response(serializer.data)
         except(User.DoesNotExist, Group.DoesNotExist):
             return Response(status=rest_status.HTTP_404_NOT_FOUND)
+    
+    @action(methods=['delete'], detail=False)
+    def delete_user_group(self, request):
+        try:
+            user = User.objects.get(id=request.data['user'])
+            group = Group.objects.get(id=request.data['group'])
+            user.groups.remove(group)
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        except(User.DoesNotExist, Group.DoesNotExist):
+            return Response(status=rest_status.HTTP_404_NOT_FOUND)
+    
+    
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
+    
         
-   
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
@@ -82,6 +99,7 @@ class GroupView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, HasGroupPermission)
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    
 
 
 class PostView(viewsets.ModelViewSet):
