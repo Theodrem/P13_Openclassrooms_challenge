@@ -9,6 +9,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 class GetNotificationSerializer(serializers.ModelSerializer):
     group_name = serializers.CharField(source='group.name')
+    sender_name = serializers.CharField(source='sender.username')
     class Meta:
         model = Notifications
-        fields = ('group_name', 'description', 'ricipient', 'group', 'id')
+        fields = ('group_name', 'description', 'ricipient', 'group', 'id', 'sender_name')

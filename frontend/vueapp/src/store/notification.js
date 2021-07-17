@@ -1,6 +1,6 @@
 import { getAPI } from '../api/axios-api'
 import routes from '../router/routes'
-  
+import { DESCRIP_NOTIF }  from './const'
 const state = {
     list_invitations_user: [],
     message_invitation: "",
@@ -23,8 +23,9 @@ const actions = {
 },
 async SendInvitation(context, invitation) {
     const access = localStorage.getItem("access")
+    const user_id = localStorage.getItem("id")
     try {
-      await getAPI.post(`/notification/`, {description: "Invitation sur le groupe", ricipient: invitation.user, group: invitation.group}, { headers: { Authorization: `Bearer ${access}` }}  );
+      await getAPI.post(`/notification/`, {description: DESCRIP_NOTIF, sender: user_id, ricipient: invitation.user, group: invitation.group}, { headers: { Authorization: `Bearer ${access}` }}  );
     } catch (e) {
         routes.push({ name: 'page-not-found' });
   }

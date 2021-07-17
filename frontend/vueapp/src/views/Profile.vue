@@ -20,7 +20,7 @@
                 <div class="card-header"><h3>Défi validé</h3></div>
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
-                          <table class="table" v-if="ValidateChallengeUser !=''">
+                          <table class="table" v-if="InfosUser !=''">
                           <tbody  v-for="(data, index) in  ValidateChallengeUser" :key="index" >
                             <tr>
                               <td class="text-white"><h5>{{ data.title }}</h5></td>
@@ -37,9 +37,9 @@
                 <div class="card-header"><h3>Défi En cours</h3></div>
                   <div class="card-body" >
                       <div class="row no-gutters align-items-center">
-                          <table class="table" v-if="ChallengeUser !=''">
+                          <table class="table">
                           <tbody  v-for="(data, index) in  ChallengeUser" :key="index">
-                            <tr>
+                            <tr v-if="data != null">
                               <td><h5>{{ data.title }}</h5></td>
                               <td><h5><i :class="data.icon"></i></h5></td> 
                             </tr>
@@ -56,7 +56,7 @@
                       <div class="row no-gutters align-items-center">
                        <table class="table" v-if="InfosUser !=''">
                           <tbody  v-for="(data, index) in InfosUser[0].groups" :key="index">
-                            <tr>
+                            <tr v-if="data != null">
                               <td class="text-white"><router-link :to = "{ name:'group', params: {id: data.id }}" class="group_name">{{ data.name }}</router-link></td>
                             </tr>
                           </tbody>
@@ -84,10 +84,10 @@
           </div>
      </div>
  </div>
- <div class="container" v-if="InfosUser != '' && ChallengeUser != ''">
+ <div class="container" v-if="InfosUser != ''">
    <div class="row list text-center" v-if="InfosUser[0].id==id_current_user">
       <div v-for="(data, index) in  ChallengeUser" :key="index">
-            <div class="card" style="background: #FFF">
+            <div class="card" style="background: #FFF" v-if="data != null">
               <div class="card-header" style="background: #FFF">
                   <h5>{{ data.category }}</h5>
               </div>
