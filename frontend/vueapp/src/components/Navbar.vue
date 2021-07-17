@@ -11,7 +11,7 @@
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'logout' }" class="nav-link">Déconnexion</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'profile', params: {id: user_id}}" class="nav-link">Mon compte</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'challenge' }" class="nav-link">Défis</router-link></li>
-        <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'notification' }" class="nav-link">Invitation</router-link></li>
+        <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'notification' }" class="nav-link">Invitation <i v-if="ListInvitations != ''" class="fas fa-exclamation-circle text-danger"></i></router-link></li>
       </ul>
     </div>
   </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   export default {
     name: 'Navbar',
      
@@ -27,7 +28,15 @@
           token: localStorage.getItem('access'),
           user_id: localStorage.getItem('id')
         }
-    }  
+    },
+    mounted () {
+        this.$store.dispatch('getListInvitations');
+    },
+    computed: {
+      ...mapGetters(['ListInvitations']),
+      ...mapGetters(['MessageInvitation']),
+    
+    }, 
   }
 </script>
 

@@ -23,15 +23,23 @@ const actions = {
         routes.push({ name: 'page-not-found' });
   }
 },
-async addPost(context, post) {
+  async addPost(context, post) {
+      const access = localStorage.getItem("access")
+      try {
+        let response = await getAPI.post(`/post/`, {text: post.text, author: post.user, group: post.group}, { headers: { Authorization: `Bearer ${access}` }}  );
+        context.commit('ADD_NEW_POST', response.data.results);
+      } catch (e) {
+          routes.push({ name: 'page-not-found' });
+    }
+  },
+  async delPost(context, post) {
     const access = localStorage.getItem("access")
     try {
-      let response = await getAPI.post(`/post/`, {text: post.text, author: post.user, group: post.group}, { headers: { Authorization: `Bearer ${access}` }}  );
-      context.commit('ADD_NEW_POST', response.data.results);
+      await getAPI.delete(`/post/${post.id}`, { headers: { Authorization: `Bearer ${access}` }}  );
     } catch (e) {
         routes.push({ name: 'page-not-found' });
-  }
-},
+      }
+  },
 }
    
 const getters = {

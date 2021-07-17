@@ -52,7 +52,7 @@ async acceptInvitation(context, user) {
 }
    
 const getters = {
-  ListInviatitions: state => {
+  ListInvitations: state => {
     return state.list_invitations_user
   },
   MessageInvitation: state => {

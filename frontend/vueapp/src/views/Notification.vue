@@ -5,15 +5,15 @@
        <div class="row sections">
           <!-- Earnings (Monthly) Card Example -->
           <div class="col-md-12">
-              <div class="card mb-3" style="background: #ffff" v-if=" ListInviatitions != ''">
+              <div class="card mb-3" style="background: #ffff" v-if=" ListInvitations != ''">
                 <div class="card-header"><h3>Invitation</h3></div>
-                    <div class="card-body d-flex justify-content-around" v-for="(data, index) in  ListInviatitions" :key="index">
+                    <div class="card-body d-flex justify-content-around" v-for="(data, index) in  ListInvitations" :key="index">
                         <h5 class="card-title">{{ data.description }}: <b>{{ data.group_name }}</b></h5>
                             <button class="btn btn-primary" v-on:click="accept_invitation(data.group, data.id)">Accepter</button>
                             <button class="btn btn-danger" v-on:click="decline_invitation(data.id)">Refuser</button>  
                     </div>
               </div>
-              <h3 class="text-center" v-if="ListInviatitions ==''">Pas de Notification</h3>
+              <h3 class="text-center" v-if="ListInvitations ==''">Pas de Notification</h3>
           </div>
        </div>
 </div>
@@ -41,7 +41,7 @@ export default {
         this.$store.dispatch('getListInvitations');
     },
     computed: {
-      ...mapGetters(['ListInviatitions']),
+      ...mapGetters(['ListInvitations']),
       ...mapGetters(['MessageInvitation']),
     
     },
