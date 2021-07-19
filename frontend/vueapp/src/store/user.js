@@ -6,7 +6,9 @@ import {
   INCORRECT_EMAIL,
   PASSWORD_NOT_SECUR,
   CHANGED_PASSWORD,
-  EMAIL_SENT
+  EMAIL_SENT,
+  DEL_USER,
+  NO_DEL
  }  from './const'
 
 
@@ -14,7 +16,8 @@ const state = {
     list_users: "",
     message_email: "",
     message_reset: "",
-    mess_no_user: ""
+    mess_user: "",
+    all_users: ""
  }
 
 const mutations = {
@@ -27,11 +30,14 @@ const mutations = {
   GET_LIST_USER(state, user) {
     state.list_users = user;
   },
+  GET_ALL_USER(state, user) {
+    state.all_users = user;
+  },
   DEL_LIST_USER(state) {
     state.list_users = "";
   },
-  MESS_USER_NO_FOUND(state, message) {
-    state.mess_no_user = message;
+  MESS_USER(state, message) {
+    state.mess_user = message;
   },
 }
  
@@ -41,13 +47,28 @@ const actions = {
       const access = localStorage.getItem("access");
       let response = await getAPI.get(`/profile/?username=${user.username}`, { headers: { Authorization: `Bearer ${access}` }});
       context.commit("GET_LIST_USER", response.data.results);
+      console.log(response.data.results)
       if (state.list_users.length > 0) {
-        context.commit("MESS_USER_NO_FOUND", "");
+        context.commit("MESS_USER", "");
       } else {
-        context.commit("MESS_USER_NO_FOUND", NO_USER_FOUND);
+        context.commit("MESS_USER", NO_USER_FOUND);
       }
     } catch(e) {
       context.commit("DEL_LIST_USER", NO_USER_FOUND);
+    }
+  },
+  async getALLUsers(context) {
+    const is_staff = localStorage.getItem("is_staff");
+    if (is_staff != "true") {
+      routes.push({ name: 'page-not-found' });
+    } else {
+      try {
+        const access = localStorage.getItem("access");
+        let response = await getAPI.get(`/profile/`, { headers: { Authorization: `Bearer ${access}` }});
+        context.commit("GET_ALL_USER", response.data.results);
+      } catch(e) {
+        routes.push({ name: 'page-not-found' });
+      }
     }
   },
   async delListUsers(context) {
@@ -74,6 +95,16 @@ const actions = {
       } catch(e) {
           context.commit("MESSAGE_RESET", PASSWORD_NOT_SECUR);
     }
+  },
+  async delUser(context, user) {
+    const access = localStorage.getItem("access")
+    try {
+        await getAPI.delete(`/profile/${user.id}/`, { headers: { Authorization: `Bearer ${access}` }}  );
+        await context.commit("MESS_USER", DEL_USER);
+      } catch(e) {
+        await context.commit("MESS_USER", NO_DEL);
+        console.log(state.mess_user)
+    }
   }
 }
    
@@ -87,8 +118,11 @@ const getters = {
   MessageReset: state => {
     return state.message_reset
   },
-  MessageNoUser: state => {
-    return state.mess_no_user
+  MessageUser: state => {
+    return state.mess_user
+  },
+  AllUsers: state => {
+    return state.all_users
   },
   
 }

@@ -8,7 +8,7 @@
               <div class="card mb-3" style="background: #ffff" v-if=" ListInvitations != ''">
                 <div class="card-header"><h3>Invitation</h3></div>
                     <div class="card-body d-flex justify-content-around" v-for="(data, index) in  ListInvitations" :key="index">
-                        <h5 class="card-title"><b>{{ data.sender_name }} </b>{{ data.description }}: <b>{{ data.group_name }}</b></h5>
+                        <h5 class="card-title"><b>{{ data.sender_name }}</b>{{ data.description }}: <b>{{ data.group_name }}</b></h5>
                             <button class="btn btn-primary" v-on:click="accept_invitation(data.group, data.id)">Accepter</button>
                             <button class="btn btn-danger" v-on:click="decline_invitation(data.id)">Refuser</button>  
                     </div>

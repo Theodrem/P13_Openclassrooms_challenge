@@ -9,11 +9,15 @@ class HasGroupPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if request.method == 'GET':
-            try:
-                User.objects.get(groups=request.GET['id'], id=request.user.id)
+            user = User.objects.get(id=request.user.id)
+            if user.is_staff == True:
                 return True
-            except User.DoesNotExist:
-                return False
+            else:
+                try:
+                    User.objects.get(groups=request.GET['id'], id=request.user.id)
+                    return True
+                except User.DoesNotExist:
+                    return False
         
         else:
             return True

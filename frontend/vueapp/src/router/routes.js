@@ -11,6 +11,8 @@ import ResetPassword from '../views/ResetPassword'
 import ResetPasswordConfirm from '../views/ResetPasswordConfirm'
 import PageNotFound from '../views/PageNotFound'
 import Notification from '../views/Notification'
+import Admin from '../views/Admin'
+
 
 Vue.use(VueRouter)
 
@@ -73,6 +75,13 @@ export default new VueRouter({
         name: 'notification',
         component: Notification 
         },
+        {
+        path: "/admin/",
+        name: 'admin',
+        component: Admin
+        },
+        
+        
 
         
     

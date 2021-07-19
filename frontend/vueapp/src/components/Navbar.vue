@@ -12,6 +12,7 @@
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'profile', params: {id: user_id}}" class="nav-link">Mon compte</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'challenge' }" class="nav-link">Défis</router-link></li>
         <li class="nav-item" v-if="token!=null"><router-link :to = "{ name:'notification' }" class="nav-link">Invitation <i v-if="ListInvitations != ''" class="fas fa-exclamation-circle text-danger"></i></router-link></li>
+        <li class="nav-item" v-if="token!=null && is_staff=='true'"><router-link :to = "{ name:'admin' }" class="nav-link">admin</router-link></li>
       </ul>
     </div>
   </div>
@@ -26,14 +27,14 @@
     data () {
       return {
           token: localStorage.getItem('access'),
-          user_id: localStorage.getItem('id')
+          user_id: localStorage.getItem('id'),
+          is_staff: localStorage.getItem('is_staff')
         }
     },
     mounted () {
       if (this.token != null) {
         this.$store.dispatch('getListInvitations');
-      }
-        
+      }   
     },
     computed: {
       ...mapGetters(['ListInvitations']),

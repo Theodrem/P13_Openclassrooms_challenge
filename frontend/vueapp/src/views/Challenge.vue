@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-md-12 title text-center">
             <h1 id="liste" class="text-white" ></h1>
-            <h2 v-if="MessageChallengeFail !=''" class="text-white">{{ MessageChallengeFail }}</h2>
+            <h2 v-if="MessageChallenge !=''" class="text-white">{{ MessageChallenge }}</h2>
         </div>
     </div>
     <div class="row list text-center">
@@ -75,18 +75,17 @@ export default {
       Navbar,
       Footers,
     },
-    created () {
+    mounted () {
       this.$store.dispatch("get_challenges")
     },
     computed: {
       ...mapGetters(['challenges']),
-      ...mapGetters(['MessageChallengeFail']),
+      ...mapGetters(['MessageChallenge']),
     },
     methods: {
-    get_id: function(data) { 
+    async get_id(data) { 
       this.id = data;
-    
-      this.$store.dispatch('addChallenge', { 
+      await this.$store.dispatch('addUserChallenge', { 
         id: this.id
       })
     }
