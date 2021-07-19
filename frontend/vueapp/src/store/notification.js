@@ -32,7 +32,6 @@ async SendInvitation(context, invitation) {
 },
 async dropInvitation(context, invit) {
     const access = localStorage.getItem("access")
-    console.log(invit)
     try {
       await getAPI.delete(`/notification/${invit.id}/`, { headers: { Authorization: `Bearer ${access}` }}  );
     } catch (e) {
@@ -41,7 +40,6 @@ async dropInvitation(context, invit) {
 },
 async acceptInvitation(context, user) {
   const access = localStorage.getItem("access")
-  console.log(user)
   try {
     await getAPI.post(`profile/add_user_group/`,{user: user.user, group: user.group}, { headers: { Authorization: `Bearer ${access}` }}  ) 
     routes.push({ name: 'group', params: {id: user.group }});

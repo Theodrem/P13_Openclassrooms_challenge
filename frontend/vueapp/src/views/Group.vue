@@ -55,7 +55,7 @@
                                 </td>
                               </tr>
                               <tr>
-                              <td v-if="MessageNoUser !=''" class="text-white">{{ MessageNoUser }}</td>
+                              <td v-if="MessageUser !=''" class="text-white">{{ MessageUser }}</td>
                             </tr>
                             </tfoot>
                       </table>
@@ -91,7 +91,7 @@
               <div class="card text-left">
                 <div class="card-header text-left d-flex justify-content-around">
                   <h4 class="text-capitalize">{{ data.username }}</h4>
-                  <button class="btn btn-danger" v-on:click="delete_post(data.id)" v-if="data.id_user==current_user">Supprimer</button>
+                  <button class="btn btn-danger" v-on:click="delete_post(data.id)" v-if="data.id_user==current_user || current_user_is_staff=='true'">Supprimer</button>
                   </div>
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
@@ -116,8 +116,10 @@ export default {
       return {
           APIData: [],
           current_user: localStorage.getItem("id"),
+          current_user_is_staff: localStorage.getItem("is_staff"),
           username: "",
-          post: ""
+          post: "",
+
         }
     },
     components: {
@@ -130,7 +132,7 @@ export default {
       ...mapGetters(['ListUsers']),
       ...mapGetters(['ListPostsGroup']),
       ...mapGetters(['InfoGroup']),
-      ...mapGetters(['MessageNoUser']),
+      ...mapGetters(['MessageUser']),
     },
     mounted () {
         this.$store.dispatch('getGroup', {

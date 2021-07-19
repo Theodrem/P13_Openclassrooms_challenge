@@ -14,7 +14,8 @@ const state = {
     refreshToken: null,
     id: null,
     message: null,
-    current_user_id: null
+    current_user_id: null,
+    is_admin: null
  }
 const mutations = {
     UPDATE_STORAGE (state, { access, refresh}) {
@@ -29,12 +30,15 @@ const mutations = {
      localStorage.removeItem("access");
      localStorage.removeItem("refresh");
      localStorage.removeItem("id");
+     localStorage.removeItem("is_staff");
    },
    UPDATE_MESSAGE(state, message) {
      state.message = message;
    },
-   UPDATE_ID(state, id) {
+   UPDATE_ID_IS_ADMIN(state, id, admin) {
     state.current_user_id = id;
+    state.is_admin = admin
+
   }
  }
 const actions = {
@@ -58,10 +62,11 @@ const actions = {
      }
   },
    async saveId (context, usercredentials) {
-    const access = localStorage.getItem("access")
-      let response = await getAPI.get(`/profile/?username=${usercredentials.username}`, { headers: { Authorization: `Bearer ${access}` }}  )  
-      localStorage.setItem("id", response.data.results[0].id)
-      await context.commit("UPDATE_ID", localStorage.getItem("id"))
+    const access = localStorage.getItem("access");
+      let response = await getAPI.get(`/profile/?username=${usercredentials.username}`, { headers: { Authorization: `Bearer ${access}` }}  );
+      localStorage.setItem("is_staff", response.data.results[0].is_staff);
+      localStorage.setItem("id", response.data.results[0].id);
+      await context.commit("UPDATE_ID_IS_ADMIN", localStorage.getItem("id"), localStorage.getItem("is_staff"));
       routes.push({ name: 'profile', params: {id: state.current_user_id}});
   },
    async userRegister (context, data) {

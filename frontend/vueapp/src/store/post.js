@@ -35,7 +35,7 @@ const actions = {
   async delPost(context, post) {
     const access = localStorage.getItem("access")
     try {
-      await getAPI.delete(`/post/${post.id}`, { headers: { Authorization: `Bearer ${access}` }}  );
+      await getAPI.delete(`/post/${post.id}/`, { headers: { Authorization: `Bearer ${access}` }}  );
     } catch (e) {
         routes.push({ name: 'page-not-found' });
       }
