@@ -13,7 +13,8 @@ const state = {
     accessToken: null,
     refreshToken: null,
     id: null,
-    message: null,
+    message_register: null,
+    message_login: null,
     current_user_id: null,
     is_admin: null
  }
@@ -32,9 +33,12 @@ const mutations = {
      localStorage.removeItem("id");
      localStorage.removeItem("is_staff");
    },
-   UPDATE_MESSAGE(state, message) {
-     state.message = message;
+   UPDATE_MESSAGE_REG(state, message) {
+     state.message_register = message;
    },
+   UPDATE_MESSAGE_LOG(state, message) {
+    state.message_login = message;
+  },
    UPDATE_ID_IS_ADMIN(state, id, admin) {
     state.current_user_id = id;
     state.is_admin = admin
@@ -58,7 +62,7 @@ const actions = {
       let response = await getAPI.post('/login/', {username: usercredentials.username, password: usercredentials.password});
       await context.commit('UPDATE_STORAGE', { access: response.data.access, refresh: response.data.refresh });
      } catch(e) {
-       context.commit('UPDATE_MESSAGE', ERROR_LOGIN);
+       context.commit('UPDATE_MESSAGE_LOG', ERROR_LOGIN);
      }
   },
    async saveId (context, usercredentials) {
@@ -83,29 +87,31 @@ const actions = {
         routes.push({ name: 'login'});
         } catch(e) {
           if ('username' in e.response.data) {
-            context.commit("UPDATE_MESSAGE", USERNAME_ALREADY_EXIST);
+            context.commit("UPDATE_MESSAGE_REG", USERNAME_ALREADY_EXIST);
           }
           else if ('email' in e.response.data) {
           
           if (e.response.data.email.includes("Enter a valid email address.")) {
-            context.commit("UPDATE_MESSAGE", INCORRECT_EMAIL);
+            context.commit("UPDATE_MESSAGE_REG", INCORRECT_EMAIL);
           } else {
-            context.commit("UPDATE_MESSAGE", EMAIL_ALREADY_EXIST);
+            context.commit("UPDATE_MESSAGE_REG", EMAIL_ALREADY_EXIST);
           }
           }
           else if ('password' in e.response.data) {
-          context.commit("UPDATE_MESSAGE", PASSWORD_NOT_SECUR);
+          context.commit("UPDATE_MESSAGE_REG", PASSWORD_NOT_SECUR);
         }
       }
         } else {
-          context.commit("UPDATE_MESSAGE", PASSWORD_NOT_MATCH)
-          console.log(data.password, data.password2)
+          context.commit("UPDATE_MESSAGE_REG", PASSWORD_NOT_MATCH)
       }
     }
    }
  const getters = {
-  Message: state => {
-    return state.message
+  MessageReg: state => {
+    return state.message_register
+  },
+  MessageLog: state => {
+    return state.message_login
   },
  }
 

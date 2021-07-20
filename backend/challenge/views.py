@@ -1,17 +1,9 @@
-from django.db.models import query
-from rest_framework import generics, viewsets
-from rest_framework.response import Response
-from django.http import HttpResponse
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from django_filters import rest_framework as filters
 from challenge.models import Challenge, UserChallenge
 from challenge.serializers import ChallengeSerializer, GetUserChallengeSerializer, UserChallengeSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
-from rest_framework import status 
-from rest_framework import viewsets, permissions
-from rest_framework.decorators import action
-from django_filters import rest_framework as filters
-from django.http import HttpResponse
-from django.contrib.auth.models import Group, User
-from django.db.models import Count
+
 
 
 class ChallengeView(viewsets.ModelViewSet):
@@ -20,14 +12,6 @@ class ChallengeView(viewsets.ModelViewSet):
     serializer_class = ChallengeSerializer
 
 
-class UserChallengePermission(permissions.BasePermission):
-
-    def has_object_permission(self, request, view, user_challenge):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-
-        return user_challenge.user == request.user
-    
 class UserChallengeFilter(filters.FilterSet):
     name = filters.CharFilter(field_name="name", lookup_expr='icontains')
     id = filters.NumberFilter(field_name="user_id")
@@ -40,7 +24,7 @@ class UserChallengeFilter(filters.FilterSet):
 class UserChallengeView(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = UserChallengeFilter
-    permission_classes = (IsAuthenticated, UserChallengePermission)
+    permission_classes = (IsAuthenticated, )
     queryset = UserChallenge.objects.all()
 
     def get_serializer_class(self):

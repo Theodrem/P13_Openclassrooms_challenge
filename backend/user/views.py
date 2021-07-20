@@ -66,18 +66,12 @@ class UserView(viewsets.ModelViewSet):
         except(User.DoesNotExist, Group.DoesNotExist):
             return Response(status=rest_status.HTTP_404_NOT_FOUND)
     
-    
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    permission_classes = (AllowAny,)
-    serializer_class = RegisterSerializer
-    
-        
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    permission_classes = (AllowAny,)
-    serializer_class = RegisterSerializer
 
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
+    
 
 class LogoutView(generics.GenericAPIView):
     """
@@ -100,7 +94,6 @@ class GroupView(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     
-
 
 class PostView(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
