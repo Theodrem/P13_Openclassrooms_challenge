@@ -171,7 +171,7 @@ export default {
       
     },
     mounted () { 
-        this.$store.dispatch('getALLUsers')
+        this.$store.dispatch('getAllUsers')
         this.$store.dispatch("get_challenges")
         this.$store.dispatch('getAllGroups')
       },

@@ -37,7 +37,7 @@
                       <div class="row no-gutters align-items-center">
                           <table class="table">
                             <tbody  v-for="(data, index) in Members" :key="index">
-                              <tr>
+                              <tr v-if="data != null">
                                 <td class="text-white"><router-link :to = "{ name:'profile', params: {id: data.id}}" class="username">{{ data.username }}</router-link></td>
                               </tr>
                             </tbody>
@@ -77,7 +77,7 @@
                       </tr>
                     </thead>
                       <tbody  v-for="(data, index) in  ListUsers" :key="index" >
-                          <tr>
+                          <tr v-if="data != null">
                               <td><router-link :to = "{ name:'profile', params: {id: data.id}}" class="username">{{ data.username }}</router-link></td>
                               <td><button type="submit" class="btn btn-dark " v-on:click="add_user(data.id)"><i class="fas fa-plus"></i></button></td>
                           </tr>
@@ -88,11 +88,11 @@
         </div>
     <div class="row" v-if="ListPostsGroup !=''">
     <div class="col-md-12" v-for="(data, index) in ListPostsGroup" :key="index">
-              <div class="card text-left">
+              <div class="card text-left" v-if="data != null">
                 <div class="card-header text-left d-flex justify-content-around">
-                  <h4 class="text-capitalize">{{ data.username }}</h4>
+                  <h4 class="text-capitalize" >{{ data.username }}</h4>
                   <button class="btn btn-danger" v-on:click="delete_post(data.id)" v-if="data.id_user==current_user || current_user_is_staff=='true'">Supprimer</button>
-                  </div>
+                </div>
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
                           <h3>{{ data.text }}</h3>  

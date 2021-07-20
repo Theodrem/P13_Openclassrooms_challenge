@@ -20,7 +20,7 @@
                             <p class="text-muted mb-4">Le mot de passe ne doit pas contenir que des chiffres</p>
                             <p class="text-muted mb-4">Evite les mots de passe trop commun</p>
 
-                            <p v-if="Message != null">{{ Message }}</p>
+                            <p v-if="MessageReg != null">{{ MessageReg }}</p>
                             <form v-on:submit.prevent="register">
                                 <div class="form-group">
                                 <input type="text" name="username" id="user" v-model="username" class="form-control" placeholder="Nom d'utilisateur*">
@@ -80,7 +80,7 @@
       Footer
     },
     computed: {
-      ...mapGetters(['Message'])
+      ...mapGetters(['MessageReg'])
     },
     methods: {
       async register () {

@@ -47,7 +47,6 @@ const actions = {
       const access = localStorage.getItem("access");
       let response = await getAPI.get(`/profile/?username=${user.username}`, { headers: { Authorization: `Bearer ${access}` }});
       context.commit("GET_LIST_USER", response.data.results);
-      console.log(response.data.results)
       if (state.list_users.length > 0) {
         context.commit("MESS_USER", "");
       } else {
@@ -57,7 +56,7 @@ const actions = {
       context.commit("DEL_LIST_USER", NO_USER_FOUND);
     }
   },
-  async getALLUsers(context) {
+  async getAllUsers(context) {
     const is_staff = localStorage.getItem("is_staff");
     if (is_staff != "true") {
       routes.push({ name: 'page-not-found' });
