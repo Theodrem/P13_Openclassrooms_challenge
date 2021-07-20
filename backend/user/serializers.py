@@ -9,18 +9,27 @@ from user.models import Post
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    """
+    Group serializer
+    """
     class Meta:
         model = Group
         fields = ('name', 'id')
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    User serializer for method Get
+    """
     groups = GroupSerializer(many=True)
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'is_staff', 'groups', 'first_name', 'last_name')
 
 class RegisterSerializer(serializers.ModelSerializer):
+    """
+    Register serializer with methode create and validate for check if the passowrds matches
+    """
     email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=User.objects.all())]
@@ -57,6 +66,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class LogoutSerializer(serializers.Serializer):
+    """
+    Logout serializer. Blacklist the access token
+    """
     refresh = serializers.CharField()
     default_error_messages = {"bad_token": ("Token is invalid or expired")}
 
@@ -73,11 +85,17 @@ class LogoutSerializer(serializers.Serializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    """
+    Post serializer for Post method
+    """
     class Meta:
         model = Post
         fields = ('__all__')
 
 class GetPostSerializer(serializers.ModelSerializer):
+    """
+    Post serializer for get method
+    """
     username = serializers.CharField(source='author.username') 
     id_user = serializers.CharField(source='author.id')
     class Meta:

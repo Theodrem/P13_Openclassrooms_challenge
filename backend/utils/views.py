@@ -5,6 +5,9 @@ from .serializers import NotificationSerializer, GetNotificationSerializer
 from .models import Notifications
 
 class NotificationsFilter(filters.FilterSet):
+    """
+    Notifications filiter by ricipient 
+    """
     ricipient = filters.CharFilter(field_name="ricipient")
 
     class Meta:
@@ -18,6 +21,9 @@ class NotificationView(viewsets.ModelViewSet):
     queryset = Notifications.objects.all()
 
     def get_serializer_class(self):
+        """
+        Select GetNotificationSerializer if method GET 
+        """
         if self.action in ["list", "detail"]:
             return GetNotificationSerializer
         return NotificationSerializer
