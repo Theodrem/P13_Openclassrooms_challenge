@@ -11,6 +11,9 @@ from .permissions import HasGroupPermission
 
 
 class UserFilter(filters.FilterSet):
+    """
+    Filter for the model User
+    """
     username = filters.CharFilter(field_name="username", lookup_expr='icontains')
     groups = filters.NumberFilter(field_name="groups")
     id = filters.NumberFilter(field_name="id")
@@ -21,6 +24,9 @@ class UserFilter(filters.FilterSet):
 
 
 class GroupFilter(filters.FilterSet):
+    """
+    Filter for the model Group
+    """
     name = filters.CharFilter(field_name="name", lookup_expr='icontains')
     id = filters.NumberFilter(field_name="id")
 
@@ -29,6 +35,9 @@ class GroupFilter(filters.FilterSet):
         fields = ['name',  'id']
 
 class PostFilter(filters.FilterSet):
+    """
+    Filter for the model Post
+    """
     group = filters.NumberFilter(field_name="group")
     id = filters.NumberFilter(field_name="id")
 
@@ -46,6 +55,9 @@ class UserView(viewsets.ModelViewSet):
 
     @action(methods=['post'], detail=False)
     def add_user_group(self, request):
+        """
+        add user in group if user and group input exist
+        """
         try:
             user = User.objects.get(id=request.data['user'])
             group = Group.objects.get(id=request.data['group'])
@@ -57,6 +69,9 @@ class UserView(viewsets.ModelViewSet):
     
     @action(methods=['delete'], detail=False)
     def delete_user_group(self, request):
+        """
+        delete user in group if user and group input exist
+        """
         try:
             user = User.objects.get(id=request.data['user'])
             group = Group.objects.get(id=request.data['group'])
@@ -102,6 +117,9 @@ class PostView(viewsets.ModelViewSet):
     queryset = Post.objects.all()
 
     def get_serializer_class(self):
+        """
+        GetPostSerializer is used if method Get 
+        """
         if self.action in ["list", "detail"]:
             return GetPostSerializer
         return PostSerializer

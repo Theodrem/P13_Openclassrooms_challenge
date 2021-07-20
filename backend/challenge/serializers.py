@@ -18,6 +18,9 @@ class ChallengeSerializer(serializers.ModelSerializer):
         fields = ("__all__")
 
 class GetUserChallengeSerializer(serializers.ModelSerializer):
+    """
+    Get challenges informations for GET method 
+    """
     title = serializers.CharField(source='challenge.title') 
     category = serializers.CharField(source='challenge.category')
     difficult = serializers.CharField(source='challenge.difficult')

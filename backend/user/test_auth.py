@@ -26,7 +26,7 @@ class UserTests(APITestCase):
 
     def test_register(self):
         """
-        Ensure we can create a new account object.
+        Test register with valid datas
         """
         url = reverse('auth_register')
         data = {'username': 'test', 'email': 'test@test.fr', 'password': 'salut-passw', 'password2': 'salut-passw', 'first_name': '', 'last_name': ''}
@@ -36,7 +36,7 @@ class UserTests(APITestCase):
 
     def test_register_password_not_match(self):
         """
-        Ensure we can create a new account object.
+        Test register with invalid password
         """
         url = reverse('auth_register')
         data = {'username': 'test', 'email': 'test@test.fr', 'password': 'salut-passw', 'password2': 'salut-password', 'first_name': '', 'last_name': ''}
@@ -46,7 +46,7 @@ class UserTests(APITestCase):
 
     def test_register_email_exist(self):
         """
-        Ensure we can create a new account object.
+        Test register with invalid email
         """
         url = reverse('auth_register')
         data = {'username': 'test', 'email': 'test2@email.fr', 'password': 'salut-password', 'password2': 'salut-password', 'first_name': '', 'last_name': ''}
@@ -103,6 +103,9 @@ class UserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         
     def test_get_users(self):
+        """
+        Test get all users
+        """
         url ='http://127.0.0.1:8000/profile/'
         response = self.client.get(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -110,6 +113,9 @@ class UserTests(APITestCase):
 
     
     def test_get_user_detail(self):
+        """
+        test get user detail
+        """
         url = f'http://127.0.0.1:8000/profile/{self.user2.id}/'
         response = self.client.get(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
