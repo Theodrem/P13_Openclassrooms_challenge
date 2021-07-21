@@ -135,6 +135,7 @@ export default {
       ...mapGetters(['MessageUser']),
     },
     mounted () {
+      //Get all groups, challenges, user information
         this.$store.dispatch('getGroup', {
             id: this.$router.currentRoute.params.id
         });
@@ -146,11 +147,13 @@ export default {
         });
     },
     methods: {
+      // Get list users 
       async search () { 
         await this.$store.dispatch('getListUsers', {
           username: this.username,
         })
       },
+      // Send invitation to user
       async add_user (user) { 
         await this.$store.dispatch('SendInvitation', {
           user: user,
@@ -158,6 +161,7 @@ export default {
         })
         await this.$store.dispatch('delListUsers')
       },
+      // Add post message on group
       async add_post () { 
         await this.$store.dispatch('addPost', {
           user: this.current_user,
@@ -168,8 +172,8 @@ export default {
           group: this.$router.currentRoute.params.id
         });
       },
+      // Delete post on group
       async delete_post (id) { 
-        console.log(id)
         await this.$store.dispatch('delPost', {
           id: id
         });
@@ -177,6 +181,7 @@ export default {
           group: this.$router.currentRoute.params.id
         });
       },
+      // The user is removed from the group
       async quit_group(id) { 
         await this.$store.dispatch('quitGroup', { 
             group: id,
@@ -219,12 +224,6 @@ header.masthead {
 
 .list {
     margin-top: 150px;
-}
-
-#body { 
-  background:  linear-gradient(to bottom, rgba(128, 7, 7, 0.8) 0%, #201d1dcc 100%), url("../assets/paris.jpg");
-  background-position: center;
-  height: 50vh;
 }
 
 #profile {

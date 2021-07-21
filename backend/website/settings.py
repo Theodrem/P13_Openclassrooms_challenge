@@ -147,8 +147,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 CORS_ORIGIN_ALLOW_ALL = True
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(weeks=10),
-    'REFRESH_TOKEN_LIFETIME': timedelta(weeks=10),
+    'ACCESS_TOKEN_LIFETIME': timedelta(weeks=50),
+    'REFRESH_TOKEN_LIFETIME': timedelta(weeks=50),
 }
 
 REST_FRAMEWORK = {

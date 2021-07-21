@@ -38,6 +38,7 @@ export default {
       Footers,
     },
     mounted () {
+      // Get users noifications
         this.$store.dispatch('getListInvitations');
     },
     computed: {
@@ -46,6 +47,7 @@ export default {
     
     },
     methods: {
+      // The user accept invitation
     async accept_invitation (data, id_invit) { 
       await this.$store.dispatch('acceptInvitation', { 
         group: data,
@@ -56,6 +58,7 @@ export default {
       })
     },
     async decline_invitation (id_invit) { 
+      // The user decline invitation
       await this.$store.dispatch('dropInvitation', {
         id: id_invit
       })
@@ -63,12 +66,7 @@ export default {
     },
   }
 }
-
-
 </script>
 
 <style scoped>
-
-
-
 </style>

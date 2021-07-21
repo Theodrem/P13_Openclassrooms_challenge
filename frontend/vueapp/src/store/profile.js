@@ -27,6 +27,7 @@ const state = {
 }
 
 const actions = {
+  // Get user profile with id in url
   async getProfile(context, user) {
     const access = localStorage.getItem("access");
     try {
@@ -38,6 +39,7 @@ const actions = {
   },
 
   async getUserChallenge(context, user) {
+    // Get user challenge with id in url
     const access = localStorage.getItem("access");
     try {
     let response = await getAPI.get(`users-challenges/?status=${user.status}&user_id=${user.id}`, { headers: { Authorization: `Bearer ${access}` }}  );
@@ -51,6 +53,7 @@ const actions = {
     }
   },
   async addGroup (context, group) {
+    // Add new group and add current user in this group
       const access = localStorage.getItem("access")
       const user_id = localStorage.getItem("id")
       try {
@@ -62,6 +65,7 @@ const actions = {
       }   
     }, 
     async updateChallenge(context, user_challenge) {
+      // Update Challenge if the user validate challenge
       const access = localStorage.getItem("access");
       const user_id = localStorage.getItem("id");
       try {
@@ -72,6 +76,7 @@ const actions = {
       } 
     },   
     async deleteChallenge(context, user_challenge) {
+      // Admin user delete challenge 
       const access = localStorage.getItem("access");
       try {
         await getAPI.delete(`/users-challenges/${user_challenge.id}/`, { headers: { Authorization: `Bearer ${access}` }}  );

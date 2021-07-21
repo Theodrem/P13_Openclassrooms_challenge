@@ -47,6 +47,7 @@ const mutations = {
  }
 const actions = {
    async userLogout (context) {
+     // When user logout we destroy the tokens, id, is_admin value in localstorage
     try {
      const access = localStorage.getItem("access")
      const refresh = localStorage.getItem("refresh")
@@ -58,6 +59,7 @@ const actions = {
     }
    },
    async userLogin (context, usercredentials) { 
+     // When user login we add the tokens, is_admin value in localstorage
      try {
       let response = await getAPI.post('/login/', {username: usercredentials.username, password: usercredentials.password});
       await context.commit('UPDATE_STORAGE', { access: response.data.access, refresh: response.data.refresh });
@@ -66,6 +68,7 @@ const actions = {
      }
   },
    async saveId (context, usercredentials) {
+     //Save id of current user in local storage
     const access = localStorage.getItem("access");
       let response = await getAPI.get(`/profile/?username=${usercredentials.username}`, { headers: { Authorization: `Bearer ${access}` }}  );
       localStorage.setItem("is_staff", response.data.results[0].is_staff);
@@ -74,6 +77,7 @@ const actions = {
       routes.push({ name: 'profile', params: {id: state.current_user_id}});
   },
    async userRegister (context, data) {
+     // Add new user with form register values
        if (data.password == data.password2) {
          try {
           await getAPI.post('/register/', {
@@ -86,6 +90,7 @@ const actions = {
         })
         routes.push({ name: 'login'});
         } catch(e) {
+          // All errors messages
           if ('username' in e.response.data) {
             context.commit("UPDATE_MESSAGE_REG", USERNAME_ALREADY_EXIST);
           }

@@ -29,9 +29,8 @@
   </header>
   <div class="container">
     <div class="row">
-        <div class="col-md-12 title text-center">
-            <h1 id="liste" class="text-white" ></h1>
-            <h2 v-if="MessageChallenge !=''" class="text-white">{{ MessageChallenge }}</h2>
+        <div class="col-md-12 title text-center">     
+            <h6 v-if="MessageChallenge !=''" >{{ MessageChallenge }}</h6>
         </div>
     </div>
     <div class="row list text-center">
@@ -79,10 +78,12 @@ export default {
       this.$store.dispatch("get_challenges")
     },
     computed: {
+      //Get all challenges and the messages if the user add challenge already exist 
       ...mapGetters(['challenges']),
       ...mapGetters(['MessageChallenge']),
     },
     methods: {
+      //Get id for add user challenges
     async get_id(data) { 
       this.id = data;
       await this.$store.dispatch('addUserChallenge', { 

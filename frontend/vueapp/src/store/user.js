@@ -17,7 +17,7 @@ const state = {
     message_email: "",
     message_reset: "",
     mess_user: "",
-    all_users: ""
+    all_users: "",
  }
 
 const mutations = {
@@ -39,6 +39,7 @@ const mutations = {
   MESS_USER(state, message) {
     state.mess_user = message;
   },
+
 }
  
 const actions = {

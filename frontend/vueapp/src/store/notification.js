@@ -12,6 +12,7 @@ const mutations = {
 }
 const actions = {
   async getListInvitations(context) {
+    // Get all users notifications
     const access = localStorage.getItem("access")
     const user_id = localStorage.getItem("id")
     try {
@@ -22,6 +23,7 @@ const actions = {
   }
 },
 async SendInvitation(context, invitation) {
+  // Send invitation to user
     const access = localStorage.getItem("access")
     const user_id = localStorage.getItem("id")
     try {
@@ -31,6 +33,7 @@ async SendInvitation(context, invitation) {
   }
 },
 async dropInvitation(context, invit) {
+  // Delete one notification
     const access = localStorage.getItem("access")
     try {
       await getAPI.delete(`/notification/${invit.id}/`, { headers: { Authorization: `Bearer ${access}` }}  );
@@ -39,6 +42,7 @@ async dropInvitation(context, invit) {
   }
 },
 async acceptInvitation(context, user) {
+  // Add  user in group
   const access = localStorage.getItem("access")
   try {
     await getAPI.post(`profile/add_user_group/`,{user: user.user, group: user.group}, { headers: { Authorization: `Bearer ${access}` }}  ) 
