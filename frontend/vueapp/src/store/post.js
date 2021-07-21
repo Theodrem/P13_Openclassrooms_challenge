@@ -15,6 +15,7 @@ const mutations = {
 }
 const actions = {
   async getListPost(context, group) {
+    // Get all posts on the group
     const access = localStorage.getItem("access")
     try {
       let response = await getAPI.get(`/post/?group=${group.group}`, { headers: { Authorization: `Bearer ${access}` }}  );
@@ -24,6 +25,7 @@ const actions = {
   }
 },
   async addPost(context, post) {
+    // Add new post on the group
       const access = localStorage.getItem("access")
       try {
         let response = await getAPI.post(`/post/`, {text: post.text, author: post.user, group: post.group}, { headers: { Authorization: `Bearer ${access}` }}  );
@@ -33,6 +35,7 @@ const actions = {
     }
   },
   async delPost(context, post) {
+    // Del post on the group
     const access = localStorage.getItem("access")
     try {
       await getAPI.delete(`/post/${post.id}/`, { headers: { Authorization: `Bearer ${access}` }}  );

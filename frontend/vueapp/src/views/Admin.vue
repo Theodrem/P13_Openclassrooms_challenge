@@ -176,6 +176,7 @@ export default {
         this.$store.dispatch('getAllGroups')
       },
     methods: {
+      // Delete select user with his id
         async del_user(id) {
            await this.$store.dispatch('delUser', {
                id: id,
@@ -183,18 +184,22 @@ export default {
             this.$store.dispatch('getAllUsers')
         },
         async del_group(id) {
+          // Delete select group with his id
            await this.$store.dispatch('delGroup', {
                id: id
             })
+          //refresh list 
           await this.$store.dispatch('getAllGroups')
         },
         async del_challenge(id) {
+          // Delete select challenge with his id
            await this.$store.dispatch('delChallenge', {
                id: id,
             })
           await this.$store.dispatch('get_challenges');
         },
         async add_challenge() {
+          // Add new challenge
            await this.$store.dispatch('addChallenge', {
                 title: this.title,
                 category: this.category,

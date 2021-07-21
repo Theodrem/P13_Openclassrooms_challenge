@@ -24,6 +24,7 @@ const mutations = {
 }
 const actions = {
   async getGroup(context, group) {
+    // Get group by id
     const access = localStorage.getItem("access")
     try {
       let response = await getAPI.get(`/group/?id=${group.id}`, { headers: { Authorization: `Bearer ${access}` }}  );
@@ -33,6 +34,7 @@ const actions = {
     }
   },
   async getAllGroups(context) {
+    // Get all groups for admin user
     const is_staff = localStorage.getItem("is_staff")
     const access = localStorage.getItem("access")
     if (is_staff != "true") {
@@ -47,6 +49,7 @@ const actions = {
     }
   },
   async getMembersGroup(context, group) {
+    // Get members group 
     const access = localStorage.getItem("access")
     try {
       let response = await getAPI.get(`/profile/?groups=${group.id}`, { headers: { Authorization: `Bearer ${access}` }}  );
@@ -56,6 +59,7 @@ const actions = {
   }
   },
   async quitGroup(context, user) {
+    // Current user quit the group
     const access = localStorage.getItem("access")
     try {
       await getAPI.delete(`profile/delete_user_group/`,{data: {user: user.user, group: user.group},  headers: { Authorization: `Bearer ${access}` }},    );
@@ -65,6 +69,7 @@ const actions = {
     }
   },
   async delGroup(context, group) {
+    // Admin user delete group
     const access = localStorage.getItem("access")
     try {
       await getAPI.delete(`/group/${group.id}/`, {headers: { Authorization: `Bearer ${access}` }},    );

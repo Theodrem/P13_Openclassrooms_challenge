@@ -21,12 +21,14 @@ class ChallengeTests(APITestCase):
         self.access = response.data['access']
         self.refresh =  response.data['refresh']
 
+        #self.client.force_authenticate(user=self.user, token="123")
+
     def test_get_all_challenges(self):
         """
         Tet get all challenges
         """
         url = 'http://127.0.0.1:8000/challenges/'
-        response = self.client.get(url, format='json', HTTP_AUTHORIZATION=f'Bearer {self.access}')
+        response = self.client.get(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(json.dumps(response.data["results"][0]['category']), '"Sportif"')
     

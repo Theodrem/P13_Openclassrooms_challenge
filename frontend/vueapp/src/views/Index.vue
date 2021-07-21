@@ -41,7 +41,7 @@
                           <th scope="col">Utilisateurs</th>
                         </tr>
                       </thead>
-                      <tbody  v-for="(data, index) in  ListUsers.results" :key="index" >
+                      <tbody  v-for="(data, index) in  ListUsers" :key="index" >
                           <tr>
                               <td><router-link :to = "{ name:'profile', params: {id: data.id}}" class="username">{{ data.username }}</router-link></td>
                           </tr>
@@ -107,6 +107,7 @@
     },
     methods: {
       search () { 
+        //Get list users
         this.$store.dispatch('getListUsers', {
           username: this.username,
         })

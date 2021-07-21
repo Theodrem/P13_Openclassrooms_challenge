@@ -28,6 +28,9 @@ class UserChallengeView(viewsets.ModelViewSet):
     queryset = UserChallenge.objects.all()
 
     def get_serializer_class(self):
+        """
+        GetUserChallengeSerializer is used if method Get 
+        """
         if self.action in ["list", "detail", "user"]:
             return GetUserChallengeSerializer
         return UserChallengeSerializer

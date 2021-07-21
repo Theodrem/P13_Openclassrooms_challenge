@@ -26,6 +26,7 @@ const state = {
   },
 }
 const actions = {
+  // Get all challenges for challenge and admin page
    async get_challenges (context) {
      try {
       const token = localStorage.getItem("access");
@@ -36,16 +37,19 @@ const actions = {
      }
         },
   async addUserChallenge (context, challenge) {
+    //  the current user adds a challenge to their account
     const access = localStorage.getItem("access");
     const user_id = localStorage.getItem("id");
     try {
       await getAPI.post('/users-challenges/',{user: user_id, challenge: challenge.id, status: "En cours"}, { headers: { Authorization: `Bearer ${access}` }}  );
       routes.push({ name: 'profile', params: {id: user_id}});
+      context.commit("UPDATE_MESS_CHALLENGE", '');
     } catch (e) {
       context.commit("UPDATE_MESS_CHALLENGE", MESSAGE_ADD_CHALLENGE_FAIL);
     }   
   },
   async delChallenge (context, challenge) {
+     //  the admin user delete one challenge
     const access = localStorage.getItem("access");
     try {
       await getAPI.delete(`/challenges/${challenge.id}/`,{ headers: { Authorization: `Bearer ${access}` }}  );
@@ -56,8 +60,8 @@ const actions = {
     }   
   },
   async addChallenge (context, challenge) {
+    //  the admin user add one challenge
     const access = localStorage.getItem("access");
-    console.log(challenge)
     try {
       await getAPI.post('/challenges/',{category: challenge.category, title: challenge.title, icon: challenge.icon, difficult: challenge.difficult},
        { headers: { Authorization: `Bearer ${access}` }}  );

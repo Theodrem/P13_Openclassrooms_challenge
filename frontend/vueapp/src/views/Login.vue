@@ -66,6 +66,7 @@
           password: this.password
         })
         .then(() => {
+          //save id user for get his profile 
           this.$store.dispatch('saveId', {
             username: this.username
           })
