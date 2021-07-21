@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="row list text-center">
-      <div class="col-md-4 text-center" v-for="(data, index) in  challenges.results" :key="index">
+      <div class="col-md-4 text-center loop" v-for="(data, index) in  challenges.results" :key="index">
             <div class="card" style="background: #FFF">
                 <div class="card-header" style="background: #FFF">
                     <h5>{{ data.category }}</h5>
