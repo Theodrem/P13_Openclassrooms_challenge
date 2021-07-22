@@ -14,8 +14,8 @@ lib/
 __pypackages__/
 
 # Environments
-.env
-env/
-
-
+.venv
+venv/
+var
+var.py
 #gitlance
