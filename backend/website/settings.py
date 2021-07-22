@@ -3,18 +3,18 @@ from pathlib import Path
 from datetime import timedelta
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
-from .var import ALLOWED_HOSTS, PASSWORD_DB, SECRET_KEY 
+from .var import ENV 
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = SECRET_KEY
+SECRET_KEY = ENV["SECRET_KEY"]
 
 
 DEBUG = False
 
-ALLOWED_HOSTS = ALLOWED_HOSTS
+ALLOWED_HOSTS = ENV["ALLOWED_HOSTS"]
 
 
 # Application definition
@@ -84,7 +84,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'challenge',
             'USER': 'theodrem',
-            'PASSWORD': PASSWORD_DB,
+            'PASSWORD': ENV["PASSWORD_DB"],
             'HOST': 'localhost',
             'PORT': '5432'
         }
