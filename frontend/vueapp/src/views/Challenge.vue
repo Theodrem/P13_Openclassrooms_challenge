@@ -33,15 +33,22 @@
             <h6 v-if="MessageChallenge !=''" >{{ MessageChallenge }}</h6>
         </div>
     </div>
-    <div class="row list text-center">
-      <div class="col-md-4 text-center loop" v-for="(data, index) in  challenges.results" :key="index">
+    <div class="row list">
+      <div class="col-md-4 loop" v-for="(data, index) in  challenges.results" :key="index">
             <div class="card" style="background: #FFF">
-                <div class="card-header" style="background: #FFF">
-                    <h5>{{ data.category }}</h5>
+                <div class="card-header text-left" style="background: #FFF">
+                    <h3 class="card-title">{{ data.category }}</h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body text-center">
                     <div class="card-body">
-                        <h1><i :class="data.icon"></i></h1>
+                        <h1  v-if="data.category=='Sportif'"><i :class="data.icon"  style="color: #EEC610"></i></h1>
+                        <h1  v-if="data.category=='Santé'"><i :class="data.icon"  style="color: #2764C8"></i></h1>
+                        <h1  v-if="data.category=='Environmental'"  style="color: #32AC30"><i :class="data.icon"></i></h1>
+                        <h1  v-if="data.category=='Sensation'"  style="color: #C82736"><i :class="data.icon"></i></h1>
+                        <h1  v-if="data.category=='Culture'"><i :class="data.icon"  style="color: #38C1B0"></i></h1>
+                        
+
+                        
                         <h4 class="card-title">{{ data.title }}</h4>
                         <h5 v-if="data.difficult==4" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
                         <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
