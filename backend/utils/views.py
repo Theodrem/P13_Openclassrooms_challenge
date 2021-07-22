@@ -9,7 +9,6 @@ class NotificationsFilter(filters.FilterSet):
     Notifications filiter by ricipient 
     """
     ricipient = filters.CharFilter(field_name="ricipient")
-    ssss
     class Meta:
         model = Notifications
         fields = ['ricipient']
