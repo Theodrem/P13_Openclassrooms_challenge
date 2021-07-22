@@ -8,7 +8,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+ssss
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
@@ -169,9 +169,8 @@ DJANGO_REST_RESETPASSWORD_TOKEN_CONFIG = {
     }
 }
 
-
 sentry_sdk.init(
-    dsn="https://54fe1ecbd1f549aba84b0746d6046e2a@o574434.ingest.sentry.io/5875670",
+    dsn="https://298f786556b54591a600acdbeb5e9892@o574434.ingest.sentry.io/5875692",
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
