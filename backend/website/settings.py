@@ -8,7 +8,6 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ssss
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
