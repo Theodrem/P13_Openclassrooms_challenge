@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-
- 
-=======
->>>>>>> 50e4fc7ae66d01bcf978ecbeceba5d32f832ad26
 import os
 from pathlib import Path
 from datetime import timedelta
@@ -14,18 +9,12 @@ from .var import ALLOWED_HOSTS, PASSWORD_DB, SECRET_KEY
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-<<<<<<< HEAD
-
-SECRET_KEY = os.environ.get("SECRET_KEY")
-=======
 SECRET_KEY = SECRET_KEY
->>>>>>> 50e4fc7ae66d01bcf978ecbeceba5d32f832ad26
 
 
 DEBUG = False
 
 ALLOWED_HOSTS = ALLOWED_HOSTS
-
 
 
 # Application definition
