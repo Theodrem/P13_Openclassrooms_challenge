@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = ENV["SECRET_KEY"]
 
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ENV["ALLOWED_HOSTS"]
+ALLOWED_HOSTS = [ENV["ALLOWED_HOSTS"]]
 
 
 # Application definition
