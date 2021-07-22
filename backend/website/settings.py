@@ -1,16 +1,18 @@
-  
+ 
 import os
 from pathlib import Path
 from datetime import timedelta
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ssss
 
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = False
 
 ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS")]
@@ -166,3 +168,17 @@ DJANGO_REST_RESETPASSWORD_TOKEN_CONFIG = {
         "max_length": 30
     }
 }
+
+sentry_sdk.init(
+    dsn="https://298f786556b54591a600acdbeb5e9892@o574434.ingest.sentry.io/5875692",
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
