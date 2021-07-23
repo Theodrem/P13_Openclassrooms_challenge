@@ -15,6 +15,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10 col-xl-7 mx-auto">
+                            <h3 class="display-4">Inscrit toi!</h3>
                             <p class="text-muted mb-4">Le mot de passe doit contenir 8 caractères au minimum.</p>
                             <p class="text-muted mb-4">Le mot de passe ne doit pas contenir que des chiffres</p>
                             <p class="text-muted mb-4">Evite les mots de passe trop commun</p>
