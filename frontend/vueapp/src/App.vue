@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    
     <router-view></router-view>
   </div>
-  
 </template>
 
 <script>
