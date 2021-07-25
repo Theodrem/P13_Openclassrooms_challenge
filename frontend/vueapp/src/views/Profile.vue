@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 title text-center text-white" id="header" v-if="InfosUser !=''">
             <img src="../assets/user-profile.png" alt="" id="profile">
-            <h1 class="title text-uppercase">{{ InfosUser[0].username }}</h1>
+            <h1 class="title text-uppercase" id="info-username">{{ InfosUser[0].username }}</h1>
             <h4 class="title">{{ InfosUser[0].email }}</h4>
         </div>
     </div>
