@@ -1,19 +1,21 @@
+
+ 
 import os
 from pathlib import Path
 from datetime import timedelta
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
-from .var import ENV 
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = ENV["SECRET_KEY"]
+SECRET_KEY = "dzddazdazdzeezeeaeaerrrrrr"
 
 
-DEBUG = False
-ALLOWED_HOSTS = ["127.0.0.1", ENV["ALLOWED_HOSTS"]]
+DEBUG = True
+
+ALLOWED_HOSTS = 159.65.56.183
 
 
 # Application definition
@@ -70,7 +72,7 @@ TEMPLATES = [
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/build/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/build/static')]
 
 WSGI_APPLICATION = 'website.wsgi.application'
 
@@ -83,7 +85,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'challenge',
             'USER': 'theodrem',
-            'PASSWORD': ENV["PASSWORD_DB"],
+            'PASSWORD': os.environ.get('PASSWORD_DB_P8'),
             'HOST': 'localhost',
             'PORT': '5432'
         }
