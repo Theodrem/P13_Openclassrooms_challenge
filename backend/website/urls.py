@@ -4,9 +4,9 @@ from django.contrib import admin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('user.urls')),
-    path('', include('challenge.urls')),
-    path('', include('utils.urls')),
+    path('api/', include('user.urls')),
+    path('api/', include('challenge.urls')),
+    path('api/', include('utils.urls')),
 
 ]
 
