@@ -5,33 +5,13 @@
     <div class="container p-4">
         <!-- Section: Social media -->
         <section class="mb-4">
-        <!-- Facebook -->
-        <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
-            ><i class="fab fa-facebook-f"></i
-        ></a>
-
-        <!-- Twitter -->
-        <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
-            ><i class="fab fa-twitter"></i
-        ></a>
-
-        <!-- Google -->
-        <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
-            ><i class="fab fa-google"></i
-        ></a>
-
-        <!-- Instagram -->
-        <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
-            ><i class="fab fa-instagram"></i
-        ></a>
-
         <!-- Linkedin -->
-        <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
+        <a class="btn btn-outline-dark btn-floating m-1" href="https://github.com/Theodrem/P13_Openclassrooms_challenge" role="button" target="_blank"
             ><i class="fab fa-linkedin-in"></i
         ></a>
 
         <!-- Github -->
-        <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button"
+        <a class="btn btn-outline-dark btn-floating m-1" href="https://www.linkedin.com/in/theotim-h-6803b886/" role="button" target="_blank"
             ><i class="fab fa-github"></i
         ></a>
         </section>
@@ -66,16 +46,16 @@
 
             <ul class="list-unstyled mb-0">
                 <li>
-                <a href="#!" >Vue.js</a>
+                Vue.js
                 </li>
                 <li>
-                <a href="#!">Django Rest Framework</a>
+                Django Rest Framework
                 </li>
                 <li>
-                <a href="#!">Postgresql</a>
+                Postgresql
                 </li>
                 <li>
-                <a href="#!">Postman</a>
+                Postman
                 </li>
             </ul>
             </div>
