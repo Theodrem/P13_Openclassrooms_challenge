@@ -15,7 +15,7 @@
                         <div class="col-lg-10 col-xl-7 mx-auto">
                             <h3 class="display-4">Bienvue à toi!</h3>
                             <p class="text-muted mb-4">Connecte pour réaliser de nouveaux défis.</p>
-                            <p v-if="MessageLog != null">{{ MessageLog }}</p>
+                            <!--<p v-if="MessageLog != null">{{ MessageLog }}</p>-->
                             <form v-on:submit.prevent="login">
                               <div class="form-group">
                                 <input type="text" name="username" id="user" v-model="username" class="form-control" placeholder="Nom d'utilisateur*">
@@ -23,7 +23,7 @@
                               <div class="form-group">
                                 <input type="password" name="password" id="pass" v-model="password" class="form-control" placeholder="Mot de passe*">
                               </div>
-                              <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm">Envoyer</button>
+                              <button type="submit" id="submit" class="btn btn-primary btn-block text-uppercase mb-2 shadow-sm">Envoyer</button>
                             </form>
                             <p class="text-muted">T'as pas de compte?<b><router-link :to = "{ name:'register' }" class="text-decoration-none">Inscrit toi.</router-link></b></p>
                             <p><b><router-link :to = "{ name:'reset-password' }" class="text-decoration-none">Mot de passe oublié?</router-link></b></p>
