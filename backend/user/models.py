@@ -12,7 +12,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     Send email with token generated
     """
 
-    email_plaintext_message = "http://localhost:8080//reset-password-confirm//{}".format(reset_password_token.key)
+    email_plaintext_message = "http://159.65.56.183//reset-password-confirm//{}".format(reset_password_token.key)
 
     send_mail(
         # title:
