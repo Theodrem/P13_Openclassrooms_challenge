@@ -23,7 +23,7 @@
             <h5 class="text-white">Difficulté Normal: <i class="fas fa-star fa-lg" style="color: #1A1FB9"></i></h5>
         </div>
         <div class="col-md-3 title text-center">
-            <h5 class="text-white">Difficulté Facile: <i class="fas fa-star fa-lg" style="color: #04F982"></i></h5>
+            <h5 class="text-white">Difficulté Facile: <i class="fas fa-star fa-lg" style="color: #00AE59"></i></h5>
         </div>
     </div>
   </header>
@@ -46,14 +46,14 @@
                         <h1  v-if="data.category=='Environmental'"  style="color: #32AC30"><i :class="data.icon"></i></h1>
                         <h1  v-if="data.category=='Sensation'"  style="color: #C82736"><i :class="data.icon"></i></h1>
                         <h1  v-if="data.category=='Culture'"><i :class="data.icon"  style="color: #38C1B0"></i></h1>
-                        
+                        <h1  v-if="data.category=='Social'"><i :class="data.icon"  style="color: #A900AE"></i></h1>
 
                         
                         <h4 class="card-title">{{ data.title }}</h4>
                         <h5 v-if="data.difficult==4" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
                         <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
                         <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
-                        <h5 v-if="data.difficult==1" style="scolor: #04F982"><i class="fas fa-star fa-lg"></i></h5>
+                        <h5 v-if="data.difficult==1" style="scolor: #00AE59"><i class="fas fa-star fa-lg"></i></h5>
                         <button type="submit" class="btn btn-outline-dark" v-on:click="get_id(data.id)">Ajouter</button>
                     </div>
                 </div>

@@ -35,9 +35,6 @@
                                     <td><button type="submit" class="btn btn-danger" v-on:click="del_user(data.id)"><i class="fas fa-minus"></i></button></td> 
                                 </tr>
                             </tbody>
-                            <tfoot>
-                              <td v-if="MessageUser !=''">{{ MessageUser }}</td>
-                            </tfoot>
                       </table>
                       </div>
                   </div>
@@ -61,9 +58,6 @@
                                     <td><button type="submit" class="btn btn-danger" v-on:click="del_group(data.id)"><i class="fas fa-minus"></i></button></td> 
                                 </tr>
                             </tbody>
-                            <tfoot>
-                              <td v-if="MessGroups !=''">{{ MessGroups }}</td>
-                            </tfoot>
                       </table>
                       </div>
                   </div>
@@ -87,9 +81,6 @@
                                       <td><button type="submit" class="btn btn-danger" v-on:click="del_challenge(data.id)"><i class="fas fa-minus"></i></button></td> 
                                   </tr>
                               </tbody>
-                            <tfoot>
-                              <td v-if="MessageChallenge !=''">{{ MessageChallenge }}</td>
-                            </tfoot>
                       </table>
                       </div>
                   </div>
@@ -130,7 +121,6 @@
                             </div>
                             <button type="submit" class="btn btn-primary text-uppercase" style="margin-top: 10px">Envoyer</button>
                         </form>
-                        <h5 v-if="MessageAddChallenge !=''" style="margin-top: 10px;">{{ MessageAddChallenge }}</h5>
                       </div>
                    </div>
                 </div>
@@ -164,11 +154,7 @@ export default {
         ...mapGetters(['AllUsers']),
         ...mapGetters(['MessageUser']),
         ...mapGetters(['AllGroups']),
-        ...mapGetters(['MessGroups']),
         ...mapGetters(['challenges']),
-        ...mapGetters(['MessageChallenge']),
-        ...mapGetters(['MessageAddChallenge']),
-      
     },
     mounted () { 
         this.$store.dispatch('getAllUsers')
