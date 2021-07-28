@@ -13,25 +13,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3 title text-center">
-            <h5 class="text-white">Difficulté Extrême: <i class="fas fa-star fa-lg" style="color: #000000"></i></h5>
+        <div class="col-md-4 title text-center">
+            <h5 class="text-white">Difficulté Difficile: <i class="fas fa-star fa-lg" style="color: #000000"></i></h5>
         </div>
-        <div class="col-md-3 title text-center">
-            <h5 class="text-white">Difficulté Difficile: <i class="fas fa-star fa-lg" style="color: #F90404"></i></h5>
+        <div class="col-md-4 title text-center">
+            <h5 class="text-white">Difficulté Normal: <i class="fas fa-star fa-lg" style="color: #F90404"></i></h5>
         </div>
-        <div class="col-md-3 title text-center">
-            <h5 class="text-white">Difficulté Normal: <i class="fas fa-star fa-lg" style="color: #1A1FB9"></i></h5>
-        </div>
-        <div class="col-md-3 title text-center">
-            <h5 class="text-white">Difficulté Facile: <i class="fas fa-star fa-lg" style="color: #00AE59"></i></h5>
+        <div class="col-md-4 title text-center">
+            <h5 class="text-white">Difficulté Facile: <i class="fas fa-star fa-lg" style="color: #1A1FB9"></i></h5>
         </div>
     </div>
   </header>
   <div class="container">
     <div class="row">
-        <div class="col-md-12 title text-center">     
-            <h6 v-if="MessageChallenge !=''" >{{ MessageChallenge }}</h6>
-        </div>
     </div>
     <div class="row list">
       <div class="col-md-4 loop" v-for="(data, index) in  challenges.results" :key="index">
@@ -50,10 +44,9 @@
 
                         
                         <h4 class="card-title">{{ data.title }}</h4>
-                        <h5 v-if="data.difficult==4" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
-                        <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
-                        <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
-                        <h5 v-if="data.difficult==1" style="scolor: #00AE59"><i class="fas fa-star fa-lg"></i></h5>
+                        <h5 v-if="data.difficult==3" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
+                        <h5 v-if="data.difficult==2" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
+                        <h5 v-if="data.difficult==1" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
                         <button type="submit" class="btn btn-outline-dark" v-on:click="get_id(data.id)">Ajouter</button>
                     </div>
                 </div>

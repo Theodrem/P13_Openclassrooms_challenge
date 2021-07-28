@@ -105,7 +105,6 @@
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
-                                <option>4</option>
                               </select>
                             </div>
                              <div class="form-group">
@@ -152,7 +151,6 @@ export default {
     },
     computed: {
         ...mapGetters(['AllUsers']),
-        ...mapGetters(['MessageUser']),
         ...mapGetters(['AllGroups']),
         ...mapGetters(['challenges']),
     },
