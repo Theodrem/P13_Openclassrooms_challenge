@@ -15,7 +15,7 @@
                         <div class="col-lg-10 col-xl-7 mx-auto">
                             <h3 class="display-4">Mot de passe oublié?</h3>
                             <p class="text-muted mb-4">Entre ton email.</p>
-                            <p v-if="MessageSend != null">{{ MessageSend }}</p>
+                            <p v-if="MessageSend != null" style="color: red">{{ MessageSend }}</p>
                             <form v-on:submit.prevent="reset">
                               <div class="form-group">
                                 <input type="text" name="email" id="email" v-model="email" class="form-control" placeholder="Email*">

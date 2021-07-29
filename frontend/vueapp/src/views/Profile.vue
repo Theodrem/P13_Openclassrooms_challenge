@@ -95,10 +95,9 @@
                   <div class="card-body">
                       <h1><i :class="data.icon"></i></h1>
                       <h4 class="card-title">{{ data.title }}</h4>
-                      <h5 v-if="data.difficult==4" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
-                      <h5 v-if="data.difficult==3" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
-                      <h5 v-if="data.difficult==2" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
-                      <h5 v-if="data.difficult==1" style="color: #04F982"><i class="fas fa-star fa-lg"></i></h5>
+                      <h5 v-if="data.difficult==3" style="color: #000000"><i class="fas fa-star fa-lg"></i></h5>
+                      <h5 v-if="data.difficult==2" style="color: #F90404"><i class="fas fa-star fa-lg"></i></h5>
+                      <h5 v-if="data.difficult==1" style="color: #1A1FB9"><i class="fas fa-star fa-lg"></i></h5>
                       <button type="submit" class="btn btn-outline-success" v-on:click="update_challenge(data, valid)">Valider</button>
                       <button type="submit" class="btn btn-outline-danger" v-on:click="delete_challenge(data.id)" id="give-up">Annuler</button>
                   </div>
