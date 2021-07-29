@@ -15,7 +15,7 @@
                         <div class="col-lg-10 col-xl-7 mx-auto">
                             <h3 class="display-4">Bienvue à toi!</h3>
                             <p class="text-muted mb-4">Connecte pour réaliser de nouveaux défis.</p>
-                            <!--<p v-if="MessageLog != null">{{ MessageLog }}</p>-->
+                            <p v-if="MessageLog != null"  style="color: red">{{ MessageLog }}</p>
                             <form v-on:submit.prevent="login">
                               <div class="form-group">
                                 <input type="text" name="username" id="user" v-model="username" class="form-control" placeholder="Nom d'utilisateur*">
