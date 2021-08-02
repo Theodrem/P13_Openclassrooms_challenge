@@ -4,7 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail  
-
+from website.var import ENV
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
@@ -12,7 +12,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     Send email with token generated
     """
 
-    email_plaintext_message = "http://159.65.56.183//reset-password-confirm//{}".format(reset_password_token.key)
+    email_plaintext_message = "{}//reset-password-confirm//{}".format(ENV["EMAIL_HOSTS"],reset_password_token.key)
 
     send_mail(
         # title:

@@ -27,7 +27,7 @@ class ChallengeTests(APITestCase):
         """
         Tet get all challenges
         """
-        url = 'http://127.0.0.1:8000/challenges/'
+        url = 'http://127.0.0.1:8000/api/challenges/'
         response = self.client.get(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(json.dumps(response.data["results"][0]['category']), '"Sportif"')
@@ -36,7 +36,7 @@ class ChallengeTests(APITestCase):
         """
         Tet post new challenge
         """
-        url = 'http://127.0.0.1:8000/challenges/'
+        url = 'http://127.0.0.1:8000/api/challenges/'
         data = {"category": "Environment", "difficult": 4, "title": "Test le defis 3", "icon": "fa fa-icon-test 3"}
         response = self.client.post(url, data, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -46,7 +46,7 @@ class ChallengeTests(APITestCase):
         """
         Tet delete challenge
         """
-        url = f'http://127.0.0.1:8000/challenges/{self.challenge.id}/'
+        url = f'http://127.0.0.1:8000/api/challenges/{self.challenge.id}/'
         response = self.client.delete(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -54,7 +54,7 @@ class ChallengeTests(APITestCase):
         """
         Tet get all user challenge with user id
         """
-        url = 'http://127.0.0.1:8000/users-challenges/'
+        url = 'http://127.0.0.1:8000/api/users-challenges/'
         params = {"user_id": self.user1.id}
         response = self.client.get(url, params=params, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -64,7 +64,7 @@ class ChallengeTests(APITestCase):
         """
         Tet post user challenge
         """
-        url = 'http://127.0.0.1:8000/users-challenges/'
+        url = 'http://127.0.0.1:8000/api/users-challenges/'
         data = {"user": self.user1.id, "challenge": self.challenge2.id, "status": "En cours"}
         response = self.client.post(url, data, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -74,7 +74,7 @@ class ChallengeTests(APITestCase):
         """
         Tet delete user challenge
         """
-        url = f'http://127.0.0.1:8000/users-challenges/{self.user_challenge.id}/'
+        url = f'http://127.0.0.1:8000/api/users-challenges/{self.user_challenge.id}/'
         response = self.client.delete(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -82,7 +82,7 @@ class ChallengeTests(APITestCase):
         """
         Tet update user challenge
         """
-        url = f'http://127.0.0.1:8000/users-challenges/{self.user_challenge.id}/'
+        url = f'http://127.0.0.1:8000/api/users-challenges/{self.user_challenge.id}/'
         data = {"status": "Valide", "challenge": self.challenge.id, "user": self.user1.id}
         response = self.client.put(url, data, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(json.dumps(response.data['status']), '"Valide"')

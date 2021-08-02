@@ -30,53 +30,53 @@ class GroupTests(APITestCase):
         self.refresh =  response.data['refresh']
 
     def test_get_groups(self):
-        url ='http://127.0.0.1:8000/group/'
+        url ='http://127.0.0.1:8000/api/group/'
         response = self.client.get(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(json.dumps(response.data["results"][0]['name']), '"Groupe_test"')
 
     def test_post_user_groups(self):
-        url ='http://127.0.0.1:8000/profile/add_user_group/'
+        url ='http://127.0.0.1:8000/api/profile/add_user_group/'
         data = {'user':  self.user1.id, 'group': self.group.id}
         response = self.client.post(url, data, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code,  status.HTTP_200_OK)
         self.assertEqual(json.dumps(response.data['groups'][0]['name']), '"Groupe_test"')
 
     def test_delete_user_groups(self):
-        url ='http://127.0.0.1:8000/profile/delete_user_group/'
+        url ='http://127.0.0.1:8000/api/profile/delete_user_group/'
         data = {'user':  self.user2.id, 'group': self.group.id}
         response = self.client.delete(url, data, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code,  status.HTTP_200_OK)
         self.assertEqual(json.dumps(response.data['username']), '"user_test2"')
     
     def test_get_posts_group(self):
-        url ='http://127.0.0.1:8000/post/'
+        url ='http://127.0.0.1:8000/api/post/'
         params = {'groups': 1}
         response = self.client.get(url, params=params, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(json.dumps(response.data['results'][0]['text']), '"Test post"')
 
     def test_post_posts(self):
-        url ='http://127.0.0.1:8000/post/'
+        url ='http://127.0.0.1:8000/api/post/'
         data = {'group': self.group.id, 'author': self.user2.id, 'text': "hello"}
         response = self.client.post(url, data, HTTP_AUTHORIZATION=f'Bearer {self.access}', format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(json.dumps(response.data['text']), '"hello"')
 
     def test_delete_group(self):
-        url =f'http://127.0.0.1:8000/group/{self.group.id}/'
+        url =f'http://127.0.0.1:8000/api/group/{self.group.id}/'
         response = self.client.delete(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         
     def test_create_group(self):
-        url ='http://127.0.0.1:8000/group/'
+        url ='http://127.0.0.1:8000/api/group/'
         data = {'name': "GroupeTest2"}
         response = self.client.post(url, data, HTTP_AUTHORIZATION=f'Bearer {self.access}', format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(json.dumps(response.data['name']), '"GroupeTest2"')
 
     def test_delete_post(self):
-        url =f'http://127.0.0.1:8000/post/{self.post.id}/'
+        url =f'http://127.0.0.1:8000/api/post/{self.post.id}/'
         response = self.client.delete(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -86,7 +86,7 @@ class GroupTests(APITestCase):
         response_log = self.client.post(url_log, data_log, format='json')
         access = response_log.data['access']
 
-        url =f'http://127.0.0.1:8000/group/?id={self.group.id}'
+        url =f'http://127.0.0.1:8000/api/group/?id={self.group.id}'
         
         response = self.client.get(url, HTTP_AUTHORIZATION=f'Bearer {access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -98,7 +98,7 @@ class GroupTests(APITestCase):
         response_log = self.client.post(url_log, data_log, format='json')
         access = response_log.data['access']
 
-        url =f'http://127.0.0.1:8000/group/?id={self.group2.id}'
+        url =f'http://127.0.0.1:8000/api/group/?id={self.group2.id}'
         
         response = self.client.get(url, HTTP_AUTHORIZATION=f'Bearer {access}')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
