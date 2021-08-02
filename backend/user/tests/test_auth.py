@@ -106,7 +106,7 @@ class UserTests(APITestCase):
         """
         Test get all users
         """
-        url ='http://127.0.0.1:8000/profile/'
+        url ='http://127.0.0.1:8000/api/profile/'
         response = self.client.get(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(json.dumps(response.data["results"][0]['username']), '"user_test"')
@@ -116,7 +116,7 @@ class UserTests(APITestCase):
         """
         test get user detail
         """
-        url = f'http://127.0.0.1:8000/profile/{self.user2.id}/'
+        url = f'http://127.0.0.1:8000/api/profile/{self.user2.id}/'
         response = self.client.get(url, HTTP_AUTHORIZATION=f'Bearer {self.access}')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['email'], "test2@email.fr")

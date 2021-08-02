@@ -39,7 +39,6 @@ const actions = {
       await getAPI.delete(`/challenges/${challenge.id}/`,{ headers: { Authorization: `Bearer ${access}` }}  );
     } catch (e) {
       routes.push({ name: 'page-not-found' });
-
     }   
   },
   async addChallenge (context, challenge) {
